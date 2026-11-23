@@ -1,0 +1,66 @@
+/*
+ * 公共主题接入点：在 js/data-adapter.js 将 USE_PUBLIC_ASSETS 改为 true，
+ * 即可在本地兜底主题之后载入 ../00_公共资源/theme.css。
+ * 公共主题可直接覆盖以下语义变量，或用 var() 映射自己的设计令牌。
+ */
+:root {
+  color-scheme: dark;
+  --font-body: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  --font-display: "Songti SC", "STSong", "Noto Serif CJK SC", "SimSun", serif;
+  --font-hand: "Kaiti SC", "STKaiti", "KaiTi", "Songti SC", serif;
+  --font-mono: "SFMono-Regular", "Cascadia Mono", "Consolas", monospace;
+
+  --night: #161310;
+  --night-deep: #100e0c;
+  --panel: #201b17;
+  --panel-raised: #29211b;
+  --inset: #191511;
+  --line: #3e3025;
+  --line-lit: #685039;
+  --cream: #f3e6d0;
+  --text: #e2d2bb;
+  --muted: #aea08c;
+  --brass: #deac6d;
+  --brass-lit: #f5c78b;
+  --brass-dark: #7e512d;
+  --gold-fog: #422c20;
+  --hearth: #ba6c39;
+  --vermilion: #a3422e;
+  --vermilion-bright: #bc5339;
+  --vermilion-ink: #8a3426;
+  --green: #9cb280;
+  --paper: #f2ddb0;
+  --paper-light: #faedcf;
+  --paper-dark: #d4b37e;
+  --paper-rule: #c8a980;
+  --ink: #3b281c;
+  --ink-muted: #74553d;
+  --white: #fff9e9;
+  --transparent: transparent;
+
+  --radius-xs: 5px;
+  --radius-sm: 8px;
+  --radius: 13px;
+  --radius-lg: 19px;
+  --radius-phone: 24px;
+  --radius-round: 99px;
+  --shadow-panel: 0 13px 36px #0b080650;
+  --shadow-float: 0 19px 45px #100904b5;
+  --shadow-paper: 0 9px 19px #170e0866;
+  --shadow-glow: 0 0 16px #d59158a0;
+  --shadow-inset: inset 0 0 18px #2b180c55;
+  --paper-grain: repeating-linear-gradient(105deg,#734b1710 0 1px, transparent 1px 5px), radial-gradient(ellipse at 20% 5%,#fff2d2, var(--paper) 75%);
+  --book-grain: linear-gradient(90deg,#98713a38,transparent 5% 94%,#98713a38), repeating-linear-gradient(115deg,#734b170c 0 1px,transparent 1px 6px), linear-gradient(140deg,#eddbb4,#f5e7c8 65%,#dac196);
+  --wood-grain: repeating-linear-gradient(3deg,#24150d3b 0 1px,transparent 1px 6px,#a96c3b26 6px 7px,transparent 7px 11px), linear-gradient(180deg,#734628,#492b19 24%,#261910 100%);
+  --stage-light: radial-gradient(ellipse at 69% 39%,#a4512759,transparent 67%), linear-gradient(145deg,#3b261a,#160f0b 78%);
+  --hero-wash: linear-gradient(90deg,#211915 2%,#211915 25%,#21191573 69%,#1e1612a8 100%);
+  --stage-wash: linear-gradient(180deg,#140d0b31,#1c1008a8);
+  --brick-gradient: linear-gradient(5deg,#1c1510,#472d20);
+  --receipt-tint: linear-gradient(0deg,#140d07e6,transparent 68%);
+  --button-gradient: linear-gradient(180deg,var(--vermilion-bright),var(--vermilion));
+  --phone-ground: linear-gradient(140deg,#f7e8cd,#ecdbbb);
+  --highlight: #e4ad6d20;
+  --highlight-strong: #e4ad6d3b;
+  --overlay: #0e0a08ca;
+  --scene-image: url("../assets/hearth.jpg");
+}

@@ -1,0 +1,42 @@
+/*
+ * 冬夜、木色、朱砂与粮票纸为本地主题默认值。
+ * 公共样式就绪后，将 js/data-adapter.js 的 USE_PUBLIC_RESOURCES 改为 true。
+ * ../00_公共资源/theme.css 通过同名 :root 变量覆盖，未覆盖项沿用此表。
+ */
+:root {
+  --color-bg: #eee5d5;
+  --color-surface: #fff8e9;
+  --color-surface-muted: #f1e1c6;
+  --color-surface-warm: #efd5a7;
+  --color-text: #33241e;
+  --color-muted: #6b5244;
+  --color-primary: #6f2c22;
+  --color-primary-hover: #542017;
+  --color-on-primary: #fff4d9;
+  --color-accent: #914234;
+  --color-line: #cdb593;
+  --color-focus: #963b26;
+  --color-hero: #25191a;
+  --color-hero-end: #26313a;
+  --color-hero-text: #fff3d9;
+  --color-hero-muted: #f4d7a8;
+  --color-hero-accent: #f1b96e;
+  --color-hero-line: #ffe0a145;
+  --color-hero-overlay: #25191a00;
+  --color-hero-mid: #25191ac9;
+  --color-overlay: #251a17b8;
+  --color-print-bg: #fff;
+  --color-print-text: #18100d;
+  --color-print-line: #a49384;
+  --font-body: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  --font-heading: "Songti SC", "STSong", "Noto Serif CJK SC", "SimSun", serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  --radius-sm: 0.3rem;
+  --radius-md: 0.55rem;
+  --radius-lg: 0.95rem;
+  --radius-pill: 100rem;
+  --shadow-card: 0 0.18rem 0.8rem #56321c12;
+  --shadow-raised: 0 0.45rem 1.6rem #3d20194d;
+  --texture-paper: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='106' height='106' viewBox='0 0 106 106'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.69' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
+  --texture-wood: repeating-linear-gradient(1deg, var(--color-hero-line) 0 1px, var(--color-hero-overlay) 1px 8px, var(--color-hero-line) 8px 9px, var(--color-hero-overlay) 9px 24px);
+}

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>商业提案</title>
+  <link rel="stylesheet" href="../00_公共资源/theme.css">
+</head>
+<body>
+  <main>
+    <header>
+      <span class="role">1 号位的地盘</span>
+      <h1>商业提案</h1>
+      <p>整体商业方案展示 · 占位页</p>
+    </header>
+    <section class="panel" aria-labelledby="city-heading">
+      <h2 id="city-heading">四城基础数据</h2>
+      <p id="city-status">等待载入 shared_data.js</p>
+      <ul class="cities" id="cities"></ul>
+    </section>
+    <a class="button" href="../index.html">← 返回总控台</a>
+  </main>
+  <script src="../00_公共资源/shared_data.js"></script>
+  <script>
+    const cityList = document.getElementById("cities");
+    const cityStatus = document.getElementById("city-status");
+    const cities = window.SHARED_CITIES;
+
+    if (Array.isArray(cities)) {
+      for (const city of cities) {
+        const item = document.createElement("li");
+        item.textContent = city.name;
+        cityList.append(item);
+      }
+      cityStatus.textContent = "已从 shared_data.js 读取 " + cities.length + " 座城市。";
+    } else {
+      cityStatus.textContent = "读取失败。请确认 00_公共资源与四个模块仍在同一个项目文件夹。";
+    }
+  </script>
+</body>
+</html>

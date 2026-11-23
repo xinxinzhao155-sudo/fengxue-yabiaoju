@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#132841">
+  <title>風雪押鏢局 · 石青山水畫卷</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="assets/fonts/standard-kai.css">
+  <link rel="stylesheet" href="css/theme-adapter.css">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--color-text); background: var(--color-stage); font: 15px/1.6 var(--font-body); }
+    main { max-width: 1340px; margin: auto; padding: clamp(16px,4vw,54px); }
+    h1,h2,h3,p,figure { margin: 0; }
+    h1,h2,h3 { font-family: var(--font-display); }
+    h1 { font-size: clamp(28px,5vw,54px); line-height: 1.18; }
+    h2 { margin-block: 32px 12px; font-size: clamp(23px,3vw,32px); }
+    h3 { margin-top: 7px; font-size: 20px; }
+    a { color: var(--color-gold); text-underline-offset: 4px; }
+    a:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 3px; }
+    img { display: block; width: 100%; height: auto; }
+    .brand { color: var(--color-stage-muted); margin-bottom: 6px; }
+    .cover { margin-top: 20px; display: grid; grid-template-columns: minmax(0, 2fr) minmax(190px, 1fr); align-items: center; background: var(--color-bg); }
+    .cover figcaption { padding: clamp(18px,3vw,40px); }
+    .cover h2 { margin: 0 0 5px; }
+    figcaption p, article p { color: var(--color-secondary); }
+    .cover figcaption a { display: inline-block; margin-top: 13px; }
+    .choices { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: clamp(15px,2vw,28px); }
+    article img { aspect-ratio: 3/2; }
+    .links { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 6px; }
+    .details { margin-top: 12px; }
+    @media (max-width:720px) {
+      .cover,.choices { grid-template-columns: 1fr; }
+      .choices { gap: 24px; }
+      .cover figcaption { padding: 13px 16px 17px; }
+    }
+  </style>
+</head>
+<body><main>
+  <header><p class="brand">大冰的小屋 · 風雪押鏢局</p><h1>石青山水畫卷</h1></header>
+  <figure class="cover">
+    <a href="assets/stone-blue/crane-pass.webp" aria-label="查看鶴引雙闕原畫"><img src="assets/stone-blue/crane-pass.webp" alt="仙人乘鶴吹笛，鏢隊沿有石欄的山道向右行進，穿過青綠描金的雙闕。"></a>
+    <figcaption><h2>鶴引雙闕</h2><p>鶴在雲上引路，鏢隊由石橋入驛。</p><a href="index.html">打開離線小程序 →</a></figcaption>
+  </figure>
+  <figure class="cover">
+    <a href="assets/stone-blue/riverside-post.webp" aria-label="查看江岸驛站原畫"><img src="assets/stone-blue/riverside-post.webp" alt="石青群山下，鏢隊與馱騾歇在江岸石坪，驛人隔案交單，群鴿飛過屋頂。"></a>
+    <figcaption><h2>江岸驛站</h2><p>石青薄染的絹本江景，鏢隊在臨水驛站交單。</p><a href="index.html?look=d">試用此版首頁 →</a></figcaption>
+  </figure>
+  <section aria-labelledby="scenes"><h2 id="scenes">押鏢三景</h2>
+    <div class="choices">
+      <article><a href="assets/stone-blue/caravan.webp"><img src="assets/stone-blue/caravan.webp" alt="雙輪糧車與馱隊經過城門，廊燈下有人交接文書。"></a><h3>雲門接鏢</h3><div class="links"><a href="assets/stone-blue/caravan.webp">查看原畫</a><a href="index.html?look=a">試用此版首頁</a></div></article>
+      <article><a href="assets/stone-blue/flock.webp"><img src="assets/stone-blue/flock.webp" alt="松臺旁的驛人放飛成群信鴿，木匣中收著信卷。"></a><h3>松臺放鴿</h3><div class="links"><a href="assets/stone-blue/flock.webp">查看原畫</a><a href="index.html?look=b">試用此版首頁</a></div></article>
+      <article><a href="assets/stone-blue/arrival.webp"><img src="assets/stone-blue/arrival.webp" alt="鏢師在石欄內停騾交單，腳伕背貨上階，四簷驛樓敞門收貨。"></a><h3>月門交鏢</h3><div class="links"><a href="assets/stone-blue/arrival.webp">查看原畫</a><a href="index.html?look=c">試用此版首頁</a></div></article>
+    </div>
+    <div class="links details"><a href="assets/stone-blue/elevation.webp">查看四簷驛樓立面</a><a href="assets/stone-blue/review-details.jpg">放大查看圈注修訂</a></div>
+  </section>
+</main></body>
+</html>

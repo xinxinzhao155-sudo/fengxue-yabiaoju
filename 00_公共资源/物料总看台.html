@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="zh-CN" data-preview="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>物料总看台 · 风雪押镖局</title>
+  <link rel="stylesheet" href="./04_界面组件与边框/base_style.css">
+  <style>
+    :root {
+      color-scheme: light;
+      --canvas: #efe7d7;
+      --paper: #f7f0e2;
+      --ink: #2e2a27;
+      --quiet: #6b5a48;
+      --rule: #cabb9f;
+      --stage: #111523;
+      --stage-frame: #ca9c4459;
+      --stage-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='146' height='101' viewBox='0 0 146 101'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.42 .83' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 .97 0 0 0 0 .84 0 0 0 0 .62 .075 0 0 0 -.024'/%3E%3C/filter%3E%3Cpath d='M0 0h146v101H0z' filter='url(%23f)'/%3E%3C/svg%3E");
+      --batch-divider: #d1b68f60;
+      --batch-scale: #dfcaa7;
+      font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--canvas);
+    }
+
+    [data-preview="light"] {
+      --stage: #dbd7ce;
+      --stage-frame: #70432959;
+      --stage-grain: none;
+      --batch-divider: #94734d72;
+      --batch-scale: #6b5239;
+    }
+
+    [data-preview="green"] {
+      --stage: #bfd46b;
+      --stage-frame: #394c5380;
+      --stage-grain: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2785%27%20height%3D%2761%27%20viewBox%3D%270%200%2085%2061%27%3E%3Cdefs%3E%3Cpattern%20id%3D%27h%27%20width%3D%2785%27%20height%3D%279%27%20patternUnits%3D%27userSpaceOnUse%27%3E%3Cpath%20d%3D%27M-1%202q7-3%2012%200t12%200%2012%200%2012%200%2012%200%2012%200%2015%200M-1%206q7-3%2012%200t12%200%2012%200%2012%200%2012%200%2012%200%2015%200%27%20fill%3D%27none%27%20stroke%3D%27%23555C39%27%20stroke-width%3D%27.65%27%20stroke-opacity%3D%27.23%27%2F%3E%3C%2Fpattern%3E%3Cfilter%20id%3D%27f%27%20x%3D%27-10%25%27%20y%3D%27-10%25%27%20width%3D%27120%25%27%20height%3D%27120%25%27%3E%3CfeTurbulence%20type%3D%27fractalNoise%27%20baseFrequency%3D%27.035%20.067%27%20numOctaves%3D%273%27%20stitchTiles%3D%27stitch%27%2F%3E%3CfeDisplacementMap%20in%3D%27SourceGraphic%27%20scale%3D%277%27%20xChannelSelector%3D%27R%27%20yChannelSelector%3D%27G%27%2F%3E%3C%2Ffilter%3E%3C%2Fdefs%3E%3Cpath%20d%3D%27M-7-7h99v75H-7z%27%20fill%3D%27url(%23h)%27%20filter%3D%27url(%23f)%27%2F%3E%3C%2Fsvg%3E");
+      --batch-divider: #555c3970;
+      --batch-scale: #282d1c;
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    button { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    a { color: inherit; }
+    :focus-visible { outline: 2px solid #9c5a3f; outline-offset: 4px; }
+
+    .masthead {
+      color: #efe4ce;
+      background:
+        repeating-linear-gradient(128deg, #dbbd8720 0 1px, transparent 1px 13px),
+        radial-gradient(ellipse at 74% -42%, #394c53, #191e30 59%, #111523);
+      border-top: 4px solid #9db24b;
+      border-bottom: 3px double #b6a172;
+    }
+
+    .wrap { width: min(1440px, calc(100% - 64px)); margin-inline: auto; }
+    .masthead .wrap { position: relative; padding-block: 31px 36px; }
+    .masthead .wrap::after { position: absolute; inset: auto 0 12px; border-bottom: 1px solid #b9a47f57; content: ""; }
+    .masthead p { margin: 0; }
+    .project { color: #d8bd8e; font: 700 1rem / 1.4 var(--fx-serif); letter-spacing: .17em; }
+    .masthead h1 { margin: 8px 0 5px; font: 700 clamp(2.2rem, 4vw, 3.6rem) / 1.14 var(--fx-serif); letter-spacing: .065em; }
+    .cities { color: #d1c2a7; font-size: .83rem; letter-spacing: .14em; }
+    .batch-jump { display: inline-block; color: #ead4a6; margin: 7px 14px 0 0; font-size: .8rem; text-underline-offset: 4px; }
+    .batch-jump:focus-visible { outline-color: var(--fx-focus); }
+
+    .board { display: grid; grid-template-columns: minmax(285px, .49fr) minmax(0, 1fr); gap: 24px; align-items: start; padding-block: 23px 44px; }
+    .panel { border: 1px solid var(--rule); background: var(--paper); box-shadow: 0 3px 12px #4535250d; }
+    .reference { padding: 17px; }
+    .specimens { min-width: 0; }
+    .panel-head, .specimen-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .panel-head { margin-bottom: 13px; padding-bottom: 11px; border-bottom: 1px solid var(--rule); }
+    h2 { margin: 0; font: 700 1.31rem / 1.2 var(--fx-serif); }
+    .rubric { color: var(--quiet); font-size: .72rem; }
+    .source-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 11px; }
+    .source { display: flex; flex-direction: column; align-items: stretch; grid-column: span 2; min-width: 0; text-align: left; border: 0; color: var(--quiet); background: none; padding: 0; cursor: zoom-in; }
+    .source.featured { grid-column: span 3; }
+    .source-image {
+      display: grid;
+      place-items: center;
+      aspect-ratio: 3 / 4.5;
+      overflow: hidden;
+      background: #dfd3be;
+      border: 1px solid #bfae8e;
+    }
+    .source.featured .source-image { aspect-ratio: 3 / 4; }
+    .source.palette-source .source-image { border: 2px solid #555c39; }
+    .source img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: contain; transition: transform 180ms ease; }
+    .source:hover img { transform: scale(1.025); }
+    .source-label { display: block; margin-top: 5px; font-size: .72rem; }
+
+    .palette { padding: 16px 17px 14px; container-type: inline-size; }
+    .color-families { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 9px 12px; }
+    .color-family { grid-column: span 3; min-width: 0; }
+    .color-family--red { grid-column: span 5; }
+    .color-family--gold { grid-column: span 7; }
+    .color-family h3 { margin: 0 0 4px; color: #6d251a; font: 700 .88rem / 1.3 var(--fx-serif); }
+    .swatches { display: grid; grid-auto-columns: minmax(0, 1fr); grid-auto-flow: column; gap: 5px; margin: 0; padding: 0; list-style: none; }
+    .swatches li { min-width: 0; border: 1px solid #cbbba1; background: #f5ecda; }
+    .chip { display: block; height: 17px; background: var(--sample); border-bottom: 1px solid #3b2b2524; }
+    .swatches strong, .swatches code { display: block; margin-inline: 6px; }
+    .swatches strong { margin-top: 3px; font-weight: 650; font-size: .71rem; }
+    .swatches code { color: #6b5847; margin-bottom: 3px; font: .68rem / 1.28 ui-monospace, monospace; letter-spacing: .015em; }
+    .notes { display: grid; grid-template-columns: 1fr 1fr; gap: 7px 12px; margin: 12px 0 0; color: var(--quiet); font-size: .75rem; line-height: 1.54; }
+    .notes div { min-width: 0; }
+    .notes dt { display: inline; color: #6f4035; font-weight: 700; margin-right: .35em; }
+    .notes dd { display: inline; margin: 0; }
+
+    .specimen-heading { margin-block: 17px 10px; flex-wrap: wrap; scroll-margin-top: 14px; }
+    .theme-controls { display: flex; gap: 2px; padding: 3px; border: 1px solid #ac9675; background: #e4d8c4; }
+    .theme-controls button { border: 1px solid transparent; padding: 4px 9px; color: #594a3a; background: transparent; font-size: .75rem; cursor: pointer; white-space: nowrap; }
+    .theme-controls button:hover { border-color: #967956; }
+    .theme-controls button[aria-pressed="true"] { border-color: #8e6834; background: #111523; color: #f4d07c; }
+    .theme-controls button[data-theme="green"][aria-pressed="true"] { border-color: #555c39; background: #bfd46b; color: #191e30; }
+
+    .asset-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .asset { display: flex; flex-direction: column; min-width: 0; margin: 0; background: var(--paper); border: 1px solid #baa98d; }
+    .stage {
+      position: relative;
+      isolation: isolate;
+      container-type: inline-size;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      align-items: center;
+      justify-items: center;
+      height: 220px;
+      padding: 7px;
+      overflow: hidden;
+      border-bottom: 1px solid #a68e66;
+      background-color: var(--stage);
+      background-image: var(--stage-grain);
+    }
+    .stage::after {
+      position: absolute;
+      inset: 5px;
+      border: 1px solid var(--stage-frame);
+      content: "";
+      pointer-events: none;
+    }
+    .royal-grid .stage { height: clamp(220px, 22vw, 310px); padding: 12px; }
+    .royal-grid .icon-demo { width: 100%; }
+    .asset-caption { min-height: 60px; padding: 8px 10px 10px; }
+    .asset-name { margin: 0; font: 700 1rem / 1.3 var(--fx-serif); }
+    .asset-meta { display: flex; align-items: baseline; flex-wrap: wrap; gap: 1px 8px; margin-top: 3px; font-size: .69rem; line-height: 1.35; color: var(--quiet); }
+    .asset-meta a { text-decoration-color: #ab9070; text-underline-offset: 2px; }
+    .asset-meta a:hover { color: #8a4738; }
+    .status { color: #754437; font-weight: 650; }
+    .icon-demo { position: relative; box-sizing: border-box; height: 100%; width: min(100%, 234px); padding: 0; border: 1px solid transparent; background: transparent; cursor: pointer; transition: transform 140ms ease; }
+    .icon-demo:hover { transform: translateY(-2px); }
+    .icon-demo:active { transform: translateY(2px); }
+    .icon-demo:focus-visible { outline: 2px solid var(--fx-focus); outline-offset: -4px; }
+    .icon-demo img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+    .icon-lit { opacity: 0; transition: opacity 140ms ease; }
+    .icon-demo:hover .icon-lit { opacity: .78; }
+    .icon-demo:active .icon-lit, .icon-demo[aria-pressed="true"] .icon-lit { opacity: 1; }
+    .ui-demo { width: min(100%, 340px); min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 5px; }
+    .ui-demo .fx-button { width: 87%; }
+    .ui-demo .fx-story-card { min-height: 98px; padding-inline: 11%; }
+    .ui-demo .fx-story-card__body { max-width: 23ch; }
+    .modal { width: min(850px, calc(100% - 28px)); max-width: 100%; max-height: 95vh; padding: 16px; border: 1px solid #a48d67; background: var(--paper); color: var(--ink); }
+    .modal::backdrop { background: #151a22d9; }
+    .modal-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 9px; }
+    .modal-head button { padding: 4px 11px; border: 1px solid #a48863; background: #eadfc9; cursor: pointer; }
+    .modal img { display: block; max-width: 100%; max-height: 79vh; margin-inline: auto; object-fit: contain; }
+    .modal .artwork-detail {
+      width: min(100%, 710px);
+      height: min(74vh, 660px);
+      background: var(--stage) var(--stage-grain);
+      border: 1px solid var(--stage-frame);
+    }
+
+    .icon-batch { grid-column: 1 / -1; padding: 17px; scroll-margin-top: 12px; }
+    .batch-heading { margin-bottom: 12px; align-items: flex-start; }
+    .batch-hint { margin: 5px 0 0; color: var(--quiet); font-size: .75rem; line-height: 1.45; }
+    .batch-group + .batch-group { margin-top: 17px; }
+    .batch-group h3 { margin: 0 0 7px; font: 700 1rem / 1.3 var(--fx-serif); color: #704637; }
+    .batch-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+    .batch-grid--home { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .batch-card { min-width: 0; margin: 0; border: 1px solid #baa98d; background: #f5ecda; }
+    .batch-stage.stage { height: 104px; padding: 0; }
+    .batch-switch { width: 100%; height: 100%; display: grid; place-items: center; border: 0; padding: 0; background: transparent; color: inherit; cursor: pointer; }
+    .batch-switch:focus-visible { outline: 2px solid var(--batch-scale); outline-offset: -4px; }
+    .batch-view { display: grid; grid-template-columns: minmax(0, 1fr) 44px; align-items: center; justify-items: center; width: min(calc(100% - 10px), 152px); pointer-events: none; }
+    .batch-view--active, .batch-switch[aria-pressed="true"] .batch-view--default { display: none; }
+    .batch-switch[aria-pressed="true"] .batch-view--active { display: grid; }
+    .batch-large { display: block; max-width: 100%; height: auto; transition: transform 120ms ease; }
+    .batch-switch:hover .batch-large { transform: translateY(-2px); }
+    .batch-switch:active .batch-large { transform: translateY(1px); }
+    .batch-mini { border-left: 1px solid var(--batch-divider); padding: 3px 0 3px 7px; justify-self: stretch; display: grid; justify-items: center; gap: 2px; color: var(--batch-scale); font: .62rem / 1.25 ui-monospace, monospace; white-space: nowrap; }
+    .batch-mini img { display: block; }
+    .batch-card .asset-caption { min-height: 55px; }
+
+    @media (max-width: 1160px) {
+      .wrap { width: calc(100% - 40px); }
+      .board { gap: 17px; }
+    }
+
+    @media (max-width: 800px) {
+      .board { grid-template-columns: 1fr; }
+      .source-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .source, .source.featured { grid-column: auto; }
+      .source.featured .source-image, .source-image { aspect-ratio: 3 / 4.2; }
+    }
+
+    @media (max-width: 900px) {
+      .batch-grid--home { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 630px) {
+      .batch-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    }
+
+    @container (max-width: 740px) {
+      .color-family:not(.color-family--red, .color-family--gold) { grid-column: span 6; }
+    }
+
+    @container (max-width: 520px) {
+      .color-family--red, .color-family--gold { grid-column: span 12; }
+    }
+
+    @media (max-width: 490px) {
+      .wrap { width: calc(100% - 24px); }
+      .reference, .palette { padding: 12px; }
+      .source-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+      .notes { grid-template-columns: 1fr; gap: 4px; }
+      .swatches { gap: 4px; }
+      .swatches strong, .swatches code { margin-inline: 3px; font-size: .63rem; }
+      .swatches code { letter-spacing: -.025em; }
+      .asset-grid { gap: 8px; }
+      .stage { height: 166px; }
+      .royal-grid { grid-template-columns: 1fr; }
+      .royal-grid .stage { height: min(255px, 68vw); }
+      .asset-name { font-size: .88rem; }
+      .ui-demo .fx-story-card { padding-bottom: 15px; }
+      .icon-batch { padding: 12px; }
+      .batch-heading { flex-wrap: wrap; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .source img, .icon-demo, .icon-lit, .batch-large { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="wrap">
+      <p class="project">大冰的小屋 · 风雪押镖局</p>
+      <h1>物料总看台</h1>
+      <p class="cities">丽江 / 济南 / 成都 / 拉萨</p>
+      <a class="batch-jump" href="#royal-specimens">验收全套物料</a>
+      <a class="batch-jump" href="#icon-batch">查看小程序图标</a>
+    </div>
+  </header>
+
+  <main class="wrap board">
+    <section class="panel reference" aria-labelledby="reference-title">
+      <div class="panel-head">
+        <h2 id="reference-title">风格原图</h2>
+        <span class="rubric">8 张 · 点击放大</span>
+      </div>
+      <div class="source-grid">
+        <button class="source featured palette-source" type="button">
+          <span class="source-image"><img src="./01_风格参考图/a8d0b7cba4badd31e26e2c8cf6c5d2bc.jpg" alt="黛青衣料、朱漆包边、绒缘和分片铠甲的古甲武将立绘"></span>
+          <span class="source-label">本轮参考 · 古甲武将立绘</span>
+        </button>
+        <button class="source featured" type="button">
+          <span class="source-image"><img src="./01_风格参考图/644ecd38ddf0ed520d50410c8de0763d.jpg" alt="青绿衬色、靛墨外框和朱红廊柱"></span>
+          <span class="source-label">青绿山门 · 靛墨与阶梯边框</span>
+        </button>
+        <button class="source" type="button">
+          <span class="source-image"><img src="./01_风格参考图/b88705b533806a84e45352ea5c16d56c.jpg" alt="象牙纸底上的深青彩绘斗拱与金线檐口"></span>
+          <span class="source-label">彩绘斗拱 · 纸纤维与折角</span>
+        </button>
+        <button class="source" type="button">
+          <span class="source-image"><img src="./01_风格参考图/2a58c489768944aadcdb5adcbc039f5a.jpg" alt="赭纸底上的蓝绿楼阁与远山"></span>
+          <span class="source-label">楼阁 · 石青与赭纸</span>
+        </button>
+        <button class="source" type="button">
+          <span class="source-image"><img src="./01_风格参考图/52f07a7b96c980bd2398ab1ff8127b2a.jpg" alt="标有引线的多层亭塔结构图"></span>
+          <span class="source-label">亭塔 · 双线与排线</span>
+        </button>
+        <button class="source" type="button">
+          <span class="source-image"><img src="./01_风格参考图/62b733c0a9e0007dd44d3d3961c0f15b.jpg" alt="暖纸上的七层砖塔与左上方朱印"></span>
+          <span class="source-label">砖塔 · 块面阴影与朱印</span>
+        </button>
+        <button class="source" type="button">
+          <span class="source-image"><img src="./01_风格参考图/bd29752f68a6137f007f522ba0817431.jpg" alt="泥金云纹衬底前的飞鹤、朱红楼宇和靛蓝云海"></span>
+          <span class="source-label">飞鹤 · 羽片与云纹</span>
+        </button>
+        <button class="source" type="button">
+          <span class="source-image"><img src="./01_风格参考图/d0824fd3e23aad343577358e2cd7aed9.jpg" alt="题字古纸上层叠的靛蓝塔檐与檐角小铃"></span>
+          <span class="source-label">古塔 · 靛瓦与檐铃</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="specimens" id="samples" aria-labelledby="samples-title">
+      <section class="panel palette" aria-labelledby="palette-title">
+        <div class="panel-head">
+          <h2 id="palette-title">古甲立绘色板</h2>
+          <span class="rubric">本轮参考图分区取样 · sRGB</span>
+        </div>
+        <div class="color-families">
+          <div class="color-family color-family--red">
+            <h3>朱漆包边</h3>
+            <ul class="swatches">
+              <li><span class="chip" style="--sample: #8E3A28"></span><strong>朱漆受光</strong><code>#8E3A28</code></li>
+              <li><span class="chip" style="--sample: #6E3123"></span><strong>漆红背光</strong><code>#6E3123</code></li>
+            </ul>
+          </div>
+          <div class="color-family color-family--gold">
+            <h3>旧铜扣件</h3>
+            <ul class="swatches">
+              <li><span class="chip" style="--sample: #B97742"></span><strong>擦亮铜面</strong><code>#B97742</code></li>
+              <li><span class="chip" style="--sample: #704329"></span><strong>旧铜背光</strong><code>#704329</code></li>
+            </ul>
+          </div>
+          <div class="color-family">
+            <h3>黛青衣料</h3>
+            <ul class="swatches">
+              <li><span class="chip" style="--sample: #264A50"></span><strong>黛青正色</strong><code>#264A50</code></li>
+              <li><span class="chip" style="--sample: #273430"></span><strong>衣褶深影</strong><code>#273430</code></li>
+            </ul>
+          </div>
+          <div class="color-family">
+            <h3>甲片墨色</h3>
+            <ul class="swatches">
+              <li><span class="chip" style="--sample: #4E4442"></span><strong>铁灰受光</strong><code>#4E4442</code></li>
+              <li><span class="chip" style="--sample: #25201C"></span><strong>甲墨背光</strong><code>#25201C</code></li>
+            </ul>
+          </div>
+          <div class="color-family">
+            <h3>绒缘纤维</h3>
+            <ul class="swatches">
+              <li><span class="chip" style="--sample: #C7AD92"></span><strong>暖绒受光</strong><code>#C7AD92</code></li>
+              <li><span class="chip" style="--sample: #AA8F71"></span><strong>绒根背光</strong><code>#AA8F71</code></li>
+            </ul>
+          </div>
+          <div class="color-family">
+            <h3>旧绢留白</h3>
+            <ul class="swatches">
+              <li><span class="chip" style="--sample: #DBD7CE"></span><strong>旧绢亮面</strong><code>#DBD7CE</code></li>
+              <li><span class="chip" style="--sample: #DAD6CD"></span><strong>旧绢暗面</strong><code>#DAD6CD</code></li>
+            </ul>
+          </div>
+        </div>
+        <dl class="notes">
+          <div><dt>织物</dt><dd>旗面用燕尾与压边交代折转，马甲以交领右衽、绗线和叠甲区分软布与硬甲。</dd></div>
+          <div><dt>器型</dt><dd>玻璃瓶用方印塞、折肩和收足成形，窄题签下方留出液面与玻璃厚度。</dd></div>
+          <div><dt>文书</dt><dd>传书与文牒都用窄折、青布装订和朱印。卡框沿用文牒的纸边与缝线。</dd></div>
+          <div><dt>墨线与用色</dt><dd>朱漆、黛青与旧铜统一材质。交叠处聚墨，小图标提取容易辨认的轮廓。</dd></div>
+        </dl>
+      </section>
+
+      <div class="specimen-heading" id="royal-specimens">
+        <h2 id="samples-title">马帮行旅物料</h2>
+        <div class="theme-controls" role="group" aria-label="样品预览底色">
+          <button type="button" data-theme="green" aria-pressed="false" title="#BFD46B">青绿宣纹底</button>
+          <button type="button" data-theme="dark" aria-pressed="false" title="#111523">黛蓝墨底</button>
+          <button type="button" data-theme="light" aria-pressed="true" title="#DBD7CE">旧绢白底</button>
+        </div>
+      </div>
+
+      <div class="asset-grid royal-grid">
+        <figure class="asset">
+          <div class="stage">
+            <button class="icon-demo" type="button" aria-label="测试押镖令旗与铜铃的高亮态" aria-pressed="false" data-status="flag-state">
+              <img src="./02_交互图标库/icon_biaoqi.svg" alt="">
+              <img class="icon-lit" src="./02_交互图标库/icon_biaoqi.svg#highlight" alt="">
+            </button>
+          </div>
+          <figcaption class="asset-caption">
+            <h3 class="asset-name">押镖令旗与铜铃</h3>
+            <div class="asset-meta"><output class="status" id="flag-state">默认态</output><a href="./02_交互图标库/icon_biaoqi.svg" data-artwork-zoom>放大细看</a><a href="./02_交互图标库/icon_biaoqi.svg">SVG</a><a href="./02_交互图标库/icon_biaoqi.svg#highlight">高亮 SVG</a></div>
+          </figcaption>
+        </figure>
+        <figure class="asset">
+          <div class="stage">
+            <button class="icon-demo" type="button" aria-label="测试风雪镖师红马甲的高亮态" aria-pressed="false" data-status="vest-state">
+              <img src="./03_活动产品与周边/gift_hongmajia.svg" alt="">
+              <img class="icon-lit" src="./03_活动产品与周边/gift_hongmajia.svg#highlight" alt="">
+            </button>
+          </div>
+          <figcaption class="asset-caption">
+            <h3 class="asset-name">风雪镖师 · 红马甲</h3>
+            <div class="asset-meta"><output class="status" id="vest-state">默认态</output><a href="./03_活动产品与周边/gift_hongmajia.svg" data-artwork-zoom>放大细看</a><a href="./03_活动产品与周边/gift_hongmajia.svg">SVG</a><a href="./03_活动产品与周边/gift_hongmajia.svg#highlight">高亮 SVG</a></div>
+          </figcaption>
+        </figure>
+        <figure class="asset">
+          <div class="stage">
+            <button class="icon-demo" type="button" aria-label="测试风雪特调玻璃瓶的高亮态" aria-pressed="false" data-status="can-state">
+              <img src="./03_活动产品与周边/gift_jiuguan.svg" alt="">
+              <img class="icon-lit" src="./03_活动产品与周边/gift_jiuguan.svg#highlight" alt="">
+            </button>
+          </div>
+          <figcaption class="asset-caption">
+            <h3 class="asset-name">风雪特调 · 方印切面玻璃瓶</h3>
+            <div class="asset-meta"><output class="status" id="can-state">默认态</output><a href="./03_活动产品与周边/gift_jiuguan.svg" data-artwork-zoom>放大细看</a><a href="./03_活动产品与周边/gift_jiuguan.svg">SVG</a><a href="./03_活动产品与周边/gift_jiuguan.svg#highlight">高亮 SVG</a></div>
+          </figcaption>
+        </figure>
+        <figure class="asset">
+          <div class="stage">
+            <button class="icon-demo" type="button" aria-label="测试飞鸽传书的高亮态" aria-pressed="false" data-status="dove-state">
+              <img src="./02_交互图标库/icon_feige.svg" alt="">
+              <img class="icon-lit" src="./02_交互图标库/icon_feige.svg#highlight" alt="">
+            </button>
+          </div>
+          <figcaption class="asset-caption">
+            <h3 class="asset-name">飞鸽传书</h3>
+            <div class="asset-meta"><output class="status" id="dove-state">默认态</output><a href="./02_交互图标库/icon_feige.svg" data-artwork-zoom>放大细看</a><a href="./02_交互图标库/icon_feige.svg">SVG</a><a href="./02_交互图标库/icon_feige.svg#highlight">高亮 SVG</a></div>
+          </figcaption>
+        </figure>
+        <figure class="asset">
+          <div class="stage">
+            <button class="icon-demo" type="button" aria-label="测试四城通关文牒与总舵印的高亮态" aria-pressed="false" data-status="pass-state">
+              <img src="./03_活动产品与周边/gift_wendie_seal.svg" alt="">
+              <img class="icon-lit" src="./03_活动产品与周边/gift_wendie_seal.svg#highlight" alt="">
+            </button>
+          </div>
+          <figcaption class="asset-caption">
+            <h3 class="asset-name">四城通关文牒与总舵印</h3>
+            <div class="asset-meta"><output class="status" id="pass-state">默认态</output><a href="./03_活动产品与周边/gift_wendie_seal.svg" data-artwork-zoom>放大细看</a><a href="./03_活动产品与周边/gift_wendie_seal.svg">SVG</a><a href="./03_活动产品与周边/gift_wendie_seal.svg#highlight">高亮 SVG</a></div>
+          </figcaption>
+        </figure>
+        <figure class="asset">
+          <div class="stage">
+            <div class="ui-demo">
+              <button class="fx-button" type="button" aria-pressed="false" data-status="route-state" data-active="已接镖">接镖出发</button>
+              <div class="fx-story-card">
+                <h4 class="fx-story-card__title">风雪暗号</h4>
+                <p class="fx-story-card__code">雪落石桥</p>
+                <p class="fx-story-card__body">石桥那头有灯，走累了就歇一歇。</p>
+              </div>
+            </div>
+          </div>
+          <figcaption class="asset-caption">
+            <h3 class="asset-name">接镖按钮与故事卡框</h3>
+            <div class="asset-meta"><output class="status" id="route-state">默认态</output><a href="./04_界面组件与边框/ui_kit_sample.svg">SVG</a><a href="./04_界面组件与边框/base_style.css">CSS</a></div>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="panel icon-batch" id="icon-batch" aria-labelledby="batch-title">
+      <div class="panel-head batch-heading">
+        <div>
+          <h2 id="batch-title">第1批：导航与首页入口</h2>
+          <p class="batch-hint">点击双状态图标切换。右侧小图按 24 px 实际尺寸显示。</p>
+        </div>
+        <div class="theme-controls" role="group" aria-label="第1批图标预览底色">
+          <button type="button" data-theme="green" aria-pressed="false" title="#BFD46B">青绿宣纹底</button>
+          <button type="button" data-theme="dark" aria-pressed="false" title="#111523">黛蓝墨底</button>
+          <button type="button" data-theme="light" aria-pressed="true" title="#DBD7CE">旧绢白底</button>
+        </div>
+      </div>
+
+      <section class="batch-group" aria-labelledby="batch-nav-title">
+        <h3 id="batch-nav-title">底部导航</h3>
+        <div class="batch-grid batch-grid--nav">
+          <figure class="batch-card">
+            <div class="stage batch-stage">
+              <button class="batch-switch" type="button" aria-label="切换押镖主页状态" aria-pressed="false" data-status="batch-nav-home" data-active="选中" data-inactive="未选中">
+                <span class="batch-view batch-view--default" aria-hidden="true">
+                  <img class="batch-large" src="./02_交互图标库/nav_home_default.svg" alt="" width="76" height="76">
+                  <span class="batch-mini"><img src="./02_交互图标库/nav_home_default.svg" alt="" width="24" height="24"><span>24 px</span></span>
+                </span>
+                <span class="batch-view batch-view--active" aria-hidden="true">
+                  <img class="batch-large" src="./02_交互图标库/nav_home_active.svg" alt="" width="76" height="76">
+                  <span class="batch-mini"><img src="./02_交互图标库/nav_home_active.svg" alt="" width="24" height="24"><span>24 px</span></span>
+                </span>
+              </button>
+            </div>
+            <figcaption class="asset-caption">
+              <h4 class="asset-name">押镖主页</h4>
+              <div class="asset-meta"><output class="status" id="batch-nav-home">未选中</output><a href="./02_交互图标库/nav_home_default.svg">未选中 SVG</a><a href="./02_交互图标库/nav_home_active.svg">选中 SVG</a></div>
+            </figcaption>
+          </figure>
+          <figure class="batch-card">
+            <div class="stage batch-stage">
+              <button class="batch-switch" type="button" aria-label="切换通关文牒状态" aria-pressed="false" data-status="batch-nav-wendie" data-active="选中" data-inactive="未选中">
+                <span class="batch-view batch-view--default" aria-hidden="true">
+                  <img class="batch-large" src="./02_交互图标库/nav_wendie_default.svg" alt="" width="76" height="76">
+                  <span class="batch-mini"><img src="./02_交互图标库/nav_wendie_default.svg" alt="" width="24" height="24"><span>24 px</span></span>
+                </span>
+                <span class="batch-view batch-view--active" aria-hidden="true">
+                  <img class="batch-large" src="./02_交互图标库/nav_wendie_active.svg" alt="" width="76" height="76">
+                  <span class="batch-mini"><img src="./02_交互图标库/nav_wendie_active.svg" alt="" width="24" height="24"><span>24 px</span></span>
+                </span>
+              </button>
+            </div>
+            <figcaption class="asset-caption">
+              <h4 class="asset-name">通关文牒</h4>
+              <div class="asset-meta"><output class="status" id="batch-nav-wendie">未选中</output><a href="./02_交互图标库/nav_wendie_default.svg">未选中 SVG</a><a href="./02_交互图标库/nav_wendie_active.svg">选中 SVG</a></div>
+            </figcaption>
+          </figure>
+          <figure class="batch-card">
+            <div class="stage batch-stage">
+              <button class="batch-switch" type="button" aria-label="切换飞鸽传书状态" aria-pressed="false" data-status="batch-nav-feige" data-active="选中" data-inactive="未选中">
+                <span class="batch-view batch-view--default" aria-hidden="true">
+                  <img class="batch-large" src="./02_交互图标库/nav_feige_default.svg" alt="" width="76" height="76">
+                  <span class="batch-mini"><img src="./02_交互图标库/nav_feige_default.svg" alt="" width="24" height="24"><span>24 px</span></span>
+                </span>
+                <span class="batch-view batch-view--active" aria-hidden="true">
+                  <img class="batch-large" src="./02_交互图标库/nav_feige_active.svg" alt="" width="76" height="76">
+                  <span class="batch-mini"><img src="./02_交互图标库/nav_feige_active.svg" alt="" width="24" height="24"><span>24 px</span></span>
+                </span>
+              </button>
+            </div>
+            <figcaption class="asset-caption">
+              <h4 class="asset-name">飞鸽传书</h4>
+              <div class="asset-meta"><output class="status" id="batch-nav-feige">未选中</output><a href="./02_交互图标库/nav_feige_default.svg">未选中 SVG</a><a href="./02_交互图标库/nav_feige_active.svg">选中 SVG</a></div>
+            </figcaption>
+          </figure>
+          <figure class="batch-card">
+            <div class="stage batch-stage">
+              <button class="batch-switch" type="button" aria-label="切换我的行囊状态" aria-pressed="false" data-status="batch-nav-xingnang" data-active="选中" data-inactive="未选中">
+                <span class="batch-view batch-view--default" aria-hidden="true">
+                  <img class="batch-large" src="./02_交互图标库/nav_xingnang_default.svg" alt="" width="76" height="76">
+                  <span class="batch-mini"><img src="./02_交互图标库/nav_xingnang_default.svg" alt="" width="24" height="24"><span>24 px</span></span>
+                </span>
+                <span class="batch-view batch-view--active" aria-hidden="true">
+                  <img class="batch-large" src="./02_交互图标库/nav_xingnang_active.svg" alt="" width="76" height="76">
+                  <span class="batch-mini"><img src="./02_交互图标库/nav_xingnang_active.svg" alt="" width="24" height="24"><span>24 px</span></span>
+                </span>
+              </button>
+            </div>
+            <figcaption class="asset-caption">
+              <h4 class="asset-name">我的行囊</h4>
+              <div class="asset-meta"><output class="status" id="batch-nav-xingnang">未选中</output><a href="./02_交互图标库/nav_xingnang_default.svg">未选中 SVG</a><a href="./02_交互图标库/nav_xingnang_active.svg">选中 SVG</a></div>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="batch-group" aria-labelledby="batch-home-title">
+        <h3 id="batch-home-title">首页入口</h3>
+        <div class="batch-grid batch-grid--home">
+          <figure class="batch-card">
+            <div class="stage batch-stage">
+              <span class="batch-view" aria-hidden="true">
+                <img class="batch-large" src="./02_交互图标库/icon_jiebiao_flag.svg" alt="" width="76" height="76">
+                <span class="batch-mini"><img src="./02_交互图标库/icon_jiebiao_flag.svg" alt="" width="24" height="24"><span>24 px</span></span>
+              </span>
+            </div>
+            <figcaption class="asset-caption">
+              <h4 class="asset-name">接镖令旗</h4>
+              <div class="asset-meta"><a href="./02_交互图标库/icon_jiebiao_flag.svg">SVG</a></div>
+            </figcaption>
+          </figure>
+          <figure class="batch-card">
+            <div class="stage batch-stage">
+              <span class="batch-view" aria-hidden="true">
+                <img class="batch-large" src="./02_交互图标库/icon_scan_checkin.svg" alt="" width="76" height="76">
+                <span class="batch-mini"><img src="./02_交互图标库/icon_scan_checkin.svg" alt="" width="24" height="24"><span>24 px</span></span>
+              </span>
+            </div>
+            <figcaption class="asset-caption">
+              <h4 class="asset-name">江湖扫码打卡</h4>
+              <div class="asset-meta"><a href="./02_交互图标库/icon_scan_checkin.svg">SVG</a></div>
+            </figcaption>
+          </figure>
+          <figure class="batch-card">
+            <div class="stage batch-stage">
+              <button class="batch-switch" type="button" aria-label="切换马帮铜铃状态" aria-pressed="true" data-status="batch-bell" data-active="开启" data-inactive="静音">
+                <span class="batch-view batch-view--default" aria-hidden="true">
+                  <img class="batch-large" src="./02_交互图标库/icon_sound_bell_off.svg" alt="" width="76" height="76">
+                  <span class="batch-mini"><img src="./02_交互图标库/icon_sound_bell_off.svg" alt="" width="24" height="24"><span>24 px</span></span>
+                </span>
+                <span class="batch-view batch-view--active" aria-hidden="true">
+                  <img class="batch-large" src="./02_交互图标库/icon_sound_bell_on.svg" alt="" width="76" height="76">
+                  <span class="batch-mini"><img src="./02_交互图标库/icon_sound_bell_on.svg" alt="" width="24" height="24"><span>24 px</span></span>
+                </span>
+              </button>
+            </div>
+            <figcaption class="asset-caption">
+              <h4 class="asset-name">马帮铜铃</h4>
+              <div class="asset-meta"><output class="status" id="batch-bell">开启</output><a href="./02_交互图标库/icon_sound_bell_off.svg">静音 SVG</a><a href="./02_交互图标库/icon_sound_bell_on.svg">开启 SVG</a></div>
+            </figcaption>
+          </figure>
+          <figure class="batch-card">
+            <div class="stage batch-stage">
+              <span class="batch-view" aria-hidden="true">
+                <img class="batch-large" src="./02_交互图标库/icon_secret_key.svg" alt="" width="76" height="76">
+                <span class="batch-mini"><img src="./02_交互图标库/icon_secret_key.svg" alt="" width="24" height="24"><span>24 px</span></span>
+              </span>
+            </div>
+            <figcaption class="asset-caption">
+              <h4 class="asset-name">风雪暗号</h4>
+              <div class="asset-meta"><a href="./02_交互图标库/icon_secret_key.svg">SVG</a></div>
+            </figcaption>
+          </figure>
+          <figure class="batch-card">
+            <div class="stage batch-stage">
+              <span class="batch-view" aria-hidden="true">
+                <img class="batch-large" src="./02_交互图标库/icon_share_lantern.svg" alt="" width="76" height="76">
+                <span class="batch-mini"><img src="./02_交互图标库/icon_share_lantern.svg" alt="" width="24" height="24"><span>24 px</span></span>
+              </span>
+            </div>
+            <figcaption class="asset-caption">
+              <h4 class="asset-name">招募同路人</h4>
+              <div class="asset-meta"><a href="./02_交互图标库/icon_share_lantern.svg">SVG</a></div>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <dialog id="reference-modal" class="modal" aria-labelledby="reference-caption">
+    <div class="modal-head">
+      <h2 id="reference-caption"></h2>
+      <form method="dialog"><button type="submit" autofocus>关闭</button></form>
+    </div>
+    <img id="reference-full" alt="">
+  </dialog>
+
+  <script>
+    const themeControls = document.querySelectorAll("[data-theme]");
+    for (const control of themeControls) {
+      control.addEventListener("click", () => {
+        const theme = control.dataset.theme;
+        document.documentElement.dataset.preview = theme;
+        for (const option of themeControls) {
+          option.setAttribute("aria-pressed", String(option.dataset.theme === theme));
+        }
+      });
+    }
+
+    for (const control of document.querySelectorAll("[data-status]")) {
+      const status = document.getElementById(control.dataset.status);
+      control.addEventListener("click", () => {
+        const active = control.getAttribute("aria-pressed") === "false";
+        control.setAttribute("aria-pressed", String(active));
+        status.textContent = active ? (control.dataset.active || "已高亮") : (control.dataset.inactive || "默认态");
+      });
+    }
+
+    const modal = document.getElementById("reference-modal");
+    const fullImage = document.getElementById("reference-full");
+    const imageCaption = document.getElementById("reference-caption");
+    function openImage(src, alt, title, showArtworkDetail = false) {
+      fullImage.classList.toggle("artwork-detail", showArtworkDetail);
+      fullImage.src = src;
+      fullImage.alt = alt;
+      imageCaption.textContent = title;
+      modal.showModal();
+    }
+    for (const control of document.querySelectorAll(".source")) {
+      control.addEventListener("click", () => {
+        const thumbnail = control.querySelector("img");
+        openImage(thumbnail.src, thumbnail.alt, control.querySelector(".source-label").textContent);
+      });
+    }
+    for (const link of document.querySelectorAll("[data-artwork-zoom]")) {
+      link.addEventListener("click", (event) => {
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        const figure = link.closest(".asset");
+        const title = figure.querySelector(".asset-name").textContent;
+        const selected = figure.querySelector(".icon-demo").getAttribute("aria-pressed") === "true";
+        openImage(selected ? link.href + "#highlight" : link.href, title, title, true);
+      });
+    }
+  </script>
+</body>
+</html>

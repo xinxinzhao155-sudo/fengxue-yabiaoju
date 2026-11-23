@@ -1,0 +1,85 @@
+/* 风雪押镖局 · 组件样式。CSS 与 ui_kit_sample.svg 放在同一目录。 */
+:root {
+  --fx-paper: #ebddbe;
+  --fx-cloud: #ebe6ce;
+  --fx-ochre: #cfaf81;
+  --fx-ink: #263e44;
+  --fx-blue: #253c45;
+  --fx-rust: #803f34;
+  --fx-gold: #ad855d;
+  --fx-moss: #505c4e;
+  --fx-seal: #cb2724;
+  --fx-green: #b2c667;
+  --fx-serif: "Songti SC", STSong, "Noto Serif CJK SC", SimSun, serif;
+  --fx-focus: #e2bb89;
+}
+
+/* <button type="button" class="fx-button" aria-pressed="false">接镖出发</button> */
+.fx-button {
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
+  display: inline-grid;
+  place-items: center;
+  width: min(100%, 342px);
+  min-height: 44px;
+  aspect-ratio: 342 / 66;
+  padding: .28em .3em;
+  border: 0;
+  background: transparent;
+  color: #f3e2bb;
+  font: 700 clamp(.875rem, 3cqi, 1.125rem) / 1.15 var(--fx-serif);
+  letter-spacing: .08em;
+  white-space: nowrap;
+  text-shadow: 0 1px 1px #331f22;
+  cursor: pointer;
+  transition: transform 120ms ease;
+}
+
+.fx-button::before,
+.fx-button::after {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  content: "";
+  background: center / 100% 100% no-repeat;
+  pointer-events: none;
+}
+
+.fx-button::before { background-image: url("./ui_kit_sample.svg#button"); }
+.fx-button::after {
+  background-image: url("./ui_kit_sample.svg#button-highlight");
+  opacity: 0;
+  transition: opacity 140ms ease;
+}
+
+.fx-button:hover::after { opacity: .7; }
+.fx-button:active::after,
+.fx-button[aria-pressed="true"]::after { opacity: 1; }
+.fx-button:active { transform: translateY(2px); }
+.fx-button:focus-visible { outline: 2px solid var(--fx-focus); outline-offset: 3px; }
+
+/* .fx-story-card 内可放 .fx-story-card__title、__code、__body。 */
+.fx-story-card {
+  box-sizing: border-box;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  width: min(100%, 400px);
+  min-height: 104px;
+  aspect-ratio: 400 / 164;
+  padding: 10px min(11%, 45px) 17px min(15%, 58px);
+  background: url("./ui_kit_sample.svg#card") center / 100% 100% no-repeat;
+  color: #49362c;
+  text-align: center;
+  font-family: var(--fx-serif);
+  overflow-wrap: anywhere;
+}
+
+.fx-story-card__title { margin: 0 0 .5em; font-size: .8rem; font-weight: 700; letter-spacing: .12em; }
+.fx-story-card__code { margin: 0 0 .25em; color: var(--fx-rust); font-size: 1rem; font-weight: 700; }
+.fx-story-card__body { margin: 0; font-size: .7rem; line-height: 1.4; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-button, .fx-button::after { transition: none; }
+}

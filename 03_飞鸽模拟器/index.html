@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17130f">
+  <title>江湖飞鸽传书匣 · 风雪押镖局</title>
+  <link rel="stylesheet" href="css/theme-adapter.css">
+  <link rel="stylesheet" href="css/workbench.css">
+  <script defer src="js/data-adapter.js"></script>
+  <script defer src="js/audio-engine.js"></script>
+  <script defer src="js/simulator.js"></script>
+</head>
+<body>
+  <header class="masthead">
+    <div class="container mast-inner">
+      <a class="brand" href="#main" aria-label="风雪押镖局首页">
+        <span class="brand-mark" data-icon="bird"></span>
+        <span><strong>风雪押镖局</strong><small>四城共熬一碗粥</small></span>
+      </a>
+      <div class="mast-actions">
+        <span class="online"><i></i> 本地模拟已就绪</span>
+        <button class="quiet sound-toggle" id="mute" type="button" aria-pressed="true"></button>
+      </div>
+    </div>
+  </header>
+  <main class="container" id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-content">
+        <p class="kicker">四城分舵 <span></span> 民谣传音</p>
+        <h1 id="hero-title">江湖飞鸽<span>传书匣</span></h1>
+        <p class="hero-copy">寄十秒本店民谣，等千里之外的铜铃响。</p>
+      </div>
+      <div class="hero-side">
+        <button class="quiet" id="hardware" type="button"><span data-icon="diagram"></span> 硬件原理解剖镜</button>
+      </div>
+    </section>
+
+    <section class="route surface" aria-label="四城分舵总控台">
+      <div class="route-pair">
+        <label class="city-control">
+          <span class="city-medallion" id="route-source-icon"></span>
+          <span><span class="label">发镖分舵</span><select id="source" aria-label="发镖分舵"></select></span>
+        </label>
+        <button class="icon-button swap" id="swap" type="button" title="交换两地" aria-label="交换两地"><span data-icon="swap"></span></button>
+        <label class="city-control">
+          <span class="city-medallion" id="route-target-icon"></span>
+          <span><span class="label">接镖分舵</span><select id="target" aria-label="接镖分舵"></select></span>
+        </label>
+      </div>
+      <div class="route-distance"><span class="label">风雪传音 · 直线距离</span><strong id="distance"></strong></div>
+      <div class="route-actions">
+        <button class="quiet" id="watch" type="button" aria-pressed="false" title="守夜老镖师定时自动吐票模拟"><span data-icon="clock"></span><span>守夜自动吐票</span></button>
+        <button class="quiet" id="relay" type="button" title="一键触发四城合奏连发演练"><span data-icon="music"></span><span>四城连发演练</span></button>
+      </div>
+    </section>
+
+    <nav class="mobile-tabs" aria-label="切换工作台视图">
+      <button type="button" data-view="send" aria-pressed="true">发镖端</button>
+      <button type="button" data-view="receive" aria-pressed="false">传书匣端</button>
+      <button type="button" data-view="passport" aria-pressed="false">文牒集章册</button>
+    </nav>
+
+    <div class="workspace" id="workspace" data-view="send">
+      <section class="surface panel sender" aria-labelledby="sender-title">
+        <header class="panel-heading">
+          <span class="heading-icon" data-icon="phone"></span>
+          <div><h2 id="sender-title">发镖台</h2><p>客人手机 · 门店小程序</p></div>
+        </header>
+        <div class="phone">
+          <div class="phone-top"><span id="phone-time"></span><i></i><span data-icon="signal"></span></div>
+          <div class="phone-content">
+            <div class="phone-brand"><b>飞鸽传书</b><span>小屋民谣</span></div>
+            <div class="sender-city" id="sender-city"></div>
+            <div class="form-label"><label for="message">留一句暖心寄语</label><button type="button" id="seed"><span data-icon="shuffle"></span> 换一句</button></div>
+            <div class="message-wrap">
+              <textarea id="message" rows="3" maxlength="80" placeholder="写给异城火塘旁的朋友"></textarea>
+              <span id="counter"></span>
+            </div>
+            <div class="form-label"><span>本店现场 · 十秒原声</span></div>
+            <button class="voice" id="attach" type="button"></button>
+            <label class="form-label" for="destination">选择投递分舵</label>
+            <select class="destination" id="destination"></select>
+            <button class="primary send-button" id="send" type="button"><span data-icon="bird"></span> 飞鸽传书 · 寄往异城分舵</button>
+          </div>
+        </div>
+        <section class="inbox" aria-labelledby="inbox-title">
+          <div class="inbox-head"><h3 id="inbox-title"><span data-icon="envelope"></span> 跨城回执</h3><span id="receipt-count">0 张</span></div>
+          <div id="receipts"><p class="muted">等异城酒客捎回一张火塘照片。</p></div>
+        </section>
+      </section>
+
+      <section class="surface panel tracker" aria-labelledby="tracker-title">
+        <header class="panel-heading">
+          <span class="heading-icon" data-icon="route"></span>
+          <div><h2 id="tracker-title">传书链路</h2><p>云端与硬件追踪</p></div>
+        </header>
+        <div class="flight" id="flight" aria-hidden="true">
+          <div class="flight-string"></div><span class="flight-bird" data-icon="bird"></span><div class="flight-string"></div>
+        </div>
+        <div class="track-meta"><span class="state" id="flight-status"><i></i> 待发镖</span><span id="elapsed">—</span></div>
+        <ol class="steps" id="steps">
+          <li><span class="step-node" data-icon="envelope"></span><div><strong>打包传书</strong><small>寄语与 10 秒原声</small><span class="step-time"></span></div></li>
+          <li><span class="step-node" data-icon="signal"></span><div><strong>云端路由</strong><small>4G / Wi-Fi · &lt;1.5s</small><span class="step-time"></span></div></li>
+          <li><span class="step-node" data-icon="bell"></span><div><strong>钱箱脉冲</strong><small>电磁铁敲响铜铃</small><span class="step-time"></span></div></li>
+          <li><span class="step-node" data-icon="printer"></span><div><strong>热敏吐票</strong><small>有声民谣粮票</small><span class="step-time"></span></div></li>
+        </ol>
+        <div class="paper-meter"><span class="label">黄底热敏纸余量</span><strong id="paper-value"></strong><progress id="paper" value="100" max="100"></progress></div>
+      </section>
+
+      <section class="surface panel receiver" aria-labelledby="receiver-title">
+        <header class="panel-heading receiver-heading">
+          <span class="heading-icon" data-icon="printer"></span>
+          <div><h2 id="receiver-title">江湖飞鸽传书匣</h2><p id="receiving-city"></p></div>
+          <span class="state receiver-state" id="box-status"></span>
+        </header>
+        <div class="stage" id="stage">
+          <div class="stage-photo"></div>
+          <div class="snow" aria-hidden="true"></div>
+          <div class="bench"></div>
+          <div class="box-wrap" id="box-wrap">
+            <div class="machine" id="machine"></div>
+            <div class="bell-waves" aria-hidden="true"><i></i><i></i></div>
+            <div class="ticket-slot" id="ticket-slot"></div>
+          </div>
+          <div class="prop prop-roll" aria-hidden="true"><i></i></div>
+          <button class="prop prop-glue" id="glue-prop" type="button" aria-label="用吧台上的点点胶贴粮票" disabled><i></i><span>点点胶</span></button>
+          <button class="clip-button" id="clip" type="button"><span data-icon="clip"></span><span>余温粮票夹 <b id="clip-count">0</b></span></button>
+          <div class="stage-caption"><i></i> <span id="stage-caption">黄铜铃静候来信</span></div>
+        </div>
+        <div class="receiver-bench">
+          <p id="ticket-tip">飞鸽抵达时，铜铃会响，粮票会从匣口慢慢吐出。</p>
+          <div class="ticket-actions">
+            <button class="quiet" id="tear" type="button" disabled><span data-icon="tear"></span> 撕下粮票</button>
+            <button class="quiet" id="scan" type="button" disabled><span data-icon="scan"></span> 扫码听音</button>
+            <button class="quiet" id="paste" type="button" disabled><span data-icon="glue"></span> 点点胶贴文牒</button>
+          </div>
+          <div class="print-tools">
+            <label>票宽 <select id="print-width" aria-label="热敏粮票打印宽度"><option value="58">58 mm</option><option value="80">80 mm</option></select></label>
+            <button id="print" type="button" disabled><span data-icon="printer"></span> 打印粮票</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="surface panel passport" aria-labelledby="passport-title">
+        <header class="panel-heading passport-heading">
+          <span class="heading-icon" data-icon="book"></span>
+          <div><h2 id="passport-title">押镖通关文牒</h2><p id="passport-city"></p></div>
+          <div class="passport-actions"><span class="passport-count" id="passport-count">0 / 4</span><button class="quiet" id="prefill" type="button">快捷演示 · 仅差一票</button></div>
+        </header>
+        <div class="songbook" id="songbook"></div>
+      </section>
+    </div>
+    <footer class="footer"><span>风雪押镖局 · 四城共熬一碗粥</span><span>03 / 江湖飞鸽传书匣</span></footer>
+  </main>
+  <p class="toast" id="toast" role="status" hidden></p>
+  <span id="announce" class="sr-only" aria-live="polite"></span>
+  <dialog id="dialog" aria-labelledby="dialog-title">
+    <div class="dialog-inner">
+      <button class="icon-button close" id="dialog-close" type="button" aria-label="关闭弹窗"><span data-icon="close"></span></button>
+      <div id="dialog-content"></div>
+    </div>
+  </dialog>
+  <div id="print-sheet" aria-hidden="true"></div>
+  <style id="print-page"></style>
+</body>
+</html>

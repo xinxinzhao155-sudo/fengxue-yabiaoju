@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="四城民谣、寻味留声、歌词暗号与腊八全自助门店执行手册。">
+  <title>风雪押镖局 · 四城共熬一碗粥</title>
+  <link rel="stylesheet" href="css/theme-adapter.css">
+  <link rel="stylesheet" href="css/handbook.css">
+  <script defer src="js/data-adapter.js"></script>
+  <script defer src="js/handbook.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳至手册正文</a>
+  <header class="site-header">
+    <div class="frame header-inner">
+      <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">镖</span><span><strong>风雪押镖局</strong><small>大冰的小屋</small></span></a>
+      <nav class="section-nav" aria-label="手册导航">
+        <a href="#stories" aria-current="location">四城民谣</a>
+        <a href="#sop">全自助 SOP</a>
+        <a href="#materials">硬件图鉴</a>
+        <a href="#contingency">应急预案</a>
+      </nav>
+      <button type="button" class="button print-button" id="print-button">打印手册</button>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <div class="frame">
+      <header class="hero" id="top">
+        <div class="hero-art" aria-hidden="true"></div>
+        <div class="hero-copy">
+          <p class="hero-kicker"><span></span> 风雪押镖局 · 腊八民谣</p>
+          <h1>四城共熬<br><em>一碗粥</em></h1>
+          <p>一碗热粥暖皮囊，一首民谣暖魂灵。<br>粥熬百味，歌敬异乡。</p>
+        </div>
+        <ol class="journey" aria-label="三关一匣">
+          <li><span>一</span> 听音寻味</li>
+          <li><span>二</span> 火塘听曲</li>
+          <li><span>三</span> 落米成音</li>
+          <li><span>匣</span> 飞鸽传书</li>
+        </ol>
+      </header>
+
+      <noscript><p class="notice">请启用 JavaScript 查看互动手册，或查阅 <a href="docs/01_四城民谣故事歌词与暗号总库.md">四城民谣 Markdown</a>。</p></noscript>
+
+      <section class="chapter" id="stories" aria-labelledby="stories-heading">
+        <header class="chapter-head">
+          <div><h2 id="stories-heading">四城民谣与留声</h2><p>查阅共创总谱，或选分舵复制录音稿、暗号、歌词和种子粮票。</p></div>
+        </header>
+        <div class="city-tabs" id="city-tabs" role="tablist" aria-label="选择城市"></div>
+        <div id="city-panels"></div>
+      </section>
+
+      <section class="chapter" id="sop" aria-labelledby="sop-heading">
+        <header class="chapter-head">
+          <div><h2 id="sop-heading">全自助门店 SOP</h2><p>开店点检、三关一匣、10 秒核销及腊八施粥。</p></div>
+        </header>
+        <div id="labor"></div>
+        <fieldset class="role-filter">
+          <legend>岗位</legend>
+          <div class="role-options" id="role-options"></div>
+        </fieldset>
+        <div id="sop-content"></div>
+      </section>
+
+      <section class="chapter" id="materials" aria-labelledby="materials-heading">
+        <header class="chapter-head">
+          <div><h2 id="materials-heading">硬件与物料图鉴</h2><p>查看装配与预算，点米缸或木匣的预览按钮切换状态。</p></div>
+        </header>
+        <div class="material-grid" id="material-grid"></div>
+      </section>
+
+      <section class="chapter" id="contingency" aria-labelledby="contingency-heading">
+        <header class="chapter-head">
+          <div><h2 id="contingency-heading">门店应急预案</h2><p>展开对应场景，查阅触发条件、极简兜底动作与安抚话术。</p></div>
+        </header>
+        <div class="scenarios" id="scenarios"></div>
+      </section>
+    </div>
+  </main>
+  <footer class="site-footer"><div class="frame footer-inner"><strong>大冰的小屋 · 风雪押镖局</strong><a href="#top">回到手册开头 ↑</a></div></footer>
+  <p id="feedback" class="feedback" role="status" aria-live="polite" aria-atomic="true"></p>
+  <dialog id="copy-dialog" aria-labelledby="copy-dialog-title">
+    <form method="dialog">
+      <h2 id="copy-dialog-title">手动复制</h2>
+      <p>系统剪贴板不可用。请复制下方已选中的文字。</p>
+      <textarea id="copy-text" aria-label="待复制文字" readonly></textarea>
+      <button class="button" type="submit">关闭</button>
+    </form>
+  </dialog>
+</body>
+</html>

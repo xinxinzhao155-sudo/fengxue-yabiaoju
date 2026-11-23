@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-labelledby="title">
+  <title id="title">接镖令旗</title>
+  <g fill="none" stroke="#241f20" stroke-linecap="round" stroke-linejoin="round">
+<path d="M19.76 12.58l5.38.79L16.45 58l-4.8-.89Z" fill="#743b31" stroke-width="1.57"/>
+    <path d="M21.27 13.5l-8 43.17m4.56-13.2-1.94 9.43" stroke="#bf8959" stroke-width=".79"/>
+    <path d="M22.84 14.33c-3.36-.88-4.16-3.46-2.44-5.04l4.43-3.72 3.19 4.94c1.12 1.87-.86 4.82-2.77 4.53Z" fill="#bf8959" stroke-width="1.2"/>
+    <path d="M23.7 11.79l.97-3.93m-2.37 3.26 1.84-1.97" stroke="#f0dfba" stroke-width=".67"/>
+    <path d="M25.25 13.92q9.53-2.19 16.08 3.61 7.35 6.2 16.85 5.42-4.88 5.11-14.24 5.96 7.23 3.53 9.88 10.08-9.15-.79-15.18-4.41-7.23-4.79-16.73-1.64Z" fill="#36535a" stroke-width="1.83"/>
+    <path d="M25.21 14.49q9.45-1.89 15.72 3.95 7.74 5.8 16.67 4.82m-35.53 9.59q9.56-3.41 16.62 1.23 6.82 4.28 15 4.91" stroke="#a15340" stroke-width="2.13"/>
+    <path d="M25.82 17.54q8.77-1.75 14.6 3.72 5.02 4.29 10.86 3.79m-28.57 4.86q6.81-3.07 13.16.38m9.51 5.16q2.29.96 5.3 1.35" stroke="#f0dfba" stroke-width=".82"/>
+    <path d="m28.81 19.25 6.28.45 1.2 1.23-.78 6.72-1.37.72-6.26-.46-1-1.03.8-6.81Z" fill="#d9c49a" stroke="#743b31" stroke-width=".7"/>
+    <path d="m29.52 24.69 1.5-1.7 1.22 1.15 1.13-1 1.12 2.26" stroke="#743b31" stroke-width=".77"/>
+  </g>
+</svg>

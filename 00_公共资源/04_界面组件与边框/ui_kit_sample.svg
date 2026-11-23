@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 258" width="420" height="258" role="img" aria-labelledby="title desc">
+  <title id="title">接镖出发按钮与风雪暗号故事卡片</title>
+  <desc id="desc">窄铜边漆木按钮与青布装订的通关文书卡片。</desc>
+  <view id="button" viewBox="0 -78 342 66" preserveAspectRatio="none"/>
+  <view id="button-highlight" viewBox="0 -157 342 66" preserveAspectRatio="none"/>
+  <view id="card" viewBox="0 270 400 164" preserveAspectRatio="none"/>
+  <defs>
+    <linearGradient id="wood-red" x2=".25" y2="1">
+      <stop stop-color="#9d5847"/><stop offset=".54" stop-color="#874335"/><stop offset="1" stop-color="#703b32"/>
+    </linearGradient>
+    <linearGradient id="document" x2=".8" y2="1">
+      <stop stop-color="#ebddbe"/><stop offset=".64" stop-color="#dfcba4"/><stop offset="1" stop-color="#d6bd93"/>
+    </linearGradient>
+    <path id="wood-plaque" d="M28 8h285l7 4h8l8 9v24l-8 9h-8l-7 4H28l-7-4h-8l-7-9V21l7-9h8Z"/>
+    <path id="paper-edge" d="M17 6q1-1.6 5-1.6 27-1 61 .15l290-.15 12 1.3 8 6v141l-7 6-14 1.5q-45-.7-85-.12L24 160l-7-2-8-6q1-62 0-139Z"/>
+    <path id="bracket-cap" d="M0 6h11v5h5v17h-5v5H0V20h4v-7H0Z"/>
+    <g id="lacquer-button" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <use href="#wood-plaque" fill="url(#wood-red)" stroke="#322725" stroke-width="2.25"/>
+      <path d="M26 12h289l8 5h5l4.7 5.8v19.6l-4.7 5.8h-5l-8 5.5H26l-8-5.5h-5L9.3 42.4V22.8L13 17h5Z" stroke="#c49364" stroke-width="1.22"/>
+      <path d="M43 18q131-3 258 .2m-256 30q125 1.3 254-.1" stroke="#5e332c" stroke-width=".95"/>
+      <use href="#bracket-cap" transform="translate(23 13)" fill="#845233" stroke="#513729" stroke-width=".85"/>
+      <use href="#bracket-cap" transform="translate(318 13) scale(-1 1)" fill="#845233" stroke="#513729" stroke-width=".85"/>
+      <path d="M25 21h7v5h3v13h-3v4h-7m291-22h-7v5h-3v13h3v4h7" stroke="#d9ad7c" stroke-width=".82"/>
+      <path d="M45 14q5.72 .94 14.27 .16m-16.46 2.27 7.72-.26m244.61 34.7 9.42.28m-11.44 1.85 5.11-.22m-285.96-26.14 2.92-3.84m307.75 25.61 1.63-3.1" stroke="#daaf7e" stroke-width=".56" opacity=".58"/>
+      <path d="M46 33l19-.05m212 .05h19" stroke="#d3a272" stroke-width=".88"/>
+    </g>
+    <g id="travel-paper" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <use href="#paper-edge" fill="#263e44" stroke="#282525" stroke-width="2.1"/>
+      <path d="M25 8q25-.85 45 .1L373 8l13 2.3 4.1 3.2v134l-4.7 4.9-13 2.45q-41 .64-85 .02l-217 .21q-23 1.13-45-.13Z" fill="#86664b" stroke="#43342f" stroke-width="1.12"/>
+      <path d="M29 9.3q11.7-.72 19.7-.26 17.9 .91 29.1 .16l89.1-.22L372 9.2l12 1.65 3.6 4.5q-.5 88.7 .12 128.7l-5.42 5.2-11.7 1.85q-33.4-.77-62.1 .07H74.3q-24.3 .66-32.2-.12l-13.1 .05q.7-14.6-.16-32.7.64-48.6 .16-109.1Z" fill="url(#document)" stroke="#684a37" stroke-width="1.17"/>
+      <path d="M35 15.7q5.23-1.62 13.85-1.5m-10.61 3.09 4.86-.48m324.14-3.48 10.7 1.28m-5.9 4.09 4.97 1.7m3.43 112-1.32 6.1M37.9 144.1q8.94-1.48 15.88-.6m-17.54 2.97 7.87-.61m320.13.58 10.34-1.13" stroke="#9c7956" stroke-width=".62" opacity=".51"/>
+      <path d="M42.2 19.24q13.8-1.04 34-.25L372 19l6 1.8v116l-6.8 3.3q-28.5-.34-51.06 .1H75q-16.1 .85-33-.1-.55-19.1 .12-36.7-.34-51.2 .08-84.16Z" stroke="#795946" stroke-width="1"/>
+      <path d="M46 22.3q16-.75 27.8-.34L370 22l4.6 1.6v111.1l-5.4 2.1q-25.3-.45-48.5 .08H73q-15.6 .63-27-.08Z" stroke="#ab835e" stroke-width=".71"/>
+      <path d="M29.6 14.4q3.6-1.55 8.14-1.32m-7.95 3.8 4.49-.5m-4.32 16.8q1.71-1.04 4.3-.82m-4.63 102.18 3.48 .52m-3.38 6.33q2.58 .8 6.88 .58m2.52 5.81q11.8 .44 17.71-.24" stroke="#a1754f" stroke-width=".61" opacity=".63"/>
+      <path d="M28.23 13.3q.54-2.89 1.67-3.36m-.73 108.52q.45 3.4 .05 8.22m.21 21.24 3.33 .65" stroke="#e6ca9d" stroke-width=".94" opacity=".76"/>
+      <path d="M133 55h134m-124-3.7h115m-119 75.7h123" stroke="#9d734d" stroke-width=".88"/>
+      <path d="M20 10.7h11q-.84 36.2-.12 73.9-.72 38.7 .12 66.5H20Zm-6.2 8.1q.45 42.05 0 79.23l.13 43.8m7.07-128.53q-.7 24.4 0 45.29v82.96l-.18 7.75" stroke="#48666b" stroke-width=".98"/>
+      <path d="M17.5 42.4l11.4.05m-11.4 4 11.2.07m-11.4 64 11.3.07m-11.2 3.85h11.35" stroke="#b18b5b" stroke-width="1.17"/>
+      <path d="M358.3 109.5h12.2v12.8h-12.2Zm2 2h8.2m-8.2 2.85h8.2m-8.2 2.89h8.2m-5.2-5.7v8.8" stroke="#8d4b40" stroke-width=".82" opacity=".77"/>
+    </g>
+  </defs>
+  <use href="#lacquer-button" y="-78"/>
+  <g transform="translate(0 -157)" fill="none" stroke-linecap="round">
+    <use href="#lacquer-button"/>
+    <use href="#wood-plaque" fill="#d29c6b" opacity=".23"/>
+    <path d="M26 12h289l8 5h5l4.7 5.8v19.6l-4.7 5.8h-5l-8 5.5H26l-8-5.5h-5L9.3 42.4V22.8L13 17h5Z" stroke="#e2bb89" stroke-width="1.4"/>
+  </g>
+  <use href="#travel-paper" y="270"/>
+  <use href="#lacquer-button" x="39" y="6"/>
+  <use href="#travel-paper" x="10" y="84"/>
+  <g text-anchor="middle" font-family="Songti SC, STSong, Noto Serif CJK SC, SimSun, serif">
+    <text x="210" y="46" font-size="21" font-weight="700" letter-spacing="1.2" fill="#f2dfb9">接镖出发</text>
+    <text x="210" y="128" font-size="20" font-weight="700" letter-spacing="1.3" fill="#4f382e">风雪暗号</text>
+    <text x="210" y="169" font-size="19" font-weight="700" fill="#803f34">雪落石桥</text>
+    <text x="210" y="191" font-size="12" fill="#554436">石桥那头有灯，走累了就歇一歇。</text>
+  </g>
+</svg>

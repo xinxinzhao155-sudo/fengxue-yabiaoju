@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-labelledby="title">
+  <title id="title">江湖扫码打卡 · 关防印</title>
+  <g fill="none" stroke="#16263f" stroke-linecap="round" stroke-linejoin="round">
+<g id="base-corner">
+      <path d="M7.7 23.5v-9.8h4.05v-4.15h11.8l-.12 5.11-7.23.06v3.66h-3.3l-.23 5.2Z" fill="#49688a" stroke-width="1.5"/>
+      <path d="M9.71 20.56v-5.17h3.74v-3.97l7.95-.07m-11.56 3.87 3.43-.02" stroke="#e3b875" stroke-width="1"/>
+    </g>
+    <use href="#base-corner"/><use href="#base-corner" transform="rotate(90 32 32)"/><use href="#base-corner" transform="rotate(180 32 32)"/><use href="#base-corner" transform="rotate(270 32 32)"/>
+    <path d="M21.2 20.5q10.57-1.11 21.64.45l.43 22.23q-10.79.99-22.77.19Z" fill="#a15340" stroke-width="1.5"/>
+    <path d="M23.7 23.2q8.87-.8 16.69.3l.18 17.35q-8.77.63-17.32.12Z" stroke="#f0dfba" stroke-width="1.1"/>
+    <path d="M26 26h6v5.4h-6Zm0 8.1h6v3.85h-6Zm8.5-8.1H38v5.4h-3.5Zm0 8.3 3.5-.1v3.75h-3.5Z" fill="#f0dfba" stroke="none"/>
+    <path d="M12.8 32.47q18.62-1.72 38.4-.37" stroke="#efcc7a" stroke-width="1.4"/>
+  </g>
+</svg>

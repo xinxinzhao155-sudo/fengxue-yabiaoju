@@ -1,0 +1,53 @@
+/* 全项目配色与布局 */
+:root {
+  color-scheme: dark;
+  --wood: #21130e;
+  --paper: #fff1da;
+  --muted: #d5bba0;
+  --lantern: #ffd18a;
+  --cinnabar: #b94e3d;
+  --border: #765340;
+  font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 72% 4%, #774221 0%, transparent 52%),
+    repeating-linear-gradient(105deg, #ffffff04 0 1px, transparent 1px 8px),
+    var(--wood);
+  color: var(--paper);
+  line-height: 1.6;
+}
+main { width: min(1120px, calc(100% - 40px)); margin: auto; padding: clamp(36px, 8vw, 110px) 0 56px; }
+header { border-left: 4px solid var(--cinnabar); padding-left: clamp(16px, 3vw, 32px); margin-bottom: 36px; }
+h1, h2, p { margin: 0; }
+h1 { font-size: clamp(2rem, 5.5vw, 4.5rem); line-height: 1.22; }
+h1 span { display: block; color: var(--lantern); font-size: .56em; margin-top: .5em; }
+h2 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
+header p, .card p, .panel p { color: var(--muted); margin-top: .5rem; }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.card, .panel {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: linear-gradient(125deg, #38241a, #2a1a14);
+  padding: clamp(20px, 4vw, 32px);
+}
+.card { position: relative; display: block; color: inherit; text-decoration: none; padding-right: 55px; }
+.card::after { content: "→"; position: absolute; right: 22px; top: 50%; translate: 0 -50%; color: var(--lantern); font-size: 1.4rem; }
+.card:hover { border-color: var(--lantern); background: #482d20; }
+.role {
+  display: inline-block;
+  border: 1px solid var(--cinnabar);
+  border-radius: 4px;
+  color: #ffcfbd;
+  padding: .1em .55em;
+  margin-bottom: .65rem;
+  font-size: .9rem;
+}
+.cities { padding-left: 1.3em; margin-bottom: 0; font-size: 1.2rem; color: var(--lantern); }
+.button { display: inline-block; margin-top: 24px; color: var(--paper); text-decoration: none; padding: .65em 1.1em; border-radius: 5px; background: #963929; }
+.button:hover { background: #ac4635; }
+a:focus-visible { outline: 3px solid var(--lantern); outline-offset: 4px; }
+@media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }

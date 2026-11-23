@@ -1,0 +1,230 @@
+{
+  "version": "1.0",
+  "approvedDate": "2026-11-20",
+  "style": "马帮行旅 · 古甲设色立绘",
+  "base": ".",
+  "guide": "README.md",
+  "preview": "物料总看台.html",
+  "componentStyles": "04_界面组件与边框/base_style.css",
+  "cities": [
+    "丽江",
+    "济南",
+    "成都",
+    "拉萨"
+  ],
+  "previewBackgrounds": {
+    "旧绢白": "#DBD7CE",
+    "黛蓝墨": "#111523",
+    "青绿宣纹": "#BFD46B"
+  },
+  "navigation": {
+    "home": {
+      "default": "02_交互图标库/nav_home_default.svg",
+      "active": "02_交互图标库/nav_home_active.svg"
+    },
+    "wendie": {
+      "default": "02_交互图标库/nav_wendie_default.svg",
+      "active": "02_交互图标库/nav_wendie_active.svg"
+    },
+    "feige": {
+      "default": "02_交互图标库/nav_feige_default.svg",
+      "active": "02_交互图标库/nav_feige_active.svg"
+    },
+    "xingnang": {
+      "default": "02_交互图标库/nav_xingnang_default.svg",
+      "active": "02_交互图标库/nav_xingnang_active.svg"
+    }
+  },
+  "sound": {
+    "on": "02_交互图标库/icon_sound_bell_on.svg",
+    "off": "02_交互图标库/icon_sound_bell_off.svg"
+  },
+  "legacy": [
+    "theme.css",
+    "shared_data.js"
+  ],
+  "files": [
+    {
+      "path": "01_风格参考图/2a58c489768944aadcdb5adcbc039f5a.jpg",
+      "sha256": "bd93ff3c670c9e1617d2de67cacf91d5d5c311c9696d845b258f84c95ead5968"
+    },
+    {
+      "path": "01_风格参考图/52f07a7b96c980bd2398ab1ff8127b2a.jpg",
+      "sha256": "4558f0486b1db517c8d7685b549c3fae70d0f99b12922fdb8550870112058310"
+    },
+    {
+      "path": "01_风格参考图/62b733c0a9e0007dd44d3d3961c0f15b.jpg",
+      "sha256": "ae75101df5745c665b8a1f60be0cad8677e710ef3581d93681fc0652b4c50b93"
+    },
+    {
+      "path": "01_风格参考图/644ecd38ddf0ed520d50410c8de0763d.jpg",
+      "sha256": "08594a7f0b6677add1a408f56ad9a1943f2a4cf009ade1d88e0fa0c8fe0e8b59"
+    },
+    {
+      "path": "01_风格参考图/a8d0b7cba4badd31e26e2c8cf6c5d2bc.jpg",
+      "sha256": "0ae39424064ed3c29fa92776660c4766c420f3853b04c7e9b572e651fe424a1d"
+    },
+    {
+      "path": "01_风格参考图/b88705b533806a84e45352ea5c16d56c.jpg",
+      "sha256": "1633bd46d3cc9cbef7cdc97d42a19438e190f3bfb65bcff5d870945eef2c2c44"
+    },
+    {
+      "path": "01_风格参考图/bd29752f68a6137f007f522ba0817431.jpg",
+      "sha256": "67bb2d0665a161a568fdffe78a439dfefd4082e0ba17af8b9fe0c12a36d57e03"
+    },
+    {
+      "path": "01_风格参考图/d0824fd3e23aad343577358e2cd7aed9.jpg",
+      "sha256": "8d92f364911593f5dc4bde9da4cea0a2ecda539c5926332bbc3e603c2c5edecd"
+    },
+    {
+      "path": "02_交互图标库/icon_biaoqi.svg",
+      "sha256": "dbaba11ad00255ba51df9751151de7a395aa714fbcc2e1f3fad2a5f47b118de7",
+      "title": "押镖令旗与铜铃 · 马帮行旅版",
+      "viewBox": "0 0 280 260",
+      "highlight": "02_交互图标库/icon_biaoqi.svg#highlight"
+    },
+    {
+      "path": "02_交互图标库/icon_feige.svg",
+      "sha256": "f207fb7f8bf793c22ca2c34d55d3bef36c6ab212b7738b1b5988e671647f72ff",
+      "title": "飞鸽传书 · 马帮行旅版",
+      "viewBox": "0 0 280 260",
+      "highlight": "02_交互图标库/icon_feige.svg#highlight"
+    },
+    {
+      "path": "02_交互图标库/icon_jiebiao_flag.svg",
+      "sha256": "9e6836cf1996bdbcaefda7e55c7eba8ecc5704333aeb89668f6fd4f66671994c",
+      "title": "接镖令旗",
+      "viewBox": "0 0 64 64"
+    },
+    {
+      "path": "02_交互图标库/icon_scan_checkin.svg",
+      "sha256": "1b2cd0f2caa72ca64d53d49f0987dfe18b1a2a2a1f6d3c3b7c04cd8307e615c4",
+      "title": "江湖扫码打卡 · 关防印",
+      "viewBox": "0 0 64 64"
+    },
+    {
+      "path": "02_交互图标库/icon_secret_key.svg",
+      "sha256": "1a70a13517c81ad6d75a23d095ec85b5c59ac7e59498fd0269d5520f06623688",
+      "title": "风雪暗号 · 鎏铜钥匙",
+      "viewBox": "0 0 64 64"
+    },
+    {
+      "path": "02_交互图标库/icon_share_lantern.svg",
+      "sha256": "a8767114327171c7a7c3f2f1c058e5a6cff43ae3aa2c90f25b7ec8960c2c735e",
+      "title": "招募同路人 · 六角行灯",
+      "viewBox": "0 0 64 64"
+    },
+    {
+      "path": "02_交互图标库/icon_sound_bell_off.svg",
+      "sha256": "c803db1836a056e1c8f68f091c653cadd964926188064f7bad0be90a3870df59",
+      "title": "马帮铜铃 · 静音",
+      "viewBox": "0 0 64 64"
+    },
+    {
+      "path": "02_交互图标库/icon_sound_bell_on.svg",
+      "sha256": "6fcd5d3b33e42fed164af35ad44feba6705937dca02057bae149d6062b4af564",
+      "title": "马帮铜铃 · 开启",
+      "viewBox": "0 0 64 64"
+    },
+    {
+      "path": "02_交互图标库/nav_feige_active.svg",
+      "sha256": "62dbe8aedd95540323147ee476f8cd6af73aa90c40b561d0940d392585bd7c4b",
+      "title": "飞鸽传书 · 选中",
+      "viewBox": "0 0 64 64"
+    },
+    {
+      "path": "02_交互图标库/nav_feige_default.svg",
+      "sha256": "a1ad131867abb66b19b9b6c4255f33c3e1a802b850189b759a9de279a9b6241d",
+      "title": "飞鸽传书 · 未选中",
+      "viewBox": "0 0 64 64"
+    },
+    {
+      "path": "02_交互图标库/nav_home_active.svg",
+      "sha256": "bc5a7a01325a6df945a3caa576df203fd81b8eaba29887ba3372c708584e4b81",
+      "title": "押镖主页 · 选中",
+      "viewBox": "0 0 64 64"
+    },
+    {
+      "path": "02_交互图标库/nav_home_default.svg",
+      "sha256": "3040481d9c44eda7671e127f8f2cc907220ff61a5322bf6a1929f377ea6b269f",
+      "title": "押镖主页 · 未选中",
+      "viewBox": "0 0 64 64"
+    },
+    {
+      "path": "02_交互图标库/nav_wendie_active.svg",
+      "sha256": "14bb2e9764093f059a7a1a76c7b690463d17ad520ea366ff0323db8a3dd37f04",
+      "title": "通关文牒 · 选中",
+      "viewBox": "0 0 64 64"
+    },
+    {
+      "path": "02_交互图标库/nav_wendie_default.svg",
+      "sha256": "15e5970da4bd08d6a2b021ef39c90708f93b511c6432a8b8a91d0a59aa39d615",
+      "title": "通关文牒 · 未选中",
+      "viewBox": "0 0 64 64"
+    },
+    {
+      "path": "02_交互图标库/nav_xingnang_active.svg",
+      "sha256": "ba7a566eac5e2f3b7d58db453476768d8bd4ec9fcaf1786cdba33ebb96f67c5a",
+      "title": "我的行囊 · 选中",
+      "viewBox": "0 0 64 64"
+    },
+    {
+      "path": "02_交互图标库/nav_xingnang_default.svg",
+      "sha256": "78c7510de0cbc045968ef400c7c6e027c868e9484baa4659a4725c6d2b24268d",
+      "title": "我的行囊 · 未选中",
+      "viewBox": "0 0 64 64"
+    },
+    {
+      "path": "03_活动产品与周边/gift_hongmajia.svg",
+      "sha256": "0f13428759a8f71de7bcfdc3f6acfe8e00e73cc1f4b35dcb1caa8f7e9284e19c",
+      "title": "风雪镖师红马甲 · 马帮行旅版",
+      "viewBox": "0 0 360 300",
+      "highlight": "03_活动产品与周边/gift_hongmajia.svg#highlight"
+    },
+    {
+      "path": "03_活动产品与周边/gift_jiuguan.svg",
+      "sha256": "dc790d2ed0172f62c4822353cc9dfbb0075ba8974c65d1e051a59df2f56ff7fe",
+      "title": "风雪特调 · 方印切面玻璃瓶 · 马帮行旅版",
+      "viewBox": "0 0 360 300",
+      "highlight": "03_活动产品与周边/gift_jiuguan.svg#highlight"
+    },
+    {
+      "path": "03_活动产品与周边/gift_wendie_seal.svg",
+      "sha256": "9c4381ea1d71e5010848ef47b16c45dc34e435be28ec1898d2f51b276e2200ef",
+      "title": "四城通关文牒与丽江总舵印章 · 马帮行旅版",
+      "viewBox": "0 0 360 300",
+      "highlight": "03_活动产品与周边/gift_wendie_seal.svg#highlight"
+    },
+    {
+      "path": "04_界面组件与边框/base_style.css",
+      "sha256": "1a03fbf9e13a7cccb4c419c8e438148542f342f12bee14293c121cf63814c21c"
+    },
+    {
+      "path": "04_界面组件与边框/ui_kit_sample.svg",
+      "sha256": "a08604dea4bb5b50e67fc29a6d647de1cf81e7cff2fb51e00c1e58948e9d2fee",
+      "title": "接镖出发按钮与风雪暗号故事卡片",
+      "viewBox": "0 0 420 258",
+      "views": {
+        "button": "04_界面组件与边框/ui_kit_sample.svg#button",
+        "button-highlight": "04_界面组件与边框/ui_kit_sample.svg#button-highlight",
+        "card": "04_界面组件与边框/ui_kit_sample.svg#card"
+      }
+    },
+    {
+      "path": "README.md",
+      "sha256": "fedd4697ea806c58c7030d6b021b41a81d08f2cede7c3abd34068d2f250c3f36"
+    },
+    {
+      "path": "shared_data.js",
+      "sha256": "5a62525f17273942f29c010bcad866423c77b6f3565b4bc256beea4697c02423"
+    },
+    {
+      "path": "theme.css",
+      "sha256": "5099c9b99e369104290e6298fb6dbbc7aed489c774b0818e77b931e335db4639"
+    },
+    {
+      "path": "物料总看台.html",
+      "sha256": "b6449c8e3a0c95426ad7379625ce2c13011272e112381a2a0ed1b89d11d0c064"
+    }
+  ]
+}
