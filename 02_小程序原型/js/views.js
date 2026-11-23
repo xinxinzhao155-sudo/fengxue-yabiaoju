@@ -66,6 +66,8 @@
 
   function image(key, className = "", alt = "") {
     const src = data.art(key);
+    if (!src && key === "gorgonSeal") return '<span class="ingredient-seal" aria-label="芡实">芡</span>';
+    if (!src && key === "peanutSeal") return '<span class="ingredient-seal" aria-label="花生仁">仁</span>';
     return src ? `<img class="art ${className}" src="${html(src)}" alt="${html(alt)}" decoding="async">` : "";
   }
 
@@ -78,7 +80,7 @@
   }
 
   function date(value) {
-    return new Intl.DateTimeFormat("zh-Hant", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Shanghai" }).format(new Date(value));
+    return new Intl.DateTimeFormat("zh-Hans-CN", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Shanghai" }).format(new Date(value));
   }
 
   function station(state) {
@@ -100,39 +102,42 @@
   function filmOpening(look, city, route) {
     return `<section class="film-opening" aria-labelledby="hero-title">
       ${image("film" + look.toUpperCase(), "film-still")}
-      <div class="film-titles"><p>大冰的小屋 · 腊八四城联动</p><h2 id="hero-title">风雪押镖局</h2><span>四城共熬一碗粥</span></div>
+      <div class="film-titles"><p>大冰的小屋 · 腊八六城联动</p><h2 id="hero-title">风雪押镖局</h2><span>六城共熬一碗粥</span></div>
       <div class="film-entry"><button type="button" data-action="route" data-value="${html(city.id)}">${route.startedAt ? "继续本城押镖" : "领本城押镖令"} ${icon("arrow")}</button>
         <small>在门口木架领取实体文牒</small></div>
     </section>`;
   }
+
+  const featuredRoutes = new Set(["changsha", "chengdu"]);
 
   function home(state, context) {
     const here = station(state);
     const route = state.routes[here.id];
     const collected = Number(Boolean(route.stampedAt)) + Object.keys(route.tickets).length;
     const opening = context?.look ? filmOpening(context.look, here, route) : `<section class="hero" aria-labelledby="hero-title">
-      ${image("winterPass", "hero-art")}
-      <div class="hero-copy"><span class="hero-kicker">大冰的小屋 · 腊八四城联动</span><h2 id="hero-title">风雪押镖局</h2><p>四城共熬一碗粥</p></div>
+      ${image(here.landscape || "winterPass", "hero-art")}
+      <div class="hero-copy"><span class="hero-kicker">大冰的小屋 · 腊八六城联动</span><h2 id="hero-title">风雪押镖局</h2><p>六城共熬一碗粥</p></div>
     </section>`;
-    return `${opening}
+    const identity = `
     <section class="identity">
       <span class="avatar">${asset("escort", "profile")}</span>
       <div><strong>${html(state.profile.nickname)}</strong><span>${icon("pin")} ${html(here.name)} · 当前分舵</span></div>
-      <div class="collect"><strong>${collected}<small> / 4</small></strong><span>文牒四格</span></div>
+      <div class="collect"><strong>${collected}<small> / 6</small></strong><span>文牒六格</span></div>
     </section>
-    ${context?.look ? "" : `<section class="rack card"><div><h3>木架自助领牒</h3><p>请在门口木架取一份实体歌本文牒。</p></div><button type="button" class="text-button" data-action="route" data-value="${here.id}">${asset("accept", "arrow")} ${route.startedAt ? "继续押镖" : "领押镖令"}</button></section>`}
-    <section aria-labelledby="route-title" class="route-section">
-      <div class="section-heading"><div><h2 id="route-title">四城接镖台</h2><p>一关一段歌，一城一味福粥</p></div></div>
-      <div class="route-grid">${data.cities.map(city => {
+    ${context?.look ? "" : `<section class="rack card"><div><h3>木架自助领牒</h3><p>请在门口木架取一份实体歌本文牒。</p></div><button type="button" class="text-button" data-action="route" data-value="${here.id}">${asset("accept", "arrow")} ${route.startedAt ? "继续押镖" : "领押镖令"}</button></section>`}`;
+    const routes = `<section aria-labelledby="route-title" class="route-section">
+      <div class="section-heading"><div><h2 id="route-title">六城接镖台</h2><p>一关一段歌，一城一味福粥</p></div></div>
+      <div class="route-grid">${[...data.cities].sort((a, b) => Number(featuredRoutes.has(b.id)) - Number(featuredRoutes.has(a.id))).map(city => {
         const cityRoute = state.routes[city.id];
-        const status = cityRoute.stampedAt ? "已钤印" : cityRoute.startedAt ? progress(cityRoute) + " / 3 关" : city === here ? "本城接镖" : "风物档案";
+        const status = cityRoute.stampedAt ? "已钤印" : cityRoute.startedAt ? progress(cityRoute) + " / 3 关" : city === here ? "本城接镖" : "查看路线";
         return `<button class="route-card tone-${city.theme}" type="button" data-action="route" data-value="${city.id}">
-          <span class="route-art" aria-hidden="true">${image(city.landmarkArt, "route-landmark")}</span>
+          <span class="route-art" aria-hidden="true">${image(city.landscape || city.landmarkArt, city.landscape ? "route-landmark route-painting" : "route-landmark")}</span>
           <span class="route-card-top"><span class="route-status ${cityRoute.stampedAt ? "complete" : city === here ? "started" : ""}">${status}</span></span>
           <span class="route-card-bottom"><span class="route-emblem">${asset(city.icon, "sprout")}</span><span><strong>${html(city.name)}</strong><small>${html(city.landmarkName)} · ${html(city.ingredient)}</small></span></span>
         </button>`;
       }).join("")}</div>
     </section>`;
+    return context?.look ? opening + routes + identity : routes + identity + opening;
   }
 
   function milestone(step) {
@@ -170,7 +175,7 @@
       <p class="track-note">15 秒演示音轨</p>
       <div class="hunt-directions">
         <div class="landmark-rule"><h4 class="landmark-plaque">${image("landmarkPlaque")}<span>${html(city.site)}</span></h4></div>
-        <p>${html(city.route)}</p><small>门店实测约 150～200 米、步行 2～3 分钟。现场在 200 米围栏内打开拨片框。</small>
+        <p>${html(city.route)}</p><small>${city.landscape ? "本版采用城景模拟寻味，实际门店路线待确认。" : "门店实测约 150～200 米、步行 2～3 分钟。现场在 200 米围栏内打开拨片框。"}</small>
       </div>
       <div class="hunt-actions">
         <button type="button" data-action="hunt-location">${image("routeLine")}<span>模拟到达地标</span></button>
@@ -204,7 +209,7 @@
     const city = station(state);
     const route = state.routes[city.id];
     if (!route.startedAt) {
-      return heading(city.name + " · 本城分舵", "押镖三关", "在门口木架扫码，领一份唱得出来的文牒。", "cranePass") +
+      return heading(city.name + " · 本城分舵", "押镖三关", "在门口木架扫码，领一份唱得出来的文牒。", city.landscape || "cranePass") +
         empty("compass", "等待领令", "先接本城的镖，沿途拾取风物音符。", button("查看本城押镖令", "route", "primary", city.id), "satchel");
     }
     const step = progress(route);
@@ -212,9 +217,9 @@
       () => huntGate(city),
       () => listenGate(city),
       () => riceGate(route),
-      () => gateCard("stamp", "本城印已入牒", `<p>飞鸽匣已激活。给异城寄出一段声音，再收齐三座异城的粮票。</p>${button("去飞鸽传书匣", "post", "primary full")}`)
+      () => gateCard("stamp", "本城印已入牒", `<p>飞鸽匣已激活。给异城寄出一段声音，再收齐五座异城的粮票。</p>${button("去飞鸽传书匣", "post", "primary full")}`)
     ];
-    return heading(city.name + " · " + city.ingredient, "押镖三关", "听一段街声、记一个暗号、盖一枚本城印。", "cranePass") +
+    return heading(city.name + " · " + city.ingredient, "押镖三关", "听一段街声、记一个暗号、盖一枚本城印。", city.landscape || "cranePass") +
       milestone(step) + gates[step]() + (step ? songbook(city, route) : "");
   }
 
@@ -278,8 +283,8 @@
     const route = state.routes[city.id];
     const count = Number(Boolean(route.stampedAt)) + Object.keys(route.tickets).length;
     const redemption = route.redemption;
-    return heading(city.name + " · 实体文牒四格", "押镖通关文牒", "一枚本城朱印，三张不同异城的民谣粮票。", "filmC") +
-      `<div class="section-heading pass-heading"><h3>四城文牒</h3><span class="small-tag">${count} / 4 已入牒</span></div>
+    return heading(city.name + " · 实体文牒六格", "押镖通关文牒", "一枚本城朱印，五张不同异城的民谣粮票。", "filmC") +
+      `<div class="section-heading pass-heading"><h3>六城文牒</h3><span class="small-tag">${count} / 6 已入牒</span></div>
       <div class="stamp-grid">${data.cities.map(other => {
         const local = other.id === city.id;
         const ticket = route.tickets[other.id];
@@ -296,17 +301,17 @@
         ${redemption.fulfillment === "pending" ? button("登记顺丰包邮补发", "shipment", "light full") : ""}
         ${route.signup ? `<div class="redeemed-line">${icon("check")} ${html(route.signup.role)} · ${html(route.signup.shift)} · ${route.signup.shift === "候补轮" ? "候补已登记" : "演示报名已登记"}</div>` : button("报名腊八红马甲施粥", "signup", "primary full")}</article>` :
         qualified(route) ? `<article class="reward card"><h4>${data.rewardName}</h4><p>请带上已盖印、贴票的实体文牒。</p>${button("出示吧台核销码", "redeem", "primary full")}</article>` :
-        empty("lock", "四格未齐", "盖好本城印，再贴入来自不同异城的三张粮票。", button("去粮票信箱", "post", "light"), "tangLock")}
+        empty("lock", "六格未齐", "盖好本城印，再贴入来自不同异城的五张粮票。", button("去粮票信箱", "post", "light"), "tangLock")}
       </section>
-      <details class="journal-item card ensemble"><summary>${asset("snow", "music")}<span>四城合奏 · ${html(data.ensemble.title)}</span>${icon("down")}</summary><div class="journal-content">
+      <details class="journal-item card ensemble"><summary>${asset("snow", "music")}<span>六城合奏 · ${html(data.ensemble.title)}</span>${icon("down")}</summary><div class="journal-content">
         <p>${html(data.ensemble.arrangement)}</p>${songLines(data.ensemble.common)}</div></details>`;
   }
 
   function demo(state) {
     return `<label for="demo-shop">当前绑定分舵</label><div class="demo-select">${icon("pin")}<select id="demo-shop">${data.cities.map(city => `<option value="${city.id}" ${state.profile.stationId === city.id ? "selected" : ""}>${html(city.name)}</option>`).join("")}</select></div>
       <div class="demo-actions">
-        ${[["demo-unlock", asset("tangSeal", "compass"), "快进四城三关", "领令、寻味、对暗号、钤印"], ["demo-letter", asset("box", "mail"), "模拟异城木匣来票", "向当前分舵送一张预录粮票"],
-          ["demo-three", asset("grainTicket", "book"), "补齐三城来票", "发到收件箱，逐张贴入文牒"], ["demo-reset", icon("refresh"), "重置本地存档", "清除本轮的进度与往来粮票"]]
+        ${[["demo-unlock", asset("tangSeal", "compass"), "快进六城三关", "领令、寻味、对暗号、钤印"], ["demo-letter", asset("box", "mail"), "模拟异城木匣来票", "向当前分舵送一张预录粮票"],
+          ["demo-three", asset("grainTicket", "book"), "补齐五城来票", "发到收件箱，逐张贴入文牒"], ["demo-reset", icon("refresh"), "重置本地存档", "清除本轮的进度与往来粮票"]]
           .map(([action, glyph, title, copy]) => `<button type="button" data-action="${action}">${glyph}<span>${title}<small>${copy}</small></span>${icon("chevron")}</button>`).join("")}
       </div>
       <label class="consent demo-stock"><input type="checkbox" id="demo-stock" ${state.demoStock ? "checked" : ""}> 模拟礼盒有货</label>`;
@@ -314,15 +319,15 @@
 
   function routeSheet(city, state) {
     const ours = station(state) === city;
-    return `<div class="route-sheet-lead tone-${city.theme}"><div><p class="eyebrow">${html(city.location)}</p><h2 id="sheet-title">${html(city.name)}</h2><span class="route-specimen">${image(city.icon)} ${html(city.ingredient)}</span></div>${image(city.landmarkArt, "sheet-landmark", city.landmarkName)}</div>
+    return `<div class="route-sheet-lead tone-${city.theme}${city.posterArt ? " canal-sheet" : ""}"><div><p class="eyebrow">${html(city.location)}</p><h2 id="sheet-title">${html(city.name)}</h2><span class="route-specimen">${image(city.icon)} ${html(city.ingredient)}</span></div>${image(city.landmarkArt, city.landscape ? "sheet-landmark city-portrait" : "sheet-landmark", city.landmarkName)}</div>
       <dl class="route-detail"><div><dt>本城风物</dt><dd><strong>${html(city.token)}</strong><p>${html(city.sound)}</p></dd></div><div><dt>寻味地标</dt><dd>${html(city.landmark)}<p>${html(city.route)}</p></dd></div></dl>
       ${ours ? `<button class="fx-button route-accept" type="button" data-action="accept">${state.routes[city.id].startedAt ? "继续本城押镖" : "揭榜领取押镖令"}</button><p class="sheet-tip">请在门口木架另取一份实体文牒。</p>` :
-        `<p class="sheet-copy">当前绑定${html(station(state).name)}。这座城的粮票可在飞鸽匣收取。</p>`}`;
+        `<p class="sheet-copy">当前绑定${html(station(state).name)}。这座城的粮票可在飞鸽匣收取。</p><a class="button primary full" href="?station=${encodeURIComponent(city.id)}">切换到${html(city.short)}演示</a>`}`;
   }
 
   function poster(city, photo = "") {
     return `<div class="hunt-poster">
-      ${photo ? `<img class="hunt-photo" src="${html(photo)}" alt="本次寻味照片">` : image("pick", "pick-art")}
+      ${photo ? `<img class="hunt-photo" src="${html(photo)}" alt="本次寻味照片">` : city.posterArt ? image(city.posterArt, "hunt-photo", city.landmarkName) : image("pick", "pick-art")}
       <span class="poster-mark">风雪押镖 · 已寻味</span><strong>${html(city.frame)}</strong><small>${html(city.name)} · ${html(city.site)}</small>
     </div>`;
   }
@@ -330,7 +335,7 @@
   function huntSheet(city, mode, photo) {
     return `<p class="eyebrow">${html(city.site)} · ${mode === "weather" ? "风雪免行" : "模拟到达"}</p><h2 id="sheet-title">吉他拨片取景框</h2>
       <p class="sheet-copy">${mode === "weather" ? "请站在门口安全处，对准风物立牌。" : "请站在开放步行区，对准古建。"}原型支持选取相片，也可以用示意图走通。</p>
-      <div id="snapshot">${poster(city, photo)}</div><label class="button light photo-picker">拍照或選圖<input id="hunt-photo" type="file" accept="image/*" capture="environment" aria-describedby="photo-error"></label><p class="form-error" id="photo-error" role="status"></p>
+      <div id="snapshot">${poster(city, photo)}</div><label class="button light photo-picker">拍照或选图<input id="hunt-photo" type="file" accept="image/*" capture="environment" aria-describedby="photo-error"></label><p class="form-error" id="photo-error" role="status"></p>
       ${button("保存寻味海报 · 解锁风物音符", "finish-hunt", "primary full")}`;
   }
 
@@ -361,7 +366,7 @@
 
   function credentialSheet(city, credential, stock) {
     return `<p class="eyebrow">${html(city.name)} · 吧台核销</p><h2 id="sheet-title">晋升金牌总镖头</h2>
-      <div class="credential-card"><h3>${data.rewardName}</h3><p>吧台查看实体文牒的一枚本城印和三张异城票。</p>${qr(credential.code)}<span class="code">${html(credential.code)}</span>
+      <div class="credential-card"><h3>${data.rewardName}</h3><p>吧台查看实体文牒的一枚本城印和五张异城票。</p>${qr(credential.code)}<span class="code">${html(credential.code)}</span>
         <div class="credential-meta"><span id="countdown"></span><button type="button" class="text-button" data-action="rotate-code">${icon("refresh")} 刷新码</button></div></div>
       <form id="redeem-form" data-credential="${html(credential.id)}"><label for="staff-pin">店员演示口令</label><input id="staff-pin" name="pin" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="2026" aria-describedby="redeem-error"><p class="form-error" id="redeem-error" role="status"></p>
         <button class="button primary full" type="submit">${stock ? "确认核销 · 发放礼盒" : "确认核销 · 礼盒待补发"} ${icon("check")}</button></form>`;

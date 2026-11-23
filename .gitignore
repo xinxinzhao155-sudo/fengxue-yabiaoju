@@ -7,3 +7,5 @@
 node_modules/
 __pycache__/
 *.pyc
+.six-qa/
+/02_小程序原型/六城网页发布/

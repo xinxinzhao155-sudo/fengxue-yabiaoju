@@ -1,17 +1,43 @@
 /* 风雪押镖局 · 组件样式。CSS 与 ui_kit_sample.svg 放在同一目录。 */
 :root {
-  --fx-paper: #ebddbe;
-  --fx-cloud: #ebe6ce;
-  --fx-ochre: #cfaf81;
-  --fx-ink: #263e44;
-  --fx-blue: #253c45;
-  --fx-rust: #803f34;
-  --fx-gold: #ad855d;
-  --fx-moss: #505c4e;
-  --fx-seal: #cb2724;
-  --fx-green: #b2c667;
+  --fx-paper: var(--fx-silk-warm);
+  --fx-cloud: var(--fx-silk-light);
+  --fx-ochre: var(--fx-gold-light);
+  --fx-ink: var(--fx-ink-outline);
+  --fx-blue: var(--fx-mountain-shadow);
+  --fx-rust: var(--fx-pillar-shadow);
+  --fx-gold: var(--fx-gold-line);
+  --fx-moss: #78816B;
+  --fx-seal: #C87454;
+  --fx-green: var(--fx-hill);
   --fx-serif: "Songti SC", STSong, "Noto Serif CJK SC", SimSun, serif;
-  --fx-focus: #e2bb89;
+  --fx-focus: var(--fx-ink-outline);
+  --fx-pillar: #A35F46;
+  --fx-pillar-shadow: #8C4E3A;
+  --fx-gold-light: #D8BD90;
+  --fx-gold-line: #BC955F;
+  --fx-mountain: #77919B;
+  --fx-mountain-shadow: #48636C;
+  --fx-ink-fine: #968062;
+  --fx-ink-outline: #524637;
+  --fx-hill: #A7B4A5;
+  --fx-silk-light: #F5E6C8;
+  --fx-silk-warm: #E9D6AF;
+  --fx-selected: #38545C;
+  --fx-selected-night: var(--fx-silk-light);
+  --fx-edge-night: #DCC595;
+  --fx-night: #111523;
+  --fx-pale-moss: #B4C4AC;
+  --fx-hover: #658797;
+  --fx-pressed: #99523D;
+  --fx-disabled: var(--fx-hill);
+  --fx-disabled-surface: var(--fx-night);
+  --fx-disabled-night: var(--fx-ink-outline);
+  --fx-disabled-surface-night: var(--fx-gold-light);
+  --fx-text-on-paper: var(--fx-ink-outline);
+  --fx-text-on-night: var(--fx-silk-light);
+  --fx-cinnabar-lit: #AF5639;
+  --fx-preview-paper: #F2E6CE;
 }
 
 /* <button type="button" class="fx-button" aria-pressed="false">接镖出发</button> */
@@ -57,7 +83,7 @@
 .fx-button:active::after,
 .fx-button[aria-pressed="true"]::after { opacity: 1; }
 .fx-button:active { transform: translateY(2px); }
-.fx-button:focus-visible { outline: 2px solid var(--fx-focus); outline-offset: 3px; }
+.fx-button:focus-visible { outline: 2px solid var(--fx-focus); outline-offset: 2px; box-shadow: 0 0 0 5px var(--fx-silk-light); }
 
 /* .fx-story-card 内可放 .fx-story-card__title、__code、__body。 */
 .fx-story-card {
@@ -68,7 +94,7 @@
   width: min(100%, 400px);
   min-height: 104px;
   aspect-ratio: 400 / 164;
-  padding: 10px min(11%, 45px) 17px min(15%, 58px);
+  padding: 10px min(11%, 45px) max(23px, 7%) min(15%, 58px);
   background: url("./ui_kit_sample.svg#card") center / 100% 100% no-repeat;
   color: #49362c;
   text-align: center;
@@ -82,4 +108,18 @@
 
 @media (prefers-reduced-motion: reduce) {
   .fx-button, .fx-button::after { transition: none; }
+}
+
+
+.fx-button:disabled {
+  color:var(--fx-disabled);
+  background:var(--fx-disabled-surface);
+  border:1px dashed currentColor;
+  text-shadow:none;
+  cursor:not-allowed;
+}
+.fx-button:disabled::before,.fx-button:disabled::after { opacity:0; }
+[data-preview="dark"] .fx-button:disabled {
+  color:var(--fx-disabled-night);
+  background:var(--fx-disabled-surface-night);
 }

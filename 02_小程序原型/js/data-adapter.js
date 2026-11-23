@@ -6,15 +6,14 @@
   const config = {
     xian: { short: "西安", theme: "copper", mark: "枣", code: "XIAN", site: "永宁门", ingredient: "红枣", landmarkName: "永宁门城楼", landmarkArt: "yongning" },
     wuhan: { short: "武汉", theme: "indigo", mark: "莲", code: "WUHAN", site: "汉阳门花园", ingredient: "莲子", landmarkName: "黄鹤楼", landmarkArt: "huanghelou" },
-    nanchang: { short: "南昌", theme: "jade", mark: "圆", code: "NANCHANG", site: "万寿宫大戏台", ingredient: "桂圆", landmarkName: "万寿宫大牌坊", landmarkArt: "wanshou" },
-    suzhou: { short: "苏州", theme: "olive", mark: "桂", code: "SUZHOU", site: "通贵桥", ingredient: "桂花", landmarkName: "寒山寺", landmarkArt: "hanshan" }
+    nanchang: { short: "南昌", theme: "jade", mark: "圆", code: "NANCHANG", site: "万寿宫大戏台", ingredient: "桂圆", landmarkName: "万寿宫大牌坊", landmarkArt: "wanshou" }
   };
-  const aliases = { a: "xian", b: "wuhan", c: "nanchang", d: "suzhou" };
+  const aliases = { a: "xian", b: "wuhan", c: "nanchang", d: "xitang", suzhou: "xitang", "苏州": "xitang", "苏州山塘街": "xitang", "浙江西塘古镇": "xitang" };
   const sopIcons = { tear: "deco_ticket_tear_line", steam: "easter_porridge_music_steam" };
   const illustrations = {
     escort: "portrait_escort", yongning: "landmark_yongning", huanghelou: "landmark_huanghelou",
-    wanshou: "landmark_wanshou", hanshan: "landmark_hanshan",
-    jujube: "token_jujube", lotus: "token_lotus", longan: "token_longan", osmanthus: "token_osmanthus",
+    wanshou: "landmark_wanshou",
+    jujube: "token_jujube", lotus: "token_lotus", longan: "token_longan",
     roundel: "step_roundel", record: "step_record", brazier: "step_brazier", rice: "step_rice",
     bianzhong: "icon_bianzhong", audioPlaque: "plaque_audio", landmarkPlaque: "plaque_landmark",
     routeLine: "action_route_line", windSnow: "action_wind_snow", box: "box_pigeon_idle",
@@ -29,7 +28,7 @@
     bell: "icon_bell", muted: "icon_bell"
   };
   const navArt = { home: "flag", xingnang: "satchel", feige: "bird", wendie: "passport" };
-  const scenes = { winterPass: "crane-pass", filmA: "caravan", filmB: "flock", filmC: "arrival", filmD: "riverside-post", mountainRoad: "mountains", cranePass: "crane-pass", towerElevation: "elevation" };
+  const scenes = { xitangCanal: "xitang-canal", changsha: "changsha", chengdu: "chengdu", changsha_shanshui: "changsha_shanshui", chengdu_shanshui: "chengdu_shanshui", winterPass: "crane-pass", filmA: "caravan", filmB: "flock", filmC: "arrival", filmD: "riverside-post", mountainRoad: "mountains", cranePass: "crane-pass", towerElevation: "elevation" };
   const cities = source.cities.map(base => {
     const shared = Array.isArray(overrides.cities) ? overrides.cities.find(item => item?.id === base.id) : null;
     const city = { ...base, ...config[base.id] };
@@ -45,7 +44,8 @@
   }
 
   function scanCity(id) {
-    return city(id) || city(aliases[id]) || cities.find(item => [item.short, item.name].some(name => root.EscortTraditional(name) === root.EscortTraditional(String(id))));
+    const label = root.EscortSimplify(String(id ?? "").trim());
+    return city(label) || city(aliases[label]) || cities.find(item => [item.short, item.name].some(name => root.EscortSimplify(name) === label));
   }
 
   function art(key) {
@@ -71,7 +71,7 @@
     gates: ["听音寻味", "火塘听曲", "落米成音"],
     roles: ["合唱", "派粥", "秩序"],
     shifts: ["第一轮", "第二轮", "候补轮"],
-    rewardName: "四城限定风物伴手礼盒",
+    rewardName: "六城限定风物伴手礼盒",
     audio: id => "assets/audio/" + id + "-ticket.wav",
     huntAudio: id => "assets/audio/" + id + "-hunt.wav"
   };

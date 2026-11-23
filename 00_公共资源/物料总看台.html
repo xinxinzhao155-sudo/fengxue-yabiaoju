@@ -13,7 +13,7 @@
       --ink: #2e2a27;
       --quiet: #6b5a48;
       --rule: #cabb9f;
-      --stage: #111523;
+      --stage: var(--fx-night);
       --stage-frame: #ca9c4459;
       --stage-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='146' height='101' viewBox='0 0 146 101'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.42 .83' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 .97 0 0 0 0 .84 0 0 0 0 .62 .075 0 0 0 -.024'/%3E%3C/filter%3E%3Cpath d='M0 0h146v101H0z' filter='url(%23f)'/%3E%3C/svg%3E");
       --batch-divider: #d1b68f60;
@@ -24,7 +24,7 @@
     }
 
     [data-preview="light"] {
-      --stage: #dbd7ce;
+      --stage: var(--fx-preview-paper);
       --stage-frame: #70432959;
       --stage-grain: none;
       --batch-divider: #94734d72;
@@ -32,7 +32,7 @@
     }
 
     [data-preview="green"] {
-      --stage: #bfd46b;
+      --stage: var(--fx-pale-moss);
       --stage-frame: #394c5380;
       --stage-grain: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2785%27%20height%3D%2761%27%20viewBox%3D%270%200%2085%2061%27%3E%3Cdefs%3E%3Cpattern%20id%3D%27h%27%20width%3D%2785%27%20height%3D%279%27%20patternUnits%3D%27userSpaceOnUse%27%3E%3Cpath%20d%3D%27M-1%202q7-3%2012%200t12%200%2012%200%2012%200%2012%200%2012%200%2015%200M-1%206q7-3%2012%200t12%200%2012%200%2012%200%2012%200%2012%200%2015%200%27%20fill%3D%27none%27%20stroke%3D%27%23555C39%27%20stroke-width%3D%27.65%27%20stroke-opacity%3D%27.23%27%2F%3E%3C%2Fpattern%3E%3Cfilter%20id%3D%27f%27%20x%3D%27-10%25%27%20y%3D%27-10%25%27%20width%3D%27120%25%27%20height%3D%27120%25%27%3E%3CfeTurbulence%20type%3D%27fractalNoise%27%20baseFrequency%3D%27.035%20.067%27%20numOctaves%3D%273%27%20stitchTiles%3D%27stitch%27%2F%3E%3CfeDisplacementMap%20in%3D%27SourceGraphic%27%20scale%3D%277%27%20xChannelSelector%3D%27R%27%20yChannelSelector%3D%27G%27%2F%3E%3C%2Ffilter%3E%3C%2Fdefs%3E%3Cpath%20d%3D%27M-7-7h99v75H-7z%27%20fill%3D%27url(%23h)%27%20filter%3D%27url(%23f)%27%2F%3E%3C%2Fsvg%3E");
       --batch-divider: #555c3970;
@@ -50,7 +50,7 @@
       color: #efe4ce;
       background:
         repeating-linear-gradient(128deg, #dbbd8720 0 1px, transparent 1px 13px),
-        radial-gradient(ellipse at 74% -42%, #394c53, #191e30 59%, #111523);
+        radial-gradient(ellipse at 74% -42%, #394c53, #191e30 59%, var(--fx-night));
       border-top: 4px solid #9db24b;
       border-bottom: 3px double #b6a172;
     }
@@ -116,8 +116,8 @@
     .theme-controls { display: flex; gap: 2px; padding: 3px; border: 1px solid #ac9675; background: #e4d8c4; }
     .theme-controls button { border: 1px solid transparent; padding: 4px 9px; color: #594a3a; background: transparent; font-size: .75rem; cursor: pointer; white-space: nowrap; }
     .theme-controls button:hover { border-color: #967956; }
-    .theme-controls button[aria-pressed="true"] { border-color: #8e6834; background: #111523; color: #f4d07c; }
-    .theme-controls button[data-theme="green"][aria-pressed="true"] { border-color: #555c39; background: #bfd46b; color: #191e30; }
+    .theme-controls button[aria-pressed="true"] { border-color: #8e6834; background: var(--fx-night); color: #f4d07c; }
+    .theme-controls button[data-theme="green"][aria-pressed="true"] { border-color: #555c39; background: var(--fx-pale-moss); color: #191e30; }
 
     .asset-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
     .asset { display: flex; flex-direction: column; min-width: 0; margin: 0; background: var(--paper); border: 1px solid #baa98d; }
@@ -245,6 +245,53 @@
     @media (prefers-reduced-motion: reduce) {
       .source img, .icon-demo, .icon-lit, .batch-large { transition: none; }
     }
+    .scenes {grid-column:1/-1; min-width:0; padding:16px}
+    #city-scenes .scene-grid {padding:0}
+    #city-scenes .panel-head {scroll-margin-top:12px}
+    .scene-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;padding:16px}
+    .scene-grid figure {margin:0}
+    .scene-grid img {display:block;width:100%;height:auto}
+    .scene-grid figcaption {display:flex;align-items:baseline;flex-wrap:wrap;gap:8px;padding:10px 0;color:var(--quiet);font-size:.83rem}
+    .scene-grid strong {margin-right:auto;font:700 1.05rem var(--fx-serif);color:var(--ink)}
+    @media(max-width:540px){.scene-grid{grid-template-columns:1fr}}
+    .palette .color-families {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px}
+    .pigment {min-width:0;background:#f4e9d3;border:1px solid #c5b597}
+    .pigment-detail {height:56px;background:url("./01_风格参考图/青绿山水_行旅驿站.png") var(--px) var(--py) / 460% auto;border-bottom:1px solid #b49a70}
+    .pigment-data {padding:8px 10px 10px}
+    .pigment h3 {margin:0 0 8px;color:var(--fx-ink-outline);display:flex;align-items:baseline;justify-content:space-between;gap:4px;font:700 1.08rem/1.4 var(--fx-serif)}
+    .pigment h3 small {font:400 .68rem/1.4 var(--fx-serif);color:#6a604e}
+    .pigment .swatches {gap:8px}.pigment .swatches li{border:0;background:none}
+    .pigment .chip {height:8px;border:0}.pigment .swatches strong,.pigment .swatches code{margin-inline:0}
+    .palette .notes {border-top:1px solid #bdab8b;padding-top:12px}
+    @container (max-width:490px){.palette .color-families{grid-template-columns:1fr 1fr;gap:7px}.pigment-data{padding:6px}.pigment h3{display:block}.pigment h3 small{display:block}.pigment .swatches{gap:4px}.pigment-detail{height:44px}.pigment .swatches code{font-size:.60rem}}
+    .batch-stage.stage{height:126px}.batch-large{width:90px;height:90px}.batch-card .asset-caption{border-top:1px solid #c3b296}
+    .state-tones{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem .95rem;margin-top:14px;color:#574b3c;font-size:.74rem}.state-tones strong{font-family:var(--fx-serif)}.state-tones span{display:inline-flex;align-items:center;gap:.24rem}.state-tones i{width:.76rem;height:.76rem;border:1px solid #ad9c7f;background:var(--c)}.state-tones code{font-size:.69rem}
+    .batch-stage.stage:has([aria-pressed="true"])::after{border-color:#a87850;box-shadow:inset 0 -2px #a8785066}
+    .nav-trial{display:flex;align-items:center;justify-content:center;gap:24px;padding:8px 10px;background:var(--stage);color:var(--batch-scale);border-block:1px solid var(--stage-frame);margin-bottom:10px}.nav-trial>span{font:700 .83rem var(--fx-serif)}.nav-trial small{display:block;font:.65rem monospace;margin-top:3px}.trial-tabs{display:flex;width:min(100%,340px);justify-content:space-between;gap:4px}.trial-tabs button{cursor:pointer;color:inherit;background:none;border:0;min-width:42px;min-height:44px;display:grid;place-items:center;gap:2px;padding:2px 5px;font:500 .72rem var(--fx-serif)}.trial-tabs button[aria-pressed="true"]{font-weight:800}.theme-controls button::before{content:"";display:inline-block;vertical-align:middle;margin-right:.3em;width:.7em;height:.7em;border-radius:50%;background:var(--dot);border:1px solid #91846e}.theme-controls [data-theme="light"]{--dot:var(--fx-preview-paper)}.theme-controls [data-theme="dark"]{--dot:var(--fx-night)}.theme-controls [data-theme="green"]{--dot:var(--fx-pale-moss)}
+    @media(max-width:520px){.nav-trial{gap:7px}.batch-heading .theme-controls button{padding:.28rem .36rem}.batch-stage.stage{height:119px}}
+    .ink-spec{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;border-block:1px solid #baa485;margin:12px 0 0;padding:10px 0;color:var(--fx-ink-outline)}.ink-spec dt{font:700 .83rem var(--fx-serif)}.ink-spec dd{margin:4px 0 0;font:.73rem/1.5 var(--fx-serif)}.ink-spec b,.verm{display:inline-grid;place-items:center;width:1.3rem;height:1.3rem;vertical-align:middle;margin-right:.35em;border:1px solid #b29c7d}.ink-dark{color:var(--fx-silk-light);background:var(--fx-night)}.ink-paper{color:var(--fx-ink-outline);background:var(--fx-preview-paper)}.verm{background:var(--fx-seal)}.trial-tabs button[aria-pressed="true"] span{background:var(--fx-selected);color:var(--fx-silk-light);padding:0 .3em;line-height:1.3;border-radius:2px}.batch-card .asset-meta{justify-content:space-between}.batch-card .asset-meta a{white-space:nowrap}
+    .batch-view {width:min(calc(100% - 12px),188px);grid-template-columns:minmax(0,1fr) 44px}.batch-large{width:108px;height:auto}.batch-stage.stage{height:145px}
+    @media(max-width:650px){.batch-stage.stage{height:117px}.batch-card .asset-meta{gap:3px}.batch-card .asset-meta a{font-size:.7rem}}
+    .interaction-spec{font:.76rem/1.55 var(--fx-serif);margin-top:10px;color:var(--fx-ink-outline)}.interaction-spec summary{cursor:pointer;font-weight:700}.interaction-spec dl{display:grid;grid-template-columns:max-content 1fr;gap:3px 12px;margin:5px 0 0}.interaction-spec dt,.interaction-spec dd{margin:0}.interaction-spec dt{font-weight:700}
+    .batch-switch:hover:not(:disabled){box-shadow:inset 0 0 0 1px var(--fx-hover)}.batch-switch:active{box-shadow:inset 0 0 0 1px var(--fx-pressed)}.batch-switch:focus-visible,.trial-tabs button:focus-visible{outline:2px solid var(--fx-ink-outline);outline-offset:-3px;box-shadow:inset 0 0 0 5px var(--fx-silk-light)}.batch-switch:disabled,.trial-tabs button:disabled{color:var(--fx-disabled);filter:saturate(.22);cursor:default}
+    .trial-tabs button[aria-pressed="true"] span{color:var(--fx-ink-outline);background:transparent;font-weight:800;text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px}
+    [data-preview="dark"] .trial-tabs button[aria-pressed="true"] span{color:var(--fx-silk-light)}
+    .state-proof{display:flex;flex-wrap:wrap;gap:8px;margin-top:7px}.state-proof span{padding:2px 8px;background:var(--fx-preview-paper);border:1px solid #bcad91;color:var(--fx-ink-outline)}.state-proof .sample-hover{border-color:var(--fx-hover)}.state-proof .sample-down{border-color:var(--fx-pressed);transform:translateY(1px)}.state-proof .sample-focus{outline:2px solid var(--fx-ink-outline);outline-offset:1px}.state-proof .sample-off{color:var(--fx-disabled);background:#ede6d8}
+    .state-proof button{border:1px solid #bdad90;background:var(--fx-preview-paper);color:var(--fx-ink-outline);font:inherit;line-height:1.3;min-height:30px;padding:3px 11px}.state-proof .sample-hover,.state-proof button:hover:enabled{border-color:var(--fx-hover);background:#e4e7d9}.state-proof .sample-down,.state-proof button:active:enabled{border-color:var(--fx-pressed);transform:translateY(1px);box-shadow:inset 0 -2px var(--fx-pressed)}.state-proof .sample-focus,.state-proof button:focus-visible{outline:2px solid var(--fx-ink-outline);outline-offset:2px;box-shadow:0 0 0 2px var(--fx-silk-light)}.state-proof button:disabled{color:var(--fx-disabled);background:#ede6d8}.nav-trial>span{white-space:nowrap}.trial-tabs button[aria-pressed="true"] span {box-shadow:none;background:none;text-decoration:none;border-bottom:2px solid currentColor}.trial-tabs button span{border-bottom:2px solid transparent}.batch-card:has(.batch-switch[aria-pressed="true"]) .status{font-weight:bold;color:var(--fx-ink-outline)}
+    .inspect-mini{font:inherit;padding:0;border:0;color:inherit;background:none;text-decoration:underline;text-underline-offset:2px;cursor:zoom-in}.batch-card .asset-meta{justify-content:flex-start;gap:4px 8px}.batch-card .asset-meta .status{margin-right:auto}
+    .state-proof{gap:12px;padding:8px 4px 5px}.state-proof button{min-width:58px;min-height:34px;font-weight:650}.state-proof .sample-down[aria-pressed="true"],.state-proof button:active:enabled{background:#d7c4a1;color:#533b2c;border-color:var(--fx-pressed);box-shadow:inset 0 3px 0 #9f805c;transform:translateY(2px)}.state-proof .sample-down[aria-pressed="false"]{transform:none;box-shadow:0 2px 0 #baa785;background:var(--fx-preview-paper);border-color:#bdad90}.state-proof .sample-focus,.state-proof button:focus-visible{outline:2px solid var(--fx-ink-outline);outline-offset:3px;box-shadow:0 0 0 3px var(--fx-silk-light)}.batch-switch:active .batch-large{transform:translateY(2px)}
+    .pick-pigment{display:block;width:100%;text-align:left;border:none;padding:0;color:inherit;background:transparent;cursor:copy}.pick-pigment:hover .chip,.pick-pigment:focus-visible .chip{outline:1px solid var(--fx-ink-outline);outline-offset:1px}.pigment-result{font:.73rem/1.5 var(--fx-serif);color:var(--fx-ink-outline);display:block;min-height:1.5em;margin-top:6px}.pigment-result:before{content:"";display:inline-block;width:.67em;height:.67em;vertical-align:middle;margin-right:.4em;background:var(--picked,var(--fx-silk-warm));border:1px solid #bca785}
+  .copy-tone{color:inherit;background:transparent;border:0;padding:.13em .22em;cursor:copy;font:inherit}.copy-tone code{text-decoration:underline dotted;text-underline-offset:3px}.copy-tone:hover,.copy-tone:focus-visible{background:var(--fx-silk-light);outline:1px solid var(--fx-hover);outline-offset:1px}.state-tones .copy-tone{min-height:28px}.copied-color:after{content:"已复制";color:currentColor;margin-left:.22em}
+    [data-hex]{position:relative}.copied-color:after{position:absolute;left:0;bottom:100%;padding:2px 6px;z-index:4;color:var(--fx-silk-light);background:var(--fx-ink-outline);white-space:nowrap;font:12px/1.5 var(--fx-serif);}
+    .mix-chip{display:inline-block;width:1em;height:1em;vertical-align:middle;background:var(--mix);border:1px solid var(--fx-ink-fine);margin-right:.25em}#mix-weight{width:5.5em;vertical-align:middle}
+    .state-proof .sample-off,.trial-tabs button:disabled,.batch-switch:disabled{color:var(--fx-disabled);opacity:1;filter:none}
+    [data-preview="dark"] .trial-tabs button:disabled,[data-preview="dark"] .batch-switch:disabled{color:var(--fx-disabled-night)}
+    .state-proof .sample-off,.batch-switch:disabled,.trial-tabs button:disabled{border:1px dashed currentColor;cursor:not-allowed;text-decoration:none}
+    .state-proof .sample-off,.batch-switch:disabled,.trial-tabs button:disabled{color:var(--fx-disabled);background:var(--fx-disabled-surface);border:1px dashed currentColor;border-radius:2px}
+    [data-preview="dark"] :is(.state-proof .sample-off,.batch-switch:disabled,.trial-tabs button:disabled){color:var(--fx-disabled-night);background:var(--fx-disabled-surface-night)}
+    .state-proof .sample-off svg{vertical-align:-.12em}
+    html[data-preview] .state-proof button.sample-off:disabled{background:var(--fx-disabled-surface);color:var(--fx-disabled)}
+    html[data-preview="dark"] .state-proof button.sample-off:disabled{background:var(--fx-disabled-surface-night);color:var(--fx-disabled-night)}
   </style>
 </head>
 <body>
@@ -254,20 +301,29 @@
       <h1>物料总看台</h1>
       <p class="cities">丽江 / 济南 / 成都 / 拉萨</p>
       <a class="batch-jump" href="#royal-specimens">验收全套物料</a>
-      <a class="batch-jump" href="#icon-batch">查看小程序图标</a>
+      <a class="batch-jump" href="#pigments">绢本设色色谱</a>
+      <a class="batch-jump" href="#specimen-objects">马帮行旅物料</a>
+      <a class="batch-jump" href="#icon-batch">导航与首页入口</a>
+      <a class="batch-jump" href="#city-scenes">查看城市景图</a>
     </div>
   </header>
 
   <main class="wrap board">
+    <section class="panel scenes" id="city-scenes" aria-labelledby="scenes-title"><div class="panel-head" id="royal-specimens"><h2 id="scenes-title">城市景图 · 绢本青绿山水</h2><a href="./01_风格参考图/青绿山水_行旅驿站.png">画风参考</a></div><div class="scene-grid"><figure><a href="./06_城市景图/scene_changsha_shanshui.png" data-scene-zoom aria-label="放大长沙 · 水阁行旅"><img decoding="async" width="1536" height="1024" src="./06_城市景图/scene_changsha_shanshui.png" alt="三层临水楼阁下有行旅与驮马，江面倒映远山"></a><figcaption><strong>长沙 · 水阁行旅</strong><a href="./01_风格参考图/城市原图/长沙.png" data-scene-zoom>建筑原图</a><a href="./06_城市景图/scene_changsha_shanshui.png" download>下载 PNG</a></figcaption></figure><figure><a href="./06_城市景图/scene_chengdu_shanshui.png" data-scene-zoom aria-label="放大成都 · 古道入城"><img decoding="async" width="1536" height="1024" src="./06_城市景图/scene_chengdu_shanshui.png" alt="两树夹门，行人牵马循石径走向朱墙门楼"></a><figcaption><strong>成都 · 古道入城</strong><a href="./01_风格参考图/城市原图/成都.png" data-scene-zoom>建筑原图</a><a href="./06_城市景图/scene_chengdu_shanshui.png" download>下载 PNG</a></figcaption></figure></div></section>
+
     <section class="panel reference" aria-labelledby="reference-title">
       <div class="panel-head">
         <h2 id="reference-title">风格原图</h2>
-        <span class="rubric">8 张 · 点击放大</span>
+        <span class="rubric">9 张 · 点击放大</span>
       </div>
       <div class="source-grid">
         <button class="source featured palette-source" type="button">
+          <span class="source-image"><img src="./01_风格参考图/青绿山水_行旅驿站.png" alt="行旅驿站图中的石青山脊、淡墨衣纹与绢色留白"></span>
+          <span class="source-label">统一画风 · 绢本青绿行旅图</span>
+        </button>
+        <button class="source featured palette-source" type="button">
           <span class="source-image"><img src="./01_风格参考图/a8d0b7cba4badd31e26e2c8cf6c5d2bc.jpg" alt="黛青衣料、朱漆包边、绒缘和分片铠甲的古甲武将立绘"></span>
-          <span class="source-label">本轮参考 · 古甲武将立绘</span>
+          <span class="source-label">器物结构 · 古甲武将立绘</span>
         </button>
         <button class="source featured" type="button">
           <span class="source-image"><img src="./01_风格参考图/644ecd38ddf0ed520d50410c8de0763d.jpg" alt="青绿衬色、靛墨外框和朱红廊柱"></span>
@@ -301,69 +357,25 @@
     </section>
 
     <section class="specimens" id="samples" aria-labelledby="samples-title">
-      <section class="panel palette" aria-labelledby="palette-title">
+      <section class="panel palette" id="pigments" aria-labelledby="palette-title">
         <div class="panel-head">
-          <h2 id="palette-title">古甲立绘色板</h2>
-          <span class="rubric">本轮参考图分区取样 · sRGB</span>
+          <h2 id="palette-title">绢本设色色谱</h2>
+          <span class="rubric">行旅图局部 / sRGB</span>
         </div>
-        <div class="color-families">
-          <div class="color-family color-family--red">
-            <h3>朱漆包边</h3>
-            <ul class="swatches">
-              <li><span class="chip" style="--sample: #8E3A28"></span><strong>朱漆受光</strong><code>#8E3A28</code></li>
-              <li><span class="chip" style="--sample: #6E3123"></span><strong>漆红背光</strong><code>#6E3123</code></li>
-            </ul>
-          </div>
-          <div class="color-family color-family--gold">
-            <h3>旧铜扣件</h3>
-            <ul class="swatches">
-              <li><span class="chip" style="--sample: #B97742"></span><strong>擦亮铜面</strong><code>#B97742</code></li>
-              <li><span class="chip" style="--sample: #704329"></span><strong>旧铜背光</strong><code>#704329</code></li>
-            </ul>
-          </div>
-          <div class="color-family">
-            <h3>黛青衣料</h3>
-            <ul class="swatches">
-              <li><span class="chip" style="--sample: #264A50"></span><strong>黛青正色</strong><code>#264A50</code></li>
-              <li><span class="chip" style="--sample: #273430"></span><strong>衣褶深影</strong><code>#273430</code></li>
-            </ul>
-          </div>
-          <div class="color-family">
-            <h3>甲片墨色</h3>
-            <ul class="swatches">
-              <li><span class="chip" style="--sample: #4E4442"></span><strong>铁灰受光</strong><code>#4E4442</code></li>
-              <li><span class="chip" style="--sample: #25201C"></span><strong>甲墨背光</strong><code>#25201C</code></li>
-            </ul>
-          </div>
-          <div class="color-family">
-            <h3>绒缘纤维</h3>
-            <ul class="swatches">
-              <li><span class="chip" style="--sample: #C7AD92"></span><strong>暖绒受光</strong><code>#C7AD92</code></li>
-              <li><span class="chip" style="--sample: #AA8F71"></span><strong>绒根背光</strong><code>#AA8F71</code></li>
-            </ul>
-          </div>
-          <div class="color-family">
-            <h3>旧绢留白</h3>
-            <ul class="swatches">
-              <li><span class="chip" style="--sample: #DBD7CE"></span><strong>旧绢亮面</strong><code>#DBD7CE</code></li>
-              <li><span class="chip" style="--sample: #DAD6CD"></span><strong>旧绢暗面</strong><code>#DAD6CD</code></li>
-            </ul>
-          </div>
-        </div>
-        <dl class="notes">
-          <div><dt>织物</dt><dd>旗面用燕尾与压边交代折转，马甲以交领右衽、绗线和叠甲区分软布与硬甲。</dd></div>
+        <div class="color-families"><article class="pigment"><div class="pigment-detail" style="--px:85%;--py:56%" aria-hidden="true"></div><div class="pigment-data"><h3>朱砂<small>廊柱 · 朱漆</small></h3><ul class="swatches"><li><button type="button" class="pick-pigment" data-hex="#A35F46" aria-label="复制朱柱设色 #A35F46"><span class="chip" style="--sample:var(--fx-pillar)"></span><strong>朱柱设色</strong><code>#A35F46</code></button></li><li><button type="button" class="pick-pigment" data-hex="#8C4E3A" aria-label="复制朱漆背光 #8C4E3A"><span class="chip" style="--sample:var(--fx-pillar-shadow)"></span><strong>朱漆背光</strong><code>#8C4E3A</code></button></li></ul></div></article><article class="pigment"><div class="pigment-detail" style="--px:78%;--py:41%" aria-hidden="true"></div><div class="pigment-data"><h3>赭金<small>檐脊 · 描金</small></h3><ul class="swatches"><li><button type="button" class="pick-pigment" data-hex="#D8BD90" aria-label="复制暖金受光 #D8BD90"><span class="chip" style="--sample:var(--fx-gold-light)"></span><strong>暖金受光</strong><code>#D8BD90</code></button></li><li><button type="button" class="pick-pigment" data-hex="#BC955F" aria-label="复制赭金刻线 #BC955F"><span class="chip" style="--sample:var(--fx-gold-line)"></span><strong>赭金刻线</strong><code>#BC955F</code></button></li></ul></div></article><article class="pigment"><div class="pigment-detail" style="--px:32%;--py:15%" aria-hidden="true"></div><div class="pigment-data"><h3>石青<small>山峦 · 石青</small></h3><ul class="swatches"><li><button type="button" class="pick-pigment" data-hex="#77919B" aria-label="复制山体石青 #77919B"><span class="chip" style="--sample:var(--fx-mountain)"></span><strong>山体石青</strong><code>#77919B</code></button></li><li><button type="button" class="pick-pigment" data-hex="#48636C" aria-label="复制青黛背阴 #48636C"><span class="chip" style="--sample:var(--fx-mountain-shadow)"></span><strong>青黛背阴</strong><code>#48636C</code></button></li></ul></div></article><article class="pigment"><div class="pigment-detail" style="--px:8%;--py:50%" aria-hidden="true"></div><div class="pigment-data"><h3>褐墨<small>松干 · 褐墨</small></h3><ul class="swatches"><li><button type="button" class="pick-pigment" data-hex="#968062" aria-label="复制淡墨细线 #968062"><span class="chip" style="--sample:var(--fx-ink-fine)"></span><strong>淡墨细线</strong><code>#968062</code></button></li><li><button type="button" class="pick-pigment" data-hex="#524637" aria-label="复制褐墨轮廓 #524637"><span class="chip" style="--sample:var(--fx-ink-outline)"></span><strong>褐墨轮廓</strong><code>#524637</code></button></li></ul></div></article><article class="pigment"><div class="pigment-detail" style="--px:31%;--py:50%" aria-hidden="true"></div><div class="pigment-data"><h3>苔绿<small>山脚 · 苔点</small></h3><ul class="swatches"><li><button type="button" class="pick-pigment" data-hex="#A7B4A5" aria-label="复制远山灰绿 #A7B4A5"><span class="chip" style="--sample:var(--fx-hill)"></span><strong>远山灰绿</strong><code>#A7B4A5</code></button></li><li><button type="button" class="pick-pigment" data-hex="#78816B" aria-label="复制苔点 #78816B"><span class="chip" style="--sample:var(--fx-moss)"></span><strong>苔点</strong><code>#78816B</code></button></li></ul></div></article><article class="pigment"><div class="pigment-detail" style="--px:72%;--py:6%" aria-hidden="true"></div><div class="pigment-data"><h3>暖绢<small>云烟 · 绢底</small></h3><ul class="swatches"><li><button type="button" class="pick-pigment" data-hex="#F5E6C8" aria-label="复制亮绢 #F5E6C8"><span class="chip" style="--sample:var(--fx-silk-light)"></span><strong>亮绢</strong><code>#F5E6C8</code></button></li><li><button type="button" class="pick-pigment" data-hex="#E9D6AF" aria-label="复制暖绢 #E9D6AF"><span class="chip" style="--sample:var(--fx-silk-warm)"></span><strong>暖绢</strong><code>#E9D6AF</code></button></li></ul></div></article></div><output class="pigment-result" aria-live="polite">点色票复制 HEX 色值</output><details class="interaction-spec"><summary>取用同款间色</summary><p>画稿以十二种基色设色，暗部、印面、金边另取黛蓝墨、印面朱和亮边金。分色矢量中的细碎笔触为两色叠染的 sRGB 数字近似。任选两支基色，每次按 12.5% 调整混合比例即可复现间色。</p><label>第一色 <select id="mix-a"></select></label> <label>第二色 <select id="mix-b"></select></label> <label>第二色用量 <input id="mix-weight" type="range" min="0" max="8" value="3"></label> <button id="mix-copy" type="button" class="copy-tone" data-label="间色" data-hex="#9CB4AB"><i class="mix-chip"></i><code></code></button> <output id="mix-ratio"></output></details><dl class="ink-spec"><div><dt>正文与签注</dt><dd><b class="ink-paper">墨</b>褐墨 <button type="button" class="copy-tone" data-hex="#524637" data-label="褐墨" aria-label="复制褐墨 #524637" title="复制 #524637"><code>#524637</code></button> 配暖绢底；用于小字与勾形。</dd></div><div><dt>深底反白</dt><dd><b class="ink-dark">绢</b>亮绢 <button type="button" class="copy-tone" data-hex="#F5E6C8" data-label="亮绢" aria-label="复制亮绢 #F5E6C8" title="复制 #F5E6C8"><code>#F5E6C8</code></button> 配黛蓝墨底；用于标签与细轮廓。</dd></div><div><dt>描金与淡染</dt><dd>赭金、亮绢用于高光和装饰；淡墨 <button type="button" class="copy-tone" data-hex="#968062" data-label="淡墨" aria-label="复制淡墨 #968062" title="复制 #968062"><code>#968062</code></button> 用于有实线衬托的纹饰。正文、图标外缘与小字号使用褐墨；石青、苔绿、赭金只用于着色与提光。</dd></div><div><dt>关防朱印</dt><dd><i class="verm"></i>印面朱 <button type="button" class="copy-tone" data-hex="#C87454" data-label="印面朱" aria-label="复制印面朱 #C87454" title="复制 #C87454"><code>#C87454</code></button> 仅用于章面与纹饰。小字统一用褐墨或亮绢。</dd></div></dl><details class="interaction-spec" open><summary>24 px 笔色与交互状态</summary><dl><dt>小稿三笔</dt><dd>褐墨 <button type="button" class="copy-tone" data-hex="#524637" data-label="褐墨" aria-label="复制褐墨 #524637" title="复制 #524637"><code>#524637</code></button> 勾形，石青 <button type="button" class="copy-tone" data-hex="#658797" data-label="石青提边" aria-label="复制石青提边 #658797" title="复制 #658797"><code>#658797</code></button> 着色，亮绢 <button type="button" class="copy-tone" data-hex="#F5E6C8" data-label="亮绢" aria-label="复制亮绢 #F5E6C8" title="复制 #F5E6C8"><code>#F5E6C8</code></button> 留光；印与系绳局部用朱砂 <button type="button" class="copy-tone" data-hex="#A35F46" data-label="朱砂" aria-label="复制朱砂 #A35F46" title="复制 #A35F46"><code>#A35F46</code></button>，朱柱与行囊结取受光朱 <button type="button" class="copy-tone" data-hex="#AF5639" data-label="朱柱受光" aria-label="复制朱柱受光 #AF5639" title="复制 #AF5639"><code>#AF5639</code></button>。</dd><dt>选中</dt><dd>选中前后保留同一张原画、原尺寸；左上与右下添两笔引首角印。标签只加粗并以正文色画 2 px 短线。浅底以青黛 <button type="button" class="copy-tone" data-label="浅底角印" data-hex="#38545C"><code>#38545C</code></button> 收角，深底改用亮绢 <button type="button" class="copy-tone" data-label="深底角印" data-hex="#F5E6C8"><code>#F5E6C8</code></button>。与底色的亮度对比分别约 6.6∶1 和 14.7∶1。</dd><dt>悬停 / 按下</dt><dd>石青 <button type="button" class="copy-tone" data-hex="#658797" data-label="石青提边" aria-label="复制石青提边 #658797" title="复制 #658797"><code>#658797</code></button> 提边；按下移 2 px，朱砂 <button type="button" class="copy-tone" data-hex="#99523D" data-label="按下收边" aria-label="复制按下收边 #99523D" title="复制 #99523D"><code>#99523D</code></button> 收边，绢面同时压暗。</dd><dt>键盘焦点</dt><dd>双层墨、绢焦点环；三种底色都保留边界。</dd><dt>不可用</dt><dd>浅底用黛蓝底配灰绿字 <button type="button" class="copy-tone" data-hex="#A7B4A5" data-label="锁定灰绿" aria-label="复制锁定灰绿 #A7B4A5"><code>#A7B4A5</code></button>；深底用暖金底配褐墨字 <button type="button" class="copy-tone" data-hex="#524637" data-label="锁定褐墨" aria-label="复制锁定褐墨 #524637"><code>#524637</code></button>。锁形、虚线与「不可用」标签共同标出状态。</dd></dl><div class="state-proof" aria-label="状态用色样张"><button type="button" class="sample-hover">悬停</button><button type="button" class="sample-down" aria-pressed="true">按下</button><button type="button" class="sample-focus">焦点</button><button type="button" class="sample-off" disabled><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path d="M4.8 7V5a3.2 3.2 0 0 1 6.4 0v2M3.5 7.5h9v6h-9Z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 9.2v2.2" stroke="currentColor" stroke-width="1.4"/></svg> 不可用</button></div></details><div class="state-tones"><strong>界面用色</strong><button type="button" class="copy-tone" data-hex="#38545C" data-label="浅底角印" aria-label="复制浅底角印 #38545C" title="复制 #38545C"><i style="--c:var(--fx-selected)"></i>浅底角印 <code>#38545C</code></button><button type="button" class="copy-tone" data-hex="#DCC595" data-label="深底亮边" aria-label="复制深底亮边 #DCC595" title="复制 #DCC595"><i style="--c:var(--fx-edge-night)"></i>深底亮边 <code>#DCC595</code></button><button type="button" class="copy-tone" data-hex="#F5E6C8" data-label="深底角印" aria-label="复制深底角印 #F5E6C8" title="复制 #F5E6C8"><i style="--c:var(--fx-selected-night)"></i>深底角印 <code>#F5E6C8</code></button><button type="button" class="copy-tone" data-hex="#111523" data-label="黛蓝墨底" aria-label="复制黛蓝墨底 #111523" title="复制 #111523"><i style="--c:var(--fx-night)"></i>黛蓝墨底 <code>#111523</code></button><button type="button" class="copy-tone" data-hex="#F2E6CE" data-label="暖绢底" aria-label="复制暖绢底 #F2E6CE" title="复制 #F2E6CE"><i style="--c:var(--fx-preview-paper)"></i>暖绢底 <code>#F2E6CE</code></button><button type="button" class="copy-tone" data-hex="#B4C4AC" data-label="淡苔底" aria-label="复制淡苔底 #B4C4AC" title="复制 #B4C4AC"><i style="--c:var(--fx-pale-moss)"></i>淡苔底 <code>#B4C4AC</code></button><a href="./04_界面组件与边框/base_style.css" download>取用整套 CSS 色值</a></div><dl class="notes">
+          <div><dt>织物</dt><dd>燕尾旗随布褶起伏，朱砂马甲以斜向绗线、盘扣和下摆山纹区分软硬材质。</dd></div>
           <div><dt>器型</dt><dd>玻璃瓶用方印塞、折肩和收足成形，窄题签下方留出液面与玻璃厚度。</dd></div>
-          <div><dt>文书</dt><dd>传书与文牒都用窄折、青布装订和朱印。卡框沿用文牒的纸边与缝线。</dd></div>
-          <div><dt>墨线与用色</dt><dd>朱漆、黛青与旧铜统一材质。交叠处聚墨，小图标提取容易辨认的轮廓。</dd></div>
+          <div><dt>文书</dt><dd>飞鸽携折件，通关文牒以线装册页承托山水和四城名录。故事卡沿用册页的山脚与装订线。</dd></div>
+          <div><dt>墨线与用色</dt><dd>褐墨细线循瓦面、羽轴与瓶肩走向收笔。导航保留主轮廓，用短线和留白区分材质。</dd></div>
         </dl>
       </section>
 
-      <div class="specimen-heading" id="royal-specimens">
+      <div class="specimen-heading" id="specimen-objects">
         <h2 id="samples-title">马帮行旅物料</h2>
         <div class="theme-controls" role="group" aria-label="样品预览底色">
-          <button type="button" data-theme="green" aria-pressed="false" title="#BFD46B">青绿宣纹底</button>
+          <button type="button" data-theme="green" aria-pressed="false" title="#B4C4AC">淡苔底</button>
           <button type="button" data-theme="dark" aria-pressed="false" title="#111523">黛蓝墨底</button>
-          <button type="button" data-theme="light" aria-pressed="true" title="#DBD7CE">旧绢白底</button>
+          <button type="button" data-theme="light" aria-pressed="true" title="#F2E6CE">暖绢底</button>
         </div>
       </div>
 
@@ -451,28 +463,28 @@
       <div class="panel-head batch-heading">
         <div>
           <h2 id="batch-title">第1批：导航与首页入口</h2>
-          <p class="batch-hint">点击双状态图标切换。右侧小图按 24 px 实际尺寸显示。</p>
+          <p class="batch-hint">点击切换状态。右侧为 24 px 专用稿，青黛双角印记表示导航已选中。</p>
         </div>
         <div class="theme-controls" role="group" aria-label="第1批图标预览底色">
-          <button type="button" data-theme="green" aria-pressed="false" title="#BFD46B">青绿宣纹底</button>
+          <button type="button" data-theme="green" aria-pressed="false" title="#B4C4AC">淡苔底</button>
           <button type="button" data-theme="dark" aria-pressed="false" title="#111523">黛蓝墨底</button>
-          <button type="button" data-theme="light" aria-pressed="true" title="#DBD7CE">旧绢白底</button>
+          <button type="button" data-theme="light" aria-pressed="true" title="#F2E6CE">暖绢底</button>
         </div>
       </div>
 
       <section class="batch-group" aria-labelledby="batch-nav-title">
         <h3 id="batch-nav-title">底部导航</h3>
-        <div class="batch-grid batch-grid--nav">
+        <div class="nav-trial" aria-label="24 像素底栏实机预览"><span>底栏预览 <small>24 px</small></span><div class="trial-tabs"><button type="button" data-trial="home" aria-pressed="false"><img width="24" height="24" alt="" src="./02_交互图标库/nav_home_default.svg#compact"><span>主页</span></button><button type="button" data-trial="wendie" aria-pressed="false"><img width="24" height="24" alt="" src="./02_交互图标库/nav_wendie_default.svg#compact"><span>文牒</span></button><button type="button" data-trial="feige" aria-pressed="false"><img width="24" height="24" alt="" src="./02_交互图标库/nav_feige_default.svg#compact"><span>传书</span></button><button type="button" data-trial="xingnang" aria-pressed="false"><img width="24" height="24" alt="" src="./02_交互图标库/nav_xingnang_default.svg#compact"><span>行囊</span></button></div></div><div class="batch-grid batch-grid--nav">
           <figure class="batch-card">
             <div class="stage batch-stage">
               <button class="batch-switch" type="button" aria-label="切换押镖主页状态" aria-pressed="false" data-status="batch-nav-home" data-active="选中" data-inactive="未选中">
                 <span class="batch-view batch-view--default" aria-hidden="true">
                   <img class="batch-large" src="./02_交互图标库/nav_home_default.svg" alt="" width="76" height="76">
-                  <span class="batch-mini"><img src="./02_交互图标库/nav_home_default.svg" alt="" width="24" height="24"><span>24 px</span></span>
+                  <span class="batch-mini"><img src="./02_交互图标库/24px/nav_home_default.svg#compact" alt="" width="24" height="24"><span>24 px</span></span>
                 </span>
                 <span class="batch-view batch-view--active" aria-hidden="true">
                   <img class="batch-large" src="./02_交互图标库/nav_home_active.svg" alt="" width="76" height="76">
-                  <span class="batch-mini"><img src="./02_交互图标库/nav_home_active.svg" alt="" width="24" height="24"><span>24 px</span></span>
+                  <span class="batch-mini"><img src="./02_交互图标库/24px/nav_home_active.svg#compact" alt="" width="24" height="24"><span>24 px</span></span>
                 </span>
               </button>
             </div>
@@ -486,11 +498,11 @@
               <button class="batch-switch" type="button" aria-label="切换通关文牒状态" aria-pressed="false" data-status="batch-nav-wendie" data-active="选中" data-inactive="未选中">
                 <span class="batch-view batch-view--default" aria-hidden="true">
                   <img class="batch-large" src="./02_交互图标库/nav_wendie_default.svg" alt="" width="76" height="76">
-                  <span class="batch-mini"><img src="./02_交互图标库/nav_wendie_default.svg" alt="" width="24" height="24"><span>24 px</span></span>
+                  <span class="batch-mini"><img src="./02_交互图标库/24px/nav_wendie_default.svg#compact" alt="" width="24" height="24"><span>24 px</span></span>
                 </span>
                 <span class="batch-view batch-view--active" aria-hidden="true">
                   <img class="batch-large" src="./02_交互图标库/nav_wendie_active.svg" alt="" width="76" height="76">
-                  <span class="batch-mini"><img src="./02_交互图标库/nav_wendie_active.svg" alt="" width="24" height="24"><span>24 px</span></span>
+                  <span class="batch-mini"><img src="./02_交互图标库/24px/nav_wendie_active.svg#compact" alt="" width="24" height="24"><span>24 px</span></span>
                 </span>
               </button>
             </div>
@@ -504,11 +516,11 @@
               <button class="batch-switch" type="button" aria-label="切换飞鸽传书状态" aria-pressed="false" data-status="batch-nav-feige" data-active="选中" data-inactive="未选中">
                 <span class="batch-view batch-view--default" aria-hidden="true">
                   <img class="batch-large" src="./02_交互图标库/nav_feige_default.svg" alt="" width="76" height="76">
-                  <span class="batch-mini"><img src="./02_交互图标库/nav_feige_default.svg" alt="" width="24" height="24"><span>24 px</span></span>
+                  <span class="batch-mini"><img src="./02_交互图标库/24px/nav_feige_default.svg#compact" alt="" width="24" height="24"><span>24 px</span></span>
                 </span>
                 <span class="batch-view batch-view--active" aria-hidden="true">
                   <img class="batch-large" src="./02_交互图标库/nav_feige_active.svg" alt="" width="76" height="76">
-                  <span class="batch-mini"><img src="./02_交互图标库/nav_feige_active.svg" alt="" width="24" height="24"><span>24 px</span></span>
+                  <span class="batch-mini"><img src="./02_交互图标库/24px/nav_feige_active.svg#compact" alt="" width="24" height="24"><span>24 px</span></span>
                 </span>
               </button>
             </div>
@@ -522,11 +534,11 @@
               <button class="batch-switch" type="button" aria-label="切换我的行囊状态" aria-pressed="false" data-status="batch-nav-xingnang" data-active="选中" data-inactive="未选中">
                 <span class="batch-view batch-view--default" aria-hidden="true">
                   <img class="batch-large" src="./02_交互图标库/nav_xingnang_default.svg" alt="" width="76" height="76">
-                  <span class="batch-mini"><img src="./02_交互图标库/nav_xingnang_default.svg" alt="" width="24" height="24"><span>24 px</span></span>
+                  <span class="batch-mini"><img src="./02_交互图标库/24px/nav_xingnang_default.svg#compact" alt="" width="24" height="24"><span>24 px</span></span>
                 </span>
                 <span class="batch-view batch-view--active" aria-hidden="true">
                   <img class="batch-large" src="./02_交互图标库/nav_xingnang_active.svg" alt="" width="76" height="76">
-                  <span class="batch-mini"><img src="./02_交互图标库/nav_xingnang_active.svg" alt="" width="24" height="24"><span>24 px</span></span>
+                  <span class="batch-mini"><img src="./02_交互图标库/24px/nav_xingnang_active.svg#compact" alt="" width="24" height="24"><span>24 px</span></span>
                 </span>
               </button>
             </div>
@@ -545,7 +557,7 @@
             <div class="stage batch-stage">
               <span class="batch-view" aria-hidden="true">
                 <img class="batch-large" src="./02_交互图标库/icon_jiebiao_flag.svg" alt="" width="76" height="76">
-                <span class="batch-mini"><img src="./02_交互图标库/icon_jiebiao_flag.svg" alt="" width="24" height="24"><span>24 px</span></span>
+                <span class="batch-mini"><img src="./02_交互图标库/24px/icon_jiebiao_flag.svg#compact" alt="" width="24" height="24"><span>24 px</span></span>
               </span>
             </div>
             <figcaption class="asset-caption">
@@ -557,7 +569,7 @@
             <div class="stage batch-stage">
               <span class="batch-view" aria-hidden="true">
                 <img class="batch-large" src="./02_交互图标库/icon_scan_checkin.svg" alt="" width="76" height="76">
-                <span class="batch-mini"><img src="./02_交互图标库/icon_scan_checkin.svg" alt="" width="24" height="24"><span>24 px</span></span>
+                <span class="batch-mini"><img src="./02_交互图标库/24px/icon_scan_checkin.svg#compact" alt="" width="24" height="24"><span>24 px</span></span>
               </span>
             </div>
             <figcaption class="asset-caption">
@@ -570,11 +582,11 @@
               <button class="batch-switch" type="button" aria-label="切换马帮铜铃状态" aria-pressed="true" data-status="batch-bell" data-active="开启" data-inactive="静音">
                 <span class="batch-view batch-view--default" aria-hidden="true">
                   <img class="batch-large" src="./02_交互图标库/icon_sound_bell_off.svg" alt="" width="76" height="76">
-                  <span class="batch-mini"><img src="./02_交互图标库/icon_sound_bell_off.svg" alt="" width="24" height="24"><span>24 px</span></span>
+                  <span class="batch-mini"><img src="./02_交互图标库/24px/icon_sound_bell_off.svg#compact" alt="" width="24" height="24"><span>24 px</span></span>
                 </span>
                 <span class="batch-view batch-view--active" aria-hidden="true">
                   <img class="batch-large" src="./02_交互图标库/icon_sound_bell_on.svg" alt="" width="76" height="76">
-                  <span class="batch-mini"><img src="./02_交互图标库/icon_sound_bell_on.svg" alt="" width="24" height="24"><span>24 px</span></span>
+                  <span class="batch-mini"><img src="./02_交互图标库/24px/icon_sound_bell_on.svg#compact" alt="" width="24" height="24"><span>24 px</span></span>
                 </span>
               </button>
             </div>
@@ -587,7 +599,7 @@
             <div class="stage batch-stage">
               <span class="batch-view" aria-hidden="true">
                 <img class="batch-large" src="./02_交互图标库/icon_secret_key.svg" alt="" width="76" height="76">
-                <span class="batch-mini"><img src="./02_交互图标库/icon_secret_key.svg" alt="" width="24" height="24"><span>24 px</span></span>
+                <span class="batch-mini"><img src="./02_交互图标库/24px/icon_secret_key.svg#compact" alt="" width="24" height="24"><span>24 px</span></span>
               </span>
             </div>
             <figcaption class="asset-caption">
@@ -599,7 +611,7 @@
             <div class="stage batch-stage">
               <span class="batch-view" aria-hidden="true">
                 <img class="batch-large" src="./02_交互图标库/icon_share_lantern.svg" alt="" width="76" height="76">
-                <span class="batch-mini"><img src="./02_交互图标库/icon_share_lantern.svg" alt="" width="24" height="24"><span>24 px</span></span>
+                <span class="batch-mini"><img src="./02_交互图标库/24px/icon_share_lantern.svg#compact" alt="" width="24" height="24"><span>24 px</span></span>
               </span>
             </div>
             <figcaption class="asset-caption">
@@ -610,6 +622,10 @@
         </div>
       </section>
     </section>
+    <section class="panel scenes"><div class="panel-head"><h3>建筑竖幅</h3></div><div class="scene-grid">
+      <figure><a href="./06_城市景图/scene_changsha.png" data-scene-zoom aria-label="放大长沙城景"><img loading="lazy" width="1086" height="1448" src="./06_城市景图/scene_changsha.png" alt="三层重檐楼阁立在水岸，朱柱与石阶倒映在水面"></a><figcaption><strong>长沙 · 临水楼阁</strong><a href="./01_风格参考图/城市原图/长沙.png" data-scene-zoom>查看原图</a><a href="./06_城市景图/scene_changsha.png" download>下载 PNG</a></figcaption></figure>
+      <figure><a href="./06_城市景图/scene_chengdu.png" data-scene-zoom aria-label="放大成都城景"><img loading="lazy" width="1086" height="1448" src="./06_城市景图/scene_chengdu.png" alt="古树夹着朱墙门楼，石径穿过门洞通往林间"></a><figcaption><strong>成都 · 古树门楼</strong><a href="./01_风格参考图/城市原图/成都.png" data-scene-zoom>查看原图</a><a href="./06_城市景图/scene_chengdu.png" download>下载 PNG</a></figcaption></figure>
+    </div></section>
   </main>
 
   <dialog id="reference-modal" class="modal" aria-labelledby="reference-caption">
@@ -636,12 +652,125 @@
       const status = document.getElementById(control.dataset.status);
       control.addEventListener("click", () => {
         const active = control.getAttribute("aria-pressed") === "false";
+        if (active && control.closest(".batch-grid--nav")) {
+          for (const sibling of control.closest(".batch-grid--nav").querySelectorAll('[aria-pressed="true"]')) {
+            if (sibling === control) continue;
+            sibling.setAttribute("aria-pressed", "false");
+            document.getElementById(sibling.dataset.status).textContent = sibling.dataset.inactive || "未选中";
+          }
+        }
         control.setAttribute("aria-pressed", String(active));
         status.textContent = active ? (control.dataset.active || "已高亮") : (control.dataset.inactive || "默认态");
       });
     }
 
+    const pressSample = document.querySelector(".sample-down");
+    pressSample.addEventListener("click", () => {
+      const pressed = pressSample.getAttribute("aria-pressed") !== "true";
+      pressSample.setAttribute("aria-pressed", String(pressed));
+      pressSample.textContent = pressed ? "按下" : "松开";
+    });
+    const colors = [...document.querySelectorAll(".pick-pigment")].map(b => [b.querySelector("strong").textContent,b.dataset.hex]);
+    colors.push(["黛蓝墨","#111523"], ["印面朱","#C87454"], ["亮边金","#DCC595"]);
+    const mixA=document.querySelector("#mix-a"), mixB=document.querySelector("#mix-b"), mixWeight=document.querySelector("#mix-weight"), mixCopy=document.querySelector("#mix-copy");
+    for(const select of [mixA,mixB]) for(const [label,hex] of colors) select.add(new Option(label,hex));
+    mixA.selectedIndex=4; mixB.selectedIndex=10;
+    function updateMix(){
+      const n=Number(mixWeight.value);
+      const channel=(hex,i)=>parseInt(hex.slice(i,i+2),16);
+      const byte=x=>x-Math.floor(x)===.5?2*Math.round(x/2):Math.round(x);
+      const mixed=[1,3,5].map(i=>byte((channel(mixA.value,i)*(8-n)+channel(mixB.value,i)*n)/8).toString(16).padStart(2,"0")).join("").toUpperCase();
+      mixCopy.dataset.hex="#"+mixed;mixCopy.querySelector("code").textContent="#"+mixed;
+      mixCopy.style.setProperty("--mix","#"+mixed);document.querySelector("#mix-ratio").textContent=(n*12.5)+"%";
+      mixCopy.classList.remove("copied-color");
+    }
+    [mixA,mixB,mixWeight].forEach(el=>el.addEventListener("input",updateMix));updateMix();
+    const pigmentResult = document.querySelector(".pigment-result");
+    for (const choice of document.querySelectorAll("[data-hex]")) {
+      choice.addEventListener("click", async () => {
+        const value = choice.dataset.hex;
+        let copied = false;
+        const field = document.createElement("textarea");
+        field.value = value;
+        field.style.cssText = "position:fixed;left:0;top:0;opacity:0";
+        document.body.append(field);
+        field.select();
+        try { copied = document.execCommand("copy"); } catch {}
+        field.remove();
+        choice.focus({preventScroll:true});
+        if (!copied && navigator.clipboard) {
+          try { await navigator.clipboard.writeText(value); copied = true; } catch {}
+        }
+        for (const old of document.querySelectorAll(".copied-color")) old.classList.remove("copied-color");
+        if (copied) choice.classList.add("copied-color");
+        pigmentResult.textContent = (choice.dataset.label || choice.querySelector("strong").textContent) + " · " + value + (copied ? " 已复制" : "（可直接选取色值）");
+        pigmentResult.style.setProperty("--picked", value);
+      });
+    }
+    const navTrials = document.querySelectorAll("[data-trial]");
+    for (const tab of navTrials) {
+      const card = document.querySelector('[data-status="batch-nav-' + tab.dataset.trial + '"]');
+      tab.addEventListener("click", () => card.click());
+      card.addEventListener("click", () => {
+        for (const other of navTrials) {
+          const control = document.querySelector('[data-status="batch-nav-' + other.dataset.trial + '"]');
+          const pressed = control.getAttribute("aria-pressed");
+          other.setAttribute("aria-pressed", pressed);
+          other.querySelector("img").src = "./02_交互图标库/24px/nav_" + other.dataset.trial + "_" + (pressed === "true" ? "active" : "default") + ".svg#compact";
+        }
+      });
+    }
+    for (const card of document.querySelectorAll(".batch-card:has(button[data-status])")) {
+      const control = card.querySelector("[data-status]");
+      const links = [...card.querySelectorAll(".asset-meta a")];
+      const urls = links.map(link => link.href);
+      const link = links[0];
+      links[1].remove();
+      const update = () => {
+        const active = control.getAttribute("aria-pressed") === "true";
+        link.href = urls[Number(active)];
+        link.textContent = "取用当前 SVG";
+        link.setAttribute("aria-label", card.querySelector("h4").textContent + " · " + card.querySelector("output").textContent + " SVG");
+      };
+      update();
+      new MutationObserver(update).observe(control, {attributes:true, attributeFilter:["aria-pressed"]});
+    }
+    document.querySelector('[data-status="batch-nav-home"]').click();
+    function applyIconSurface() {
+      const dark = document.documentElement.dataset.preview === "dark";
+      for (const img of document.querySelectorAll(".batch-card img, .nav-trial img")) {
+        const [source] = img.getAttribute("src").split("#");
+        const small = img.width === 24;
+        const file = small ? "./02_交互图标库/24px/"+source.split("/").pop() : source;
+        const src = file + (small ? (dark ? "#compact-night" : "#compact") : (dark ? "#night" : ""));
+        if (img.getAttribute("src") !== src) img.setAttribute("src", src);
+      }
+    }
+    for (const button of themeControls) button.addEventListener("click", applyIconSurface);
+    for (const card of document.querySelectorAll(".batch-grid--nav button")) card.addEventListener("click", applyIconSurface);
+    applyIconSurface();
     const modal = document.getElementById("reference-modal");
+    for (const figure of document.querySelectorAll(".batch-card")) {
+      const zoom = document.createElement("button");
+      zoom.type = "button";
+      zoom.className = "inspect-mini";
+      zoom.textContent = "看笔触";
+      zoom.addEventListener("click", () => {
+        const art = [...figure.querySelectorAll(".batch-large")].find(img => img.getClientRects().length);
+        const caption = figure.querySelector("h4").textContent;
+        if (art) openImage(art.src, caption, caption, true);
+      });
+      const downloadSmall = document.createElement("a");
+      downloadSmall.textContent = "24 px SVG";
+      const setSmallLink = () => {
+        const current = [...figure.querySelectorAll(".batch-mini img")].find(i => i.getClientRects().length);
+        if (current) downloadSmall.href = "./02_交互图标库/24px/" + current.src.split("/").pop().split("#")[0];
+      };
+      setSmallLink();
+      const control = figure.querySelector("[data-status]");
+      if (control) new MutationObserver(setSmallLink).observe(control,{attributes:true,attributeFilter:["aria-pressed"]});
+      figure.querySelector(".asset-meta").append(downloadSmall, zoom);
+    }
     const fullImage = document.getElementById("reference-full");
     const imageCaption = document.getElementById("reference-caption");
     function openImage(src, alt, title, showArtworkDetail = false) {
@@ -655,6 +784,15 @@
       control.addEventListener("click", () => {
         const thumbnail = control.querySelector("img");
         openImage(thumbnail.src, thumbnail.alt, control.querySelector(".source-label").textContent);
+      });
+    }
+    for (const link of document.querySelectorAll("[data-scene-zoom]")) {
+      link.addEventListener("click", event => {
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        const figure = link.closest("figure");
+        const caption = figure.querySelector("strong").textContent + (link.querySelector("img") ? " · 设色稿" : " · 原图");
+        openImage(link.href, figure.querySelector("img").alt, caption);
       });
     }
     for (const link of document.querySelectorAll("[data-artwork-zoom]")) {

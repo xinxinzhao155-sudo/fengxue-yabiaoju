@@ -5,7 +5,7 @@
  */
 :root {
   color-scheme: dark;
-  --font-handwriting: "Escort Kai", "BiauKai", "DFKai-SB", "Kaiti TC", "KaiTi", cursive;
+  --font-handwriting: "Escort Kai SC", "Escort Kai SC Extended", "Kaiti SC", "KaiTi", "STKaiti", serif;
   --font-body: var(--font-handwriting);
   --font-display: var(--font-handwriting);
   --font-mono: var(--font-handwriting);

@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#263e44">
+<meta name="description" content="风雪押镖局四城飞鸽传书提案模拟器，单文件离线演示。">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'none'; connect-src 'none'; font-src 'none'; media-src 'none'; base-uri 'none'; form-action 'none'">
+<title>风雪押镖局 · 江湖飞鸽传书模拟器</title>
+<style>
+/* 视觉配置：沿用 00_公共资源 定稿的朱漆、旧铜、黛青、旧绢与宋体；纹理全部由 CSS 绘制。 */
+:root{--paper:#ebddbe;--cloud:#ebe6ce;--ochre:#cfaf81;--ink:#263e44;--blue:#253c45;--rust:#803f34;--gold:#ad855d;--moss:#505c4e;--seal:#a15340;--green:#b2c667;--ok:#bed2a2;--warn:#e7bb78;--err:#f3a199;--info:#a4c7ce;--serif:"Songti SC",STSong,SimSun,serif;--sans:"PingFang SC","Microsoft YaHei",sans-serif;--mono:"SFMono-Regular",Consolas,"Courier New",monospace;--line:#b49c79;--shadow:0 6px 18px #34281b13;--grain:repeating-linear-gradient(107deg,#8a654508 0 1px,transparent 1px 5px)}
+*{box-sizing:border-box}html{font-size:16px}body{margin:0;color:var(--ink);background:var(--grain),radial-gradient(ellipse at 48% 0%,#f1e9d8,transparent 70%),#dbd7ce;font-family:var(--sans);line-height:1.5}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.5}button,select,input,textarea{border-radius:3px}button{color:inherit}button:focus-visible,a:focus-visible{outline:3px solid #c2874f;outline-offset:3px}input:focus,textarea:focus,select:focus{outline:2px solid #ad855d;outline-offset:1px}button:active:not(:disabled){transform:translateY(1px)}[hidden]{display:none!important}h1,h2,h3,p{margin:0}svg{display:block}.icon{width:25px;height:25px;flex:none}.symbols{position:absolute;width:0;height:0;overflow:hidden}.mono{font-family:var(--mono)}.muted{color:#6c6b5e}.small{font-size:13px}.sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+.masthead{position:relative;color:#eee1c6;background:repeating-linear-gradient(105deg,#ffffff02 0 1px,transparent 1px 5px),linear-gradient(115deg,#253c45,#203337);border-top:5px solid #ad855d;border-bottom:1px solid #705a43}.mast-inner{max-width:1920px;margin:auto;padding:23px 30px 20px;display:grid;grid-template-columns:1.08fr 1fr;gap:36px;align-items:center}.brand-line{display:flex;align-items:center;gap:14px}.brand-emblem{display:grid;place-items:center;width:62px;height:62px;border:1px solid #ad855d;border-radius:3px;box-shadow:inset 0 0 0 4px #263e44,inset 0 0 0 5px #ad855d;background:#203438}.brand-emblem .icon{width:48px;height:48px}.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#c9b18d;margin-bottom:4px}.masthead h1{font:700 clamp(18px,1.55vw,30px)/1.4 var(--serif);letter-spacing:1.2px}.subtitle{margin:7px 0 0 76px;color:#c9c6b8;font-size:13px;letter-spacing:.3px}.rice-label{display:flex;align-items:center;gap:12px;font:600 15px var(--serif);margin-bottom:11px}.rice-number{font:600 27px var(--mono);color:#e6c994}.rice-label .pot-copy{font:14px var(--sans);color:#d0c7b2;margin-left:auto}.rice-label .pot-copy b{color:#e5c893;font-weight:500}.meter{height:7px;background:#15282d;border:1px solid #53635e;overflow:hidden}.meter-fill{height:100%;width:57.2%;background:repeating-linear-gradient(90deg,#b8bd78 0 18px,#9f9d66 18px 20px);transition:width .5s}.rice-foot{display:flex;justify-content:space-between;gap:10px;margin-top:9px;font-size:12px;color:#d0c7b2}.stats{color:#f1dfbd;white-space:nowrap}.utility-bar{max-width:1920px;margin:auto;padding:12px 30px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13px;border-bottom:1px solid #c0b299}.utility-bar .story{font-family:var(--serif);letter-spacing:1px}.live-mark{display:inline-flex;align-items:center;gap:7px;margin-right:17px;font-family:var(--sans);letter-spacing:0}.live-mark i{width:6px;height:6px;background:#61764d;border-radius:50%;box-shadow:0 0 0 3px #65784d17}.toolbar{display:flex;gap:15px}.text-btn{border:0;background:transparent;padding:3px 0;font-size:13px;color:#5a5e51}.text-btn:hover{color:#803f34;text-decoration:underline;text-underline-offset:4px}.layout{max-width:1920px;margin:auto;display:grid;grid-template-columns:350px minmax(0,1fr) 330px;gap:20px;padding:20px 30px}.left-col,.right-col{display:flex;flex-direction:column;gap:16px;min-width:0}.panel{background:var(--grain),#eee4cd;border:1px solid var(--line);border-radius:4px;box-shadow:var(--shadow);position:relative}.panel::after{content:"";position:absolute;inset:4px;border:1px solid #ad855d26;border-radius:1px;pointer-events:none}.panel-heading{display:flex;align-items:center;gap:9px;padding:14px 17px;border-bottom:1px solid #bbab8b;background:linear-gradient(90deg,#e3d4b9,#ede1ca)}.panel-heading h2{font:700 19px var(--serif);letter-spacing:1px}.section-num{font:12px var(--mono);color:#8c5944;border:1px solid #ab8b69;padding:3px 5px;line-height:1}.panel-sub{font-size:12px;color:#796f5b;margin-left:auto}.form-body{padding:13px 17px 15px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:11px 10px}label.field{display:block;min-width:0}.field-label{display:block;font-size:13px;color:#5c6053;margin-bottom:5px}.field.full{grid-column:1/-1}input[type=text],select,textarea{width:100%;min-width:0;border:1px solid #baa789;background:#f5eddc;color:#263e44;padding:8px 9px;font-size:14px;line-height:1.35;box-shadow:inset 0 1px 3px #4c371508}select{padding-right:22px}select:disabled{opacity:.55;background:#dedacb}textarea{height:77px;resize:vertical;min-height:77px;max-height:180px;line-height:1.65;font-family:var(--serif);font-size:16px;padding-bottom:20px}.textarea-wrap{position:relative}.counter{position:absolute;right:8px;bottom:9px;font:11px var(--mono);color:#7f7866}.check-row{display:flex;gap:7px;align-items:flex-start;font-size:13px;color:#5c6053;margin:9px 0}.check-row input{accent-color:#803f34;margin:3px 0 0;flex:none}.check-row small{font-size:11px;color:#7f7866}.primary,.secondary{width:100%;padding:10px 8px;border:1px solid #9e734f;font-family:var(--serif);font-weight:700;letter-spacing:1px;min-height:40px}.primary{position:relative;color:#f4e2bd;background:var(--grain),linear-gradient(#96503e,#793b31);box-shadow:inset 0 0 0 3px #803f34,inset 0 0 0 4px #bd936b,0 3px 6px #49301c18;text-shadow:0 1px #5d2925}.primary:hover{filter:brightness(1.08)}.secondary{background:#e7dcc1;color:#374c4a;margin-top:8px;font-size:13px}.secondary:hover{background:#ddd0af}.form-status{font-size:12px;min-height:18px;color:#6a7158;margin-top:7px}.form-status.err{color:#a03d31}.form-status.warn{color:#8d592c}.accelerate{margin-bottom:0}.passport-body{padding:12px 17px 15px;background:linear-gradient(90deg,#304d4f 0 6px,transparent 6px)}.holder{font-size:13px;margin-bottom:9px;color:#5c6053}.passport-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}.stamp-slot{min-height:69px;border:1px dashed #ad9674;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px;color:#847d6a;background:#f1e6cc55;font-family:var(--serif);font-size:14px}.stamp-slot small{font-family:var(--sans);font-size:11px;color:#8c826b}.stamp-slot.filled{background:#d8dfc2;border:1px solid #83906a;box-shadow:inset 0 0 0 3px #d8dfc2,inset 0 0 0 4px #a3ad87;color:#40583f}.stamp-slot.filled.home{color:#914d3a;background:#e5cdb0;border-color:#a15340;box-shadow:inset 0 0 0 3px #e5cdb0,inset 0 0 0 4px #bc8e6d}.stamp-sign{font:700 21px var(--serif);letter-spacing:3px}.passport-hint{font-size:12px;color:#796f5b;margin-top:8px}.cloud-note{padding:15px 3px 20px;font:16px/1.9 var(--serif)}.complete-card{margin-top:12px;padding:12px;background:#263e44;color:#e9ddc4;border:1px solid #ad855d;text-align:center}.complete-card h3{font:700 19px var(--serif);color:#e0bd83}.redeem-code{font:700 24px var(--mono);letter-spacing:2px;margin:8px 0}.complete-card p{font-size:12px;color:#d5ccb9}.complete-card button{margin-top:8px;border:1px solid #b99466;background:#d6bb8e;padding:6px 14px;font-size:13px;color:#263e44}.used-code{text-decoration:line-through;opacity:.5}
+.city-section{min-width:0;display:flex;flex-direction:column}.city-intro{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:12px;padding:0 2px}.city-intro h2{font:700 23px var(--serif);letter-spacing:2px}.city-intro p{font-size:12px;color:#766f5f}.city-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(2,minmax(350px,1fr));gap:16px;flex:1;min-height:0}.city-card{border:1px solid #8a8268;border-radius:4px;background:#e9dfc6;box-shadow:var(--shadow);min-width:0;overflow:hidden;display:flex;flex-direction:column;position:relative}.city-head{height:61px;flex:none;display:flex;align-items:center;padding:11px 14px;gap:9px;background:var(--grain),linear-gradient(110deg,#304b4e,#263e44);color:#ede0c3;border-bottom:2px solid #a98256}.city-art{font-size:25px;line-height:1}.city-head h3{font:700 18px var(--serif);letter-spacing:1px}.city-head p{font:10px var(--mono);letter-spacing:2px;color:#c2b38e;margin-top:3px}.bell{width:32px;height:32px;margin-left:auto;transform-origin:50% 15%;flex:none}.printer-toggle{font-size:11px;padding:4px 7px;background:#adc29715;color:#d0dbb1;border:1px solid #a2aa7e70;white-space:nowrap}.printer-toggle.offline{color:#e1b580;border-color:#b78957;background:#7f552533}.printer-toggle:hover{background:#c3ad6d20}.queue{background:#e4d5b6;border-bottom:1px solid #c4b18f;padding:8px 12px;font-size:12px;min-height:39px;max-height:76px;overflow:auto;color:#5f6251}.queue-item{padding:2px 0;line-height:1.6;overflow-wrap:anywhere}.queue-item strong{color:#8a4b34;font-weight:500}.city-body{position:relative;min-height:220px;flex:1;background:repeating-linear-gradient(0deg,#ffffff02 0 1px,transparent 1px 6px),linear-gradient(140deg,#34413c,#263733);padding:17px 13px 10px;overflow:hidden}.printer-slot{height:7px;position:relative;max-width:255px;margin:0 auto -3px;background:#142624;border:1px solid #5d6253;border-bottom:1px solid #9a8e71;border-radius:2px;box-shadow:0 2px 6px #111c1b88;z-index:2}.ticket-list{height:250px;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#879079 #34413c;padding:0 5px 12px;position:relative}.city-empty{height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;color:#b7bea6;text-align:center;font-family:var(--serif)}.city-empty .empty-seal{width:59px;height:59px;display:grid;place-items:center;border:1px solid #82947e6e;transform:rotate(-6deg);box-shadow:inset 0 0 0 4px #34413c,inset 0 0 0 5px #82947e6e;font-size:28px;color:#a4b395;margin-bottom:5px}.city-empty p{font-size:15px;letter-spacing:2px}.city-empty small{font-size:12px;letter-spacing:1px;color:#9da991}.city-foot{padding:7px 12px;background:#d6c9ac;font-size:11px;display:flex;justify-content:space-between;color:#6d6856;border-top:1px solid #ae9c7b}.ticket{position:relative;width:min(255px,100%);margin:0 auto 15px;padding:22px 17px 14px;color:#4a392c;background:var(--grain),linear-gradient(95deg,#e3cc9e,#f1e3c2 10%,#f5e7c9 90%,#e0c79d);box-shadow:0 6px 10px #14221d66;font-family:var(--serif);overflow-wrap:anywhere;border-bottom:1px dashed #a88b61;clip-path:polygon(0 0,100% 0,100% calc(100% - 4px),98% 100%,96% calc(100% - 4px),94% 100%,92% calc(100% - 4px),90% 100%,88% calc(100% - 4px),86% 100%,84% calc(100% - 4px),82% 100%,80% calc(100% - 4px),78% 100%,76% calc(100% - 4px),74% 100%,72% calc(100% - 4px),70% 100%,68% calc(100% - 4px),66% 100%,64% calc(100% - 4px),62% 100%,60% calc(100% - 4px),58% 100%,56% calc(100% - 4px),54% 100%,52% calc(100% - 4px),50% 100%,48% calc(100% - 4px),46% 100%,44% calc(100% - 4px),42% 100%,40% calc(100% - 4px),38% 100%,36% calc(100% - 4px),34% 100%,32% calc(100% - 4px),30% 100%,28% calc(100% - 4px),26% 100%,24% calc(100% - 4px),22% 100%,20% calc(100% - 4px),18% 100%,16% calc(100% - 4px),14% 100%,12% calc(100% - 4px),10% 100%,8% calc(100% - 4px),6% 100%,4% calc(100% - 4px),2% 100%,0 calc(100% - 4px))}.ticket-print{animation:print-out 1.2s ease-in-out both}.ticket h4{font:700 19px var(--serif);text-align:center;margin:0 0 2px;letter-spacing:3px}.ticket .ticket-sub{text-align:center;font-size:10px;letter-spacing:2px;margin-bottom:12px}.ticket-kind{position:absolute;right:8px;top:10px;transform:rotate(13deg);border:2px solid #a15340;color:#934630;padding:2px 4px;font-size:12px;line-height:1.2;background:#eddfc0ce;box-shadow:inset 0 0 0 1px #f3e3be}.ticket-route{font-size:12px;border-top:1px dashed #b29972;border-bottom:1px dashed #b29972;padding:6px 0;display:flex;justify-content:space-between;gap:5px}.ticket-nick{font-size:12px;color:#7a5e48;margin-top:8px}.ticket-message{font-size:16px;line-height:1.75;margin:5px 0 10px}.ticket-food{font-size:12px;text-align:center;padding:6px 0;border-top:1px dashed #b29972}.ticket-score{font:11px var(--mono);text-align:center;letter-spacing:1px;color:#745c46}.voice-button{display:flex;gap:9px;align-items:center;width:100%;border:0;border-top:1px dashed #b29972;background:transparent;padding:9px 0;text-align:left;margin-top:8px}.voice-button .qr{width:43px;height:43px;flex:none}.voice-button span{font:12px/1.6 var(--sans);color:#6d5441}.voice-button small{display:block;font-size:10px}.ticket-id{font:10px var(--mono);text-align:center;color:#82715c;margin:5px 0 8px}.tear-button{border:1px dashed #9b805a;background:transparent;width:100%;font:12px var(--sans);padding:7px 3px;color:#754d37}.tear-button:hover{background:#dbc497}.ticket.torn{opacity:.43;transition:opacity .3s}.ticket.torn .tear-button{border-style:solid}.ticket.electronic{background:repeating-linear-gradient(135deg,#00000004 0 2px,transparent 2px 8px),#d3d6d1;border:2px dashed #7f8982;clip-path:none;box-shadow:none}.ticket.electronic .ticket-kind{background:#d3d6d1;color:#4e605b;border-color:#65786f}.electronic-note{background:#bac3bc;color:#3b5049;font:11px/1.6 var(--sans);padding:6px;margin-bottom:8px;text-align:center}.ticket-owner{font:11px var(--sans);color:#526b3e;background:#bdcc9e55;text-align:center;padding:3px;margin-top:7px}.bell.ringing{animation:ring .9s ease-out}.city-card.arrival{box-shadow:0 0 0 2px #c49c61,0 0 25px #b29c5050}.logs-panel{background:#253330;border-color:#526052;overflow:hidden}.logs-panel .panel-heading{background:#2f413b;border-color:#5b6652;color:#e2d4b7}.logs-panel .section-num{color:#c8ad80;border-color:#8c8767}.logs-panel .panel-sub{color:#b9b898}.logs{height:262px;overflow:auto;padding:13px 14px;font:12px/1.8 var(--mono);scrollbar-width:thin;scrollbar-color:#66735c #253330;overflow-wrap:anywhere}.log{padding:0 0 8px;margin:0}.log time{opacity:.65;font-size:11px}.log.ok{color:var(--ok)}.log.warn{color:var(--warn)}.log.err{color:var(--err)}.log.info{color:var(--info)}.script-body{padding:13px 17px 14px}.script-intro{font:15px var(--serif);color:#8c5943;margin-bottom:12px}.demo-script{list-style:none;counter-reset:step;padding:0;margin:0}.demo-script li{counter-increment:step;position:relative;padding:0 0 11px 26px;font-size:13px;color:#5d6254;line-height:1.65}.demo-script li::before{content:counter(step,decimal-leading-zero);position:absolute;left:0;top:1px;font:11px var(--mono);color:#9c7955}.demo-script b{font-weight:600;color:#2d4548}.script-note{border-top:1px solid #b8a88b;padding-top:10px;font-size:11px;color:#80745f;line-height:1.7}.script-tag{font:11px var(--mono);letter-spacing:1px;color:#8d7052;margin-left:auto}.bottom-line{max-width:1920px;margin:auto;padding:0 30px 15px;display:flex;justify-content:space-between;font-size:11px;color:#7c786a}.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);max-width:min(580px,calc(100vw - 28px));z-index:10;border:1px solid #b18d5c;background:#263e44;color:#eee0bd;padding:13px 22px;box-shadow:0 7px 25px #14242140;font-size:14px;border-radius:3px;pointer-events:none}.toast.error{background:#783c32;border-color:#b67b5a}.dialog{border:1px solid #ad855d;background:var(--grain),#eee3cb;color:#263e44;padding:26px;max-width:min(460px,calc(100vw - 32px));width:460px;box-shadow:0 20px 80px #101e1a70}.dialog::backdrop{background:#172a2ac4}.dialog h2{font:700 26px var(--serif);margin-bottom:14px}.dialog p{font-size:14px;line-height:1.9;margin:12px 0;color:#626452}.dialog-close{float:right;border:1px solid #a08c6b;background:transparent;width:28px;height:28px;font-size:19px}.voice-visual{display:flex;align-items:center;justify-content:center;gap:5px;height:80px;background:#263e44;margin:15px 0}.voice-visual i{width:4px;height:var(--h);background:#c2ac7e;animation:wave .8s ease-in-out infinite alternate;animation-delay:var(--d)}.voice-visual.paused i{animation-play-state:paused}.sound-note{font-size:12px!important}.dialog .secondary{margin-top:13px}.legend-row{display:flex;gap:10px;flex-wrap:wrap;font-size:11px;color:#767361}.legend-row span{display:inline-flex;align-items:center;gap:4px}.legend-row i{height:5px;width:5px;background:#ad855d;transform:rotate(45deg)}
+@keyframes print-out{from{clip-path:inset(0 0 100% 0);transform:translateY(-8px)}to{clip-path:inset(0 0 0 0);transform:translateY(0)}}@keyframes ring{0%{transform:rotate(0)}15%{transform:rotate(25deg)}30%{transform:rotate(-21deg)}45%{transform:rotate(16deg)}60%{transform:rotate(-11deg)}75%{transform:rotate(6deg)}90%{transform:rotate(-3deg)}100%{transform:rotate(0)}}@keyframes wave{to{transform:scaleY(.3)}}
+@media(min-width:1700px){.layout{grid-template-columns:410px minmax(0,1fr) 340px;gap:24px;padding-top:20px}.mast-inner{padding-top:22px;padding-bottom:20px}.form-body{padding-top:16px}.fields{gap:12px}.ticket-list{height:271px}.city-grid{grid-template-rows:repeat(2,minmax(370px,1fr))}.logs{height:220px}.script-body{padding-top:16px}.demo-script li{padding-bottom:11px}.city-head h3{font-size:20px}.city-head{height:65px}.city-body{padding-top:18px}.panel-heading{padding-top:13px;padding-bottom:13px}}
+@media(max-width:1450px) and (min-width:1150px){.layout{grid-template-columns:310px minmax(0,1fr) 290px;gap:14px;padding:16px 20px}.mast-inner{padding-left:20px;padding-right:20px;gap:20px}.masthead h1{font-size:21px}.rice-label{font-size:14px;gap:7px;flex-wrap:wrap}.rice-label .pot-copy{font-size:12px}.rice-foot{flex-wrap:wrap}.city-head{padding-left:9px;padding-right:9px;gap:6px}.city-head h3{font-size:15px;letter-spacing:0}.city-head p{font-size:9px;letter-spacing:1px}.city-art{font-size:21px}.bell{width:25px;height:25px}.printer-toggle{font-size:10px;padding:3px 5px}.city-intro h2{font-size:20px}.city-intro p{font-size:11px}.panel-heading{padding-left:14px;padding-right:14px}.panel-heading h2{font-size:18px}.form-body,.passport-body{padding-left:14px;padding-right:14px}.city-body{padding-left:6px;padding-right:6px}.ticket{padding-left:13px;padding-right:13px}.logs{height:220px}.stats{font-size:11px}}
+@media(max-width:1149px){.mast-inner{grid-template-columns:1fr;padding:20px;gap:20px}.masthead h1{font-size:clamp(18px,3vw,30px)}.rice{padding-left:76px}.layout{grid-template-columns:1fr;padding:18px 20px;max-width:840px}.left-col{display:grid;grid-template-columns:1fr 1fr;align-items:start}.city-section{margin-top:5px}.city-grid{grid-template-rows:auto}.city-card{min-height:360px}.right-col{display:grid;grid-template-columns:1fr 1fr;align-items:start}.utility-bar{padding:10px 20px}.utility-bar .story-text{display:none}.ticket-list{height:285px}.bottom-line{padding-left:20px;padding-right:20px}.city-intro{margin-top:5px}}
+@media(max-width:640px){.brand-emblem{width:43px;height:48px}.brand-emblem .icon{width:36px;height:36px}.brand-line{gap:9px}.eyebrow{font-size:9px;letter-spacing:1.7px}.masthead h1{font-size:18px;letter-spacing:0}.mast-inner{padding:17px 14px;gap:16px}.subtitle{margin-left:0;font-size:11px;margin-top:12px}.rice{padding-left:0}.rice-label{gap:8px;flex-wrap:wrap;margin-bottom:8px}.rice-label .pot-copy{font-size:12px;margin-left:0}.rice-number{font-size:23px}.rice-foot{flex-wrap:wrap;font-size:11px}.stats{font-size:11px}.utility-bar{padding:9px 14px;font-size:11px}.toolbar{gap:12px}.text-btn{font-size:12px}.layout{padding:14px;gap:18px}.left-col,.right-col{display:flex}.city-grid{grid-template-columns:1fr;gap:14px}.city-intro{display:block}.city-intro p{margin-top:5px}.city-head h3{font-size:19px}.ticket-list{height:300px}.ticket{width:255px}.city-body{min-height:330px}.logs{height:240px}.bottom-line{padding:0 14px 16px;font-size:10px;gap:10px}.bottom-line span:last-child{display:none}.form-body{padding-top:16px}.fields{gap:13px}.stamp-slot{min-height:78px}.city-foot{font-size:11px}.rice-foot span:last-child{width:100%}}
+/* 投屏下保留完整操作区与四城；仅票仓、日志与新增通关卡允许滚动。 */
+@media(min-width:1150px){.mast-inner{padding-top:16px;padding-bottom:14px}.panel-heading{padding-top:11px;padding-bottom:11px}.form-body{padding-top:12px;padding-bottom:12px}.fields{gap:8px 10px}input[type=text],select{padding-top:6px;padding-bottom:6px;font-size:13px}textarea{height:65px;min-height:65px}.check-row{margin-top:6px;margin-bottom:6px}.stamp-slot{min-height:58px}.passport-body{padding-top:9px;padding-bottom:10px;max-height:249px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#a18b63 #eee4cd}.passport-grid{margin-bottom:2px}.city-head{height:61px}.ticket-list{height:220px}.city-grid{grid-template-rows:repeat(2,minmax(350px,1fr))}.city-body{padding-top:14px}.complete-card{max-height:230px;overflow:auto}.logs{height:220px}}
+.city-head>div{min-width:0}.city-head>div p{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.quick-tear{border:0;background:transparent;color:#764c34;padding:0;font-size:11px;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}.quick-tear:disabled{opacity:.7;text-decoration:none}.city-foot{min-height:33px;align-items:center;gap:5px}.city-foot>span{white-space:nowrap}
+@media(min-width:1150px) and (max-width:1280px){.city-head h3{font-size:13px}.city-head p{font-size:8px;letter-spacing:.3px}.city-head{gap:5px}.bell{width:23px;height:23px}}
+@media(max-width:640px){.fields>.field:first-child,.fields>.field:nth-child(4){grid-column:1/-1}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;animation-iteration-count:1!important}}
+</style>
+</head>
+<body>
+<!-- 内联矢量沿用风格包铜铃与飞鸽的配色、轮廓和窄亮边，无图片或网络资源。 -->
+<svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+<symbol id="bird" viewBox="0 0 64 64"><g stroke="#241f20" stroke-linejoin="round" stroke-linecap="round"><path d="M30 32C33 22 45 15 50 5c2 6-1 11-4 14l8-8c0 8-9 14-15 20Z" fill="#7c918d" stroke-width="1.5"/><path d="M14 36C26 33 38 23 45 22c6-1 9 2 10 5l5 1-5 2c-9-1-13 10-22 14-7 3-12 0-17-1l-8 4 2-5H5Z" fill="#f0dfba" stroke-width="1.8"/><path d="M17 36C10 30 5 22 4 15l9 6-4-10c6 7 16 10 23 14 13 8 1 22-15 11Z" fill="#d5ccae" stroke-width="1.7"/><path d="M7 21c10 10 20 17 31 13-4 10-22 7-31-13Z" fill="#7c918d" stroke="none"/><path d="m13 22 19 10M25 24l10 6" fill="none" stroke="#36535a"/><circle cx="51" cy="26" r="1.2" fill="#b97742"/><path d="m35 43 3 5m3-8 3 7" stroke="#bf8959" stroke-width="1.5"/><path d="m31 46 24-1 1 11-25 1Z" fill="#d9c49a" stroke-width="1.8"/><path d="m42 48 8-.3.2 5-8 .3Z" fill="#a15340" stroke="none"/></g></symbol>
+<symbol id="bell" viewBox="0 0 64 64"><g fill="#bf8959" stroke="#312a25" stroke-linecap="round" stroke-linejoin="round"><path d="M28 16c-8-7 8-11 8-5 0 2-2 4-5 5Z" stroke-width="1.4"/><path d="M30 16c-8 0-12 6-13 12l-2 9c-1 3-3 5-6 7 9 7 29 8 42-1-4-3-5-5-6-9l-2-8c-2-6-6-10-13-10Z" stroke-width="1.8"/><path d="M20 25q10-5 20-1m-22 5q12-4 24-1m-24 12q14-5 28-1" fill="none" stroke="#743b31"/><path d="M9 44q19-5 42-1v4c-9 7-32 7-42 1Z" stroke-width="1.3"/><path d="M13 46q18-5 34-1c-7 5-28 5-34 1Z" fill="#36535a"/><path d="M29 48c0 9 9 8 7 0Z"/><path d="M22 25q-3 5-4 12m6 3q11-2 21 0" fill="none" stroke="#eddbb7" stroke-width=".8"/></g></symbol>
+</defs></svg>
+<header class="masthead"><div class="mast-inner">
+<div><div class="brand-line"><div class="brand-emblem" aria-hidden="true"><svg class="icon"><use href="#bird"/></svg></div><div><p class="eyebrow">大冰的小屋 / 四城共熬一碗粥</p><h1>🕊️ 风雪押镖局 · 江湖飞鸽传书模拟器</h1></div></div><p class="subtitle">客户提案演示版｜数据为模拟｜二维码为示意图，不能扫</p></div>
+<div class="rice" aria-label="四城百家米缸"><div class="rice-label"><span>四城百家米缸</span><strong class="rice-number" id="spoons">1,786</strong><span>勺</span><span class="pot-copy" id="pot-copy">已多熬 3 锅（约300碗）</span></div><div class="meter" id="rice-meter" role="progressbar" aria-label="下一锅米缸进度" aria-valuemin="0" aria-valuemax="500" aria-valuenow="286"><div class="meter-fill" id="rice-fill"></div></div><div class="rice-foot"><span id="next-pot">距下一锅还差 214 勺</span><span class="stats" id="stats">飞鸽 0 · 对对碰 0 · 保底 0 · 拦截 0 · 电子票 0</span></div></div>
+</div></header>
+<div class="utility-bar"><p class="story"><span class="live-mark"><i></i>四城分舵 · 本地演示就绪</span><span class="story-text">风雪再远，捎一句暖的。</span></p><div class="toolbar"><button class="text-btn" id="sound-toggle" type="button" aria-pressed="false">铃声：开启</button><button class="text-btn" id="reset" type="button">↺ 重置演示</button></div></div>
+<main class="layout">
+<div class="left-col">
+<section class="panel" aria-labelledby="send-title"><header class="panel-heading"><span class="section-num">01</span><h2 id="send-title">写一封飞鸽</h2><span class="panel-sub" id="quota">今日 0 / 5</span></header>
+<form class="form-body" id="send-form" novalidate><div class="fields">
+<label class="field"><span class="field-label">你的身份</span><select id="identity"><option value="store">到店客人（店内扫码）</option><option value="cloud">宅家用户（云火塘）</option></select></label>
+<label class="field"><span class="field-label">所在分舵</span><select id="home"><option value="xa">西安·南门分舵</option><option value="sz">苏州·山塘分舵</option><option value="wh">武汉·武昌分舵</option><option value="nc">南昌·万寿宫分舵</option></select></label>
+<label class="field"><span class="field-label">江湖名号 <small>最多8字</small></span><input id="nickname" type="text" value="南门老张" autocomplete="off" aria-label="江湖名号，最多8字"></label>
+<label class="field"><span class="field-label">寄往哪一城</span><select id="target"></select></label>
+<label class="field full"><span class="field-label">留一句暖心话</span><span class="textarea-wrap" style="display:block"><textarea id="message" aria-describedby="counter" placeholder="写给千里之外的江湖朋友">雪下得正紧，替我在千里外喝一碗热的。</textarea><span class="counter" id="counter">0/40</span></span></label>
+</div><label class="check-row"><input type="checkbox" id="attach" checked><span>附上此刻店里10秒现场声<br><small id="voice-hint">原声机制演示 · Web Audio 合成示意</small></span></label>
+<button class="primary" id="send" type="submit">🕊️ 放飞鸽子</button><button class="secondary" id="simulate" type="button">模拟：异城有客人正在等配对</button><label class="check-row accelerate"><input type="checkbox" id="accelerate" checked><span>演示加速（保底等待10分钟→15秒）</span></label><p class="form-status" id="form-status" role="status">每位访客每日最多寄5封 · 审核后放行</p></form></section>
+<section class="panel" aria-labelledby="passport-title"><header class="panel-heading"><span class="section-num">02</span><h2 id="passport-title">我的通关文牒</h2><span class="panel-sub" id="collection-count">0 / 4</span></header><div class="passport-body"><p class="holder" id="holder"></p><div id="passport"></div><button class="secondary" id="stamp" type="button">🥣 舀一勺米 · 盖本城大印</button><p class="passport-hint" id="passport-hint">一枚本城大印，三张异城粮票。相逢即通关。</p><div id="completion" aria-live="polite"></div></div></section>
+</div>
+<section class="city-section" aria-labelledby="cities-title"><header class="city-intro"><h2 id="cities-title">四城门店 · 铜铃候信</h2><p>点击状态切换打印机在线 / 离线</p></header><div class="city-grid" id="cities"></div></section>
+<aside class="right-col">
+<section class="panel logs-panel" aria-labelledby="logs-title"><header class="panel-heading"><span class="section-num">03</span><h2 id="logs-title">系统后台日志</h2><span class="panel-sub">实时模拟</span></header><div class="logs" id="logs" role="log" aria-label="系统后台日志，最新在上" aria-live="polite" aria-relevant="additions"></div></section>
+<section class="panel" aria-labelledby="script-title"><header class="panel-heading"><h2 id="script-title">提案演示脚本</h2><span class="script-tag">DEMO / 04:00</span></header><div class="script-body"><p class="script-intro">一封寄语，两地铜铃，一碗热粥。</p><ol class="demo-script">
+<li><b>双城相逢。</b>西安寄苏州，再点「模拟」，看两地铜铃与小票同时响应。</li>
+<li><b>撕票、贴牒。</b>撕西安收到的苏州票，舀米盖本城印；点示意码听10秒合成声。</li>
+<li><b>保底与漂流。</b>寄武汉，不点「模拟」；等15秒，撕西安保底票，武汉收到漂流票。</li>
+<li><b>离线也通关。</b>西安切离线，寄南昌再点「模拟」。撕电子票、贴齐四格并核销。</li>
+<li><b>宅家送暖。</b>切宅家用户，寄任一城，门店收到云票，宅家不生成实体文牒。</li>
+<li><b>拦截与限流。</b>寄语填「加我微信」看拦截；恢复寄语，第5封后再发，看每日限流。</li>
+</ol><p class="script-note">盖印计米，每城一次；换名不重置额度。所有数据仅存本页，刷新或重置清空。无真实发送与硬件连接。</p></div></section>
+</aside></main>
+<footer class="bottom-line"><span>风雪押镖局 · 腊八四城联动 / 提案演示工作台</span><span>西安 · 苏州 · 武汉 · 南昌　｜　纯本地运行 · 刷新即重置</span></footer>
+<div class="toast" id="toast" role="status" hidden></div>
+<dialog class="dialog" id="voice-dialog" aria-labelledby="voice-title"><button class="dialog-close" id="voice-close" type="button" aria-label="关闭试听">×</button><h2 id="voice-title">千里之外，听见一盏灯</h2><p id="voice-city"></p><div class="voice-visual" id="voice-visual" aria-hidden="true"></div><p id="voice-status" role="status">准备播放</p><p class="sound-note">现场声机制的合成示意，非真实门店录音。票面二维码仅为图案示意，不能扫。</p><button class="primary" id="voice-replay" type="button">重新听10秒</button></dialog>
+<dialog class="dialog" id="reset-dialog" aria-labelledby="reset-title"><button class="dialog-close" id="reset-close" type="button" aria-label="取消重置">×</button><h2 id="reset-title">重新开一局江湖</h2><p>清空本页粮票、队列、文牒、核销与每日计数，米缸恢复1786勺。</p><button class="primary" id="reset-confirm" type="button">清空并重置演示</button><button class="secondary" id="reset-cancel" type="button">继续当前演示</button></dialog>
+<script>
+'use strict';
+/* ==================== 数据配置 ==================== */
+const CITIES = {
+  xa:{name:'西安·南门分舵', short:'西安', food:'红枣', art:'🏯', score:'| 6 6 5 3 | 2 - - - |',
+      chord:[110,164.81,220,261.63,329.63], fb:'城墙根下风大，西安的红枣给你暖着手。'},
+  sz:{name:'苏州·山塘分舵', short:'苏州', food:'桂花', art:'🛶', score:'| 3 5 6 1 | 6 5 3 - |',
+      chord:[146.83,220,293.66,369.99], fb:'山塘的橹声摇到你那儿，记得趁热喝。'},
+  wh:{name:'武汉·武昌分舵', short:'武汉', food:'莲子', art:'⛴️', score:'| 5 3 2 1 | 2 - 3 - |',
+      chord:[98,123.47,146.83,196,246.94], fb:'江上汽笛响了一声，武汉的莲子给你留着。'},
+  nc:{name:'南昌·万寿宫分舵', short:'南昌', food:'桂圆', art:'🏮', score:'| 1 2 3 5 | 3 2 1 - |',
+      chord:[130.81,164.81,196,261.63,329.63], fb:'万寿宫檐铃响三声，南昌给你盛了碗热的。'}
+};
+const CLOUD = {short:'云火塘', food:'八宝', art:'☁️', score:'| 1 1 5 5 | 6 6 5 - |', chord:[130.81,196,261.63,329.63,392]};
+const BOT_NICKS = ['山塘阿桂','江滩夜归人','城根下的猫','赣江摆渡人','背吉他的小李','异乡第三年'];
+const BOT_MSGS  = ['今晚又下雪了，你那边冷吗？','在异乡第三年，今晚听见一首老歌。','替我跟驻唱说声谢谢。','这碗粥，敬所有还没回家的人。','碰个杯吧，千里之外的陌生人。'];
+const BAN = ['微信','vx','v信','加我','qq','http','www','.com','代购','广告','兼职','刷单','赌','博彩','贷款','私聊'];
+const LIMIT = 5;
+const PER_POT = 500;
+const KEYS = Object.keys(CITIES);
+const CITY_CODES = {xa:'XI’AN / NANMEN',sz:'SUZHOU / SHANTANG',wh:'WUHAN / WUCHANG',nc:'NANCHANG / WANSHOUGONG'};
+const $ = id => document.getElementById(id);
+const esc = value => String(value).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const chars = value => Array.from(value);
+const pick = list => list[Math.floor(Math.random()*list.length)];
+const city = id => id === 'cloud' ? CLOUD : CITIES[id];
+const pad = n => String(n).padStart(2,'0');
+const clockText = date => [date.getHours(),date.getMinutes(),date.getSeconds()].map(pad).join(':');
+const dayKey = () => {const d=new Date();return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;};
+const timers = new Set();
+let state, queueSeq=0, toastTimer, voiceTimer, voiceCity='xa', playing=false;
+function later(fn,ms){const id=setTimeout(()=>{timers.delete(id);fn();},ms);timers.add(id);return id;}
+function freshState(){return {spoons:1786,seq:0,queue:[],tickets:[],logs:[],day:dayKey(),sent:0,botSeq:0,
+  stats:{flights:0,pairs:0,fallback:0,blocked:0,electronic:0},
+  printers:Object.fromEntries(KEYS.map(k=>[k,true])),
+  passports:Object.fromEntries(KEYS.map(k=>[k,{stamp:false,foods:[],code:null,expires:0,used:false}]))};}
+function log(type,message){
+  const entry={type,message,time:clockText(new Date())};state.logs.unshift(entry);state.logs=state.logs.slice(0,100);
+  const line=document.createElement('p');line.className='log '+type;
+  line.innerHTML=`<time>[${esc(entry.time)}]</time> ${esc(message)}`;
+  $('logs').prepend(line);while($('logs').children.length>100)$('logs').lastElementChild.remove();
+  $('logs').scrollTop=0;
+}
+function toast(message,error=false){clearTimeout(toastTimer);$('toast').textContent=message;$('toast').classList.toggle('error',error);$('toast').hidden=false;toastTimer=setTimeout(()=>$('toast').hidden=true,4200);}
+function status(message,type=''){const el=$('form-status');el.textContent=message;el.className='form-status '+type;}
+function rollover(){const today=dayKey();if(state.day!==today){state.day=today;state.sent=0;log('info','新的一天，访客每日寄信额度已恢复。');renderStats();}}
+
+/* ==================== 声音：Web Audio 实时合成 ==================== */
+let audioContext=null,master=null,muted=false,voiceNodes=[];
+function unlockAudio(){
+  try{if(!audioContext){audioContext=new(window.AudioContext||window.webkitAudioContext)();master=audioContext.createGain();master.gain.value=muted?0:.42;master.connect(audioContext.destination);}if(audioContext.state==='suspended')audioContext.resume().catch(()=>{});return audioContext;}
+  catch{return null;}
+}
+function tone(freq,when,length,volume=.12,type='sine',voice=false){
+  if(!audioContext)return;
+  const osc=audioContext.createOscillator(),gain=audioContext.createGain();
+  osc.type=type;osc.frequency.setValueAtTime(freq,when);gain.gain.setValueAtTime(.0001,when);
+  gain.gain.exponentialRampToValueAtTime(Math.max(.0002,volume),when+.008);
+  gain.gain.exponentialRampToValueAtTime(.0001,when+length);
+  osc.connect(gain);gain.connect(master);osc.start(when);osc.stop(when+length+.02);
+  osc.onended=()=>{osc.disconnect();gain.disconnect();};if(voice)voiceNodes.push(osc);
+}
+function bellSound(index=0){const ctx=unlockAudio();if(!ctx)return;const t=ctx.currentTime+.02+index*.014;
+  [740,1492,2072,3120].forEach((f,i)=>tone(f,t,.8-i*.08,.14/(i+1)));
+}
+function paperSound(){const ctx=unlockAudio();if(!ctx)return;const length=.7,buffer=ctx.createBuffer(1,Math.floor(ctx.sampleRate*length),ctx.sampleRate),data=buffer.getChannelData(0);
+  for(let i=0;i<data.length;i++)data[i]=(Math.random()*2-1)*.045*(1-i/data.length);
+  const src=ctx.createBufferSource(),filter=ctx.createBiquadFilter();filter.type='bandpass';filter.frequency.value=1300;filter.Q.value=.8;src.buffer=buffer;src.connect(filter);filter.connect(master);src.start();src.onended=()=>{src.disconnect();filter.disconnect();};
+}
+function stopVoice(){voiceNodes.forEach(node=>{try{node.stop();}catch{}});voiceNodes=[];clearInterval(voiceTimer);playing=false;$('voice-visual').classList.add('paused');}
+function playVoice(){
+  stopVoice();const ctx=unlockAudio();if(!ctx){$('voice-status').textContent='当前浏览器未能启用音频，仍可继续演示。';return;}
+  const chord=city(voiceCity).chord,t=ctx.currentTime+.03;playing=true;$('voice-visual').classList.remove('paused');
+  for(let n=0;n<20;n++){const start=t+n*.45,f=chord[n%chord.length];tone(f,start,.68,.2,'triangle',true);tone(f*2,start+.01,.4,.055,'sine',true);}
+  const began=performance.now();const update=()=>{const left=Math.max(0,10-(performance.now()-began)/1000);$('voice-status').textContent=muted?'声音已静音 · 可在顶栏开启':`合成现场声试听 · 还剩 ${Math.ceil(left)} 秒`;if(left<=0){stopVoice();$('voice-status').textContent='十秒听罢，愿你今夜也有热粥。';}};
+  update();voiceTimer=setInterval(update,180);
+}
+function showVoice(source){voiceCity=source;$('voice-city').textContent=`${city(source).art} ${city(source).short} · ${city(source).food}粮料 / ${city(source).score}`;
+  $('voice-dialog').showModal();playVoice();}
+
+/* ==================== 示意二维码：有意采用无寻像框的纹样，不能扫码 ==================== */
+function mockQR(seed){
+  let n=seed*733+137,cells='';
+  for(let y=0;y<11;y++)for(let x=0;x<11;x++){n=(n*1664525+1013904223)>>>0;if((n&4)&&!(x>2&&x<8&&y>3&&y<7))cells+=`<rect x="${x*3+2}" y="${y*3+2}" width="2" height="2"/>`;}
+  return `<svg class="qr" viewBox="0 0 37 37" role="img" aria-label="示意纹样，不能扫码"><rect width="37" height="37" fill="#f0e7cf"/><g fill="#596254">${cells}</g><path d="M2 35 35 2" stroke="#a15340" stroke-width="1" opacity=".55"/><rect x="9" y="14" width="20" height="9" fill="#f0e7cf"/><text x="19" y="21" text-anchor="middle" font-size="7" fill="#803f34">示意</text></svg>`;
+}
+
+/* ==================== 审核：所有参与者的名号和寄语都走同一路径 ==================== */
+function audit(nick,message){
+  const n=nick.trim(),m=message.trim();
+  if(!n)return {ok:false,reason:'请留下江湖名号。'};
+  if(chars(n).length>8)return {ok:false,reason:'江湖名号最多8字。'};
+  if(!m)return {ok:false,reason:'先写一句寄语，再放飞鸽子。'};
+  if(chars(m).length>40)return {ok:false,reason:'寄语最多40字，请收短一点。'};
+  // NFKC 兼容全角字母，移除分隔符与零宽字符，演示拦截常见广告和联系方式。
+  const normalized=(n+' '+m).normalize('NFKC').toLowerCase().replace(/[\s\u200B-\u200F\u202A-\u202E\u2060\uFEFF_\-·]/g,'');
+  const hit=BAN.find(word=>normalized.includes(word.toLowerCase()));
+  if(hit)return {ok:false,reason:`内容审核未通过：含「${hit}」，请勿留下联系方式或广告。`};
+  if(/(?:\+?86)?1[3-9]\d{9}/.test(normalized))return {ok:false,reason:'内容审核未通过：请勿留下手机号。'};
+  return {ok:true,nick:n,message:m};
+}
+function reject(reason){state.stats.blocked++;log('err',`拦截：${reason}`);renderStats();status(reason,'err');toast(reason,true);}
+function enforceLength(el,max){if(chars(el.value).length>max)el.value=chars(el.value).slice(0,max).join('');}
+
+/* ==================== 发送与配对 ==================== */
+function canPair(a,b){return a.source!==b.source&&a.owner!==b.owner&&(a.target==='any'||a.target===b.source)&&(b.target==='any'||b.target===a.source);}
+function makeLetter({source,target,nick,message,voice,owner}){
+  const now=Date.now();return {id:++queueSeq,source,target,nick,message,voice,owner,created:now,deadline:now+($('accelerate').checked?15000:600000)};
+}
+function enqueue(letter){
+  const match=state.queue.find(other=>canPair(letter,other));
+  if(match){state.queue=state.queue.filter(q=>q.id!==match.id);pair(letter,match);}
+  else{state.queue.push(letter);log('info',`${CITIES[letter.source].short}「${letter.nick}」等配对 → ${letter.target==='any'?'任意异城':CITIES[letter.target].short}；保底${$('accelerate').checked?'15秒':'10分钟'}。`);renderQueues();}
+  return Boolean(match);
+}
+function pair(a,b){
+  state.stats.pairs++;
+  log('ok',`对对碰成功：${CITIES[a.source].short}「${a.nick}」× ${CITIES[b.source].short}「${b.nick}」，两地同步出票。`);
+  issueBatch([
+    {source:a.source,dest:b.source,nick:a.nick,message:a.message,voice:a.voice,owner:b.owner,type:'对对碰'},
+    {source:b.source,dest:a.source,nick:b.nick,message:b.message,voice:b.voice,owner:a.owner,type:'对对碰'}
+  ]);renderQueues();renderStats();
+}
+function sendLetter(event){
+  event.preventDefault();unlockAudio();rollover();
+  const result=audit($('nickname').value,$('message').value);
+  if(!result.ok){reject(result.reason);return;}
+  if(state.sent>=LIMIT){reject(`每日限流：同一访客每天最多${LIMIT}封，今日额度已用完。`);return;}
+  const cloud=$('identity').value==='cloud',source=cloud?'cloud':$('home').value,target=$('target').value;
+  if((cloud&&!KEYS.includes(target))||(!cloud&&(!KEYS.includes(source)||target===source||(target!=='any'&&!KEYS.includes(target))))){reject('投递目的地无效，请重新选择异城。');return;}
+  // 先完成校验再扣额度；同一访客跨名号、跨城、跨身份共享额度。
+  state.sent++;state.stats.flights++;log('ok',`审核通过：${result.nick} 的第${state.sent}封飞鸽已放行。`);renderStats();
+  if(cloud){issueBatch([{source:'cloud',dest:target,nick:result.nick,message:result.message,voice:false,owner:null,type:'云票'}]);status(`云票已寄往${CITIES[target].short} · 今日 ${state.sent}/${LIMIT}`);toast('云火塘来信已成为门店云票。');}
+  else{const matched=enqueue(makeLetter({source,target,nick:result.nick,message:result.message,voice:$('attach').checked,owner:'visitor'}));status(`${matched?'配对成功，两地同时出票':'已放飞，等待异城回信'} · 今日 ${state.sent}/${LIMIT}`);toast(matched?'异城来信已抵达，两地铜铃响起。':'鸽子已放飞，异城火塘正在等你。');}
+}
+function simulateGuest(){
+  unlockAudio();if($('identity').value==='cloud'){toast('宅家云票直接送达门店，无需客人配对。');log('info','云火塘模式：云票不进入配对队列。');return;}
+  const home=$('home').value,waiting=state.queue.find(q=>q.owner==='visitor'&&q.source===home);
+  const target=$('target').value,source=waiting?(waiting.target==='any'?pick(KEYS.filter(k=>k!==home)):waiting.target):(target==='any'?pick(KEYS.filter(k=>k!==home)):target);
+  if(!KEYS.includes(source)||source===home)return;
+  if(!waiting&&state.queue.some(q=>q.owner.startsWith('bot-')&&q.source===source&&q.target===home)){toast(`${CITIES[source].short}已有模拟客人等你，放飞一封即可配对。`);return;}
+  const nick=pick(BOT_NICKS),message=pick(BOT_MSGS),result=audit(nick,message);
+  if(!result.ok){reject(result.reason);return;}
+  const bot=makeLetter({source,target:home,nick:result.nick,message:result.message,voice:true,owner:`bot-${++state.botSeq}`});
+  state.stats.flights++;log('info',`模拟异城客人：${CITIES[source].short}「${nick}」正在等${CITIES[home].short}。`);enqueue(bot);renderStats();toast(waiting?'两城配对成功，铜铃响起。':'异城客人已就位，寄一封信与TA相遇。');
+}
+function fallback(letter){
+  const dest=letter.target==='any'?pick(KEYS.filter(k=>k!==letter.source)):letter.target;
+  state.stats.fallback++;
+  log('warn',`${CITIES[letter.source].short}「${letter.nick}」等待超时，发放${CITIES[dest].short}保底票；原信转为漂流票。`);
+  issueBatch([
+    {source:dest,dest:letter.source,nick:`${CITIES[dest].short}守夜人`,message:CITIES[dest].fb,voice:true,owner:letter.owner,type:'保底票'},
+    {source:letter.source,dest,nick:letter.nick,message:letter.message,voice:letter.voice,owner:null,type:'漂流票'}
+  ]);renderStats();
+}
+function tick(){
+  rollover();const now=Date.now(),expired=state.queue.filter(q=>now>=q.deadline);
+  if(expired.length){const ids=new Set(expired.map(q=>q.id));state.queue=state.queue.filter(q=>!ids.has(q.id));expired.forEach(fallback);}
+  renderQueues();updateCodeClock();
+}
+
+/* ==================== 出票：同一批次同步插入、摇铃、走纸 ==================== */
+function issueBatch(specs){
+  const time=new Date();
+  const tickets=specs.map(spec=>({...spec,id:++state.seq,number:`FG-${String(state.seq).padStart(5,'0')}`,time:clockText(time),electronic:!state.printers[spec.dest],ready:false,torn:false,collected:false}));
+  const affected=new Set();
+  tickets.forEach(ticket=>{
+    state.tickets.unshift(ticket);affected.add(ticket.dest);if(ticket.electronic)state.stats.electronic++;
+    const wrap=document.createElement('div');wrap.innerHTML=ticketHTML(ticket);const node=wrap.firstElementChild;
+    const list=$(`tickets-${ticket.dest}`);list.querySelector('.city-empty')?.remove();list.prepend(node);list.scrollTop=0;
+    const bell=$(`bell-${ticket.dest}`);bell.classList.remove('ringing');void bell.getBoundingClientRect();bell.classList.add('ringing');
+    $(`city-${ticket.dest}`).classList.add('arrival');
+    log(ticket.electronic?'warn':'ok',`${CITIES[ticket.dest].short} ${ticket.number} ${ticket.type}：${ticket.electronic?'打印机离线，已生成电子粮票，不阻塞流程':'铜铃响，热敏小票正在吐出'}。`);
+  });
+  Array.from(affected).forEach((key,index)=>bellSound(index));if(tickets.some(t=>!t.electronic))paperSound();
+  // 动画完成才允许撕票，防止票尚未走完就贴入文牒。
+  later(()=>{tickets.forEach(ticket=>{ticket.ready=true;const node=$(`ticket-${ticket.id}`);if(node){node.classList.remove('ticket-print');node.querySelector('.tear-button').disabled=false;}});affected.forEach(key=>{$(`city-${key}`).classList.remove('arrival');$(`bell-${key}`).classList.remove('ringing');});renderCityCounts();},1200);
+  renderCityCounts();renderStats();
+}
+function ticketHTML(t){
+  const from=city(t.source),eligible=t.owner==='visitor'&&t.source!=='cloud'&&['对对碰','保底票'].includes(t.type);
+  const action=eligible?'撕票 · 贴入我的文牒':'撕下粮票';
+  return `<article class="ticket ticket-print${t.electronic?' electronic':''}" id="ticket-${t.id}" aria-label="${esc(CITIES[t.dest].short+'收到'+from.short+t.type)}">
+    <span class="ticket-kind">${esc(t.type)}</span><h4>民谣粮票</h4><p class="ticket-sub">四 城 共 熬 一 碗 粥</p>
+    ${t.electronic?'<p class="electronic-note">电子粮票 · 打印机暂离线<br>保留票号，撕票 / 贴牒照常进行</p>':''}
+    <div class="ticket-route"><span>${esc(from.short)} 来信</span><span>抵 ${esc(CITIES[t.dest].short)}</span></div>
+    <p class="ticket-nick">来自 · ${esc(t.nick)}</p><p class="ticket-message">${esc(t.message)}</p>
+    <p class="ticket-food">${esc(from.art)} 此票粮料：${esc(from.food)}</p><p class="ticket-score">${esc(from.score)}</p>
+    ${t.voice?`<button class="voice-button" type="button" data-voice="${t.id}" aria-label="试听${esc(from.short)}10秒合成现场声">${mockQR(t.id)}<span>听一段异城现场声<small>合成示意 · 点击试听10秒</small><small>二维码为示意图，不能扫</small></span></button>`:'<p class="ticket-id">未附现场声 · 只捎一句暖的</p>'}
+    <p class="ticket-id">${esc(t.number)} / ${esc(t.time)}</p>${eligible?'<p class="ticket-owner">这封回信属于你的文牒</p>':''}
+    <button class="tear-button" type="button" data-tear="${t.id}" disabled>${action}</button>
+  </article>`;
+}
+function tearTicket(id){
+  const t=state.tickets.find(item=>item.id===id);if(!t||!t.ready||t.torn)return;
+  const eligible=t.owner==='visitor'&&t.source!=='cloud'&&['对对碰','保底票'].includes(t.type);
+  if(eligible&&($('identity').value!=='store'||$('home').value!==t.dest)){toast(`这封信属于${CITIES[t.dest].short}文牒，请切回到店身份与该分舵后再贴。`);return;}
+  t.torn=true;const node=$(`ticket-${id}`);node.classList.add('torn');const btn=node.querySelector('.tear-button');btn.disabled=true;
+  if(eligible){collect(t);btn.textContent=t.collected?'已撕下 · 已贴入文牒':'已撕下 · 此城粮料已收集';}
+  else{btn.textContent='已撕下 · 门店来信留存';log('info',`${CITIES[t.dest].short} ${t.number} 已撕下${t.type}，门店留存。`);toast('粮票已撕下，留在这座城的火塘旁。');}
+  renderCityCounts();
+}
+function renderCityCounts(){KEYS.forEach(key=>{
+  const list=state.tickets.filter(t=>t.dest===key),latest=list[0];
+  $(`count-${key}`).textContent=`已收 ${list.length} 票 · 电子 ${list.filter(t=>t.electronic).length}`;
+  const shortcut=$(`city-${key}`).querySelector('.city-foot>span:first-child');
+  if(latest){const mine=latest.owner==='visitor';shortcut.innerHTML=`<button class="quick-tear" type="button" data-tear="${latest.id}" ${!latest.ready||latest.torn?'disabled':''} aria-label="${esc(CITIES[key].short+' '+latest.number+' '+(mine?'撕票贴入文牒':'撕下最新粮票'))}">${latest.torn?'✓ 最新粮票已撕下':!latest.ready?'正在走纸…':mine?'撕票 · 贴入文牒':'撕下最新粮票'}</button>`;}
+  else shortcut.textContent='58mm 热敏粮票 / 模拟';
+});}
+
+/* ==================== 文牒：归属按收件城市，异城粮料唯一 ==================== */
+function collect(ticket){
+  const pass=state.passports[ticket.dest];
+  if(!pass.foods.includes(ticket.source)){pass.foods.push(ticket.source);ticket.collected=true;
+    log('ok',`${CITIES[ticket.dest].short}文牒贴入${CITIES[ticket.source].short}「${CITIES[ticket.source].food}」，异城粮料 ${pass.foods.length}/3。`);toast(`${CITIES[ticket.source].short}的${CITIES[ticket.source].food}，已贴进你的江湖。`);
+  }else{log('info',`${ticket.number} 已撕下；该文牒已有${CITIES[ticket.source].short}粮料，不重复收集。`);toast('这座城的粮料已收集，继续寻找其他异城。');}
+  checkComplete(ticket.dest);renderPassport();
+}
+function stampHome(){
+  if($('identity').value!=='store')return;unlockAudio();const home=$('home').value,pass=state.passports[home];if(pass.stamp)return;
+  pass.stamp=true;const previous=Math.floor(state.spoons/PER_POT);state.spoons++;
+  log('ok',`${CITIES[home].short}盖下本城大印，百家米缸 +1勺，共${state.spoons}勺。`);
+  if(Math.floor(state.spoons/PER_POT)>previous){log('ok',`米缸满${PER_POT}勺，再多熬一锅热粥（约100碗）。`);toast('四城又凑齐一锅热粥！');}
+  else toast('舀一勺米，本城大印已落牒。');
+  bellSound();checkComplete(home);renderStats();renderPassport();
+}
+function checkComplete(home){const pass=state.passports[home];if(pass.stamp&&pass.foods.length===3&&!pass.code){
+  const bytes=new Uint8Array(4);crypto.getRandomValues(bytes);const code=Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('').slice(0,6).toUpperCase();
+  pass.code='FJ-'+code;pass.expires=Date.now()+600000;
+  log('ok',`${CITIES[home].short}文牒四格集齐！已生成10分钟演示核销码 ${pass.code}。`);toast('四城粮料齐，恭喜通关！左侧领取演示核销码。');
+  const ctx=unlockAudio();if(ctx)KEYS.forEach((k,i)=>CITIES[k].chord.slice(0,3).forEach((f,j)=>tone(f,ctx.currentTime+i*.16+j*.035,1.1,.07)));
+}}
+function redeem(){const home=$('home').value,pass=state.passports[home];if(!pass.code||pass.used)return;
+  if(Date.now()>=pass.expires){toast('此演示码已过期，请点击重新领码。',true);return;}
+  pass.used=true;log('ok',`模拟吧台核销成功：${pass.code}，${CITIES[home].short}文牒已兑换，不可重复使用。`);toast('模拟核销成功，愿这一碗粥暖你整个江湖。');renderPassport();
+}
+function renewCode(){const home=$('home').value,pass=state.passports[home];if(pass.used||!pass.code||Date.now()<pass.expires)return;pass.code=null;checkComplete(home);renderPassport();}
+function renderPassport(){
+  const home=$('home').value,isCloud=$('identity').value==='cloud',pass=state.passports[home],nick=$('nickname').value.trim()||'未留名';
+  $('holder').textContent=`持牒人：${nick} · 本城：${isCloud?'云火塘':CITIES[home].short}`;
+  $('collection-count').textContent=isCloud?'云火塘':`${Number(pass.stamp)+pass.foods.length} / 4`;
+  $('stamp').disabled=isCloud||pass.stamp;$('stamp').textContent=pass.stamp&&!isCloud?'本城大印已盖 · 米缸已添一勺':'🥣 舀一勺米 · 盖本城大印';
+  $('passport-hint').hidden=isCloud;
+  if(isCloud){$('passport').innerHTML='<p class="cloud-note">宅家用户没有实体文牒：在小程序集「八味云粮料」；寄出的飞鸽会成为门店的云票。</p>';$('completion').replaceChildren();return;}
+  $('passport').innerHTML=`<div class="passport-grid">${[home,...KEYS.filter(k=>k!==home)].map(k=>{const local=k===home,filled=local?pass.stamp:pass.foods.includes(k);return `<div class="stamp-slot${filled?' filled':''}${local?' home':''}"><span class="${filled?'stamp-sign':''}">${esc(local?(filled?'本城大印':CITIES[k].short+' · 大印'):(filled?CITIES[k].food:CITIES[k].short+' · 粮票'))}</span><small>${esc(local?(filled?'一勺米，一份江湖情':'舀米后盖印'):(filled?CITIES[k].short+'来信已贴入':'待一封'+CITIES[k].food+'来信'))}</small></div>`;}).join('')}</div>`;
+  if(pass.code){$('completion').innerHTML=`<div class="complete-card"><h3>四城通关 · 共饮一碗热粥</h3><div class="redeem-code${pass.used?' used-code':''}">${esc(pass.code)}</div><p id="code-clock"></p><p>演示码，无真实权益 · 仅可核销一次</p>${pass.used?'<p style="margin-top:8px;color:#c3d49d">✓ 模拟核销完成</p>':'<button id="redeem" type="button">模拟吧台核销</button><button id="renew-code" type="button" hidden>重新领取演示码</button>'}</div>`;updateCodeClock();}
+  else $('completion').replaceChildren();
+  if(pass.code&&matchMedia('(min-width:1150px)').matches)document.querySelector('.passport-body').scrollTop=document.querySelector('.passport-body').scrollHeight;
+}
+function updateCodeClock(){if($('identity').value!=='store')return;const pass=state.passports[$('home').value],label=$('code-clock');if(!pass.code||!label)return;
+  const left=Math.max(0,Math.ceil((pass.expires-Date.now())/1000));label.textContent=pass.used?'该码已使用':left?`有效期剩余 ${Math.floor(left/60)}:${pad(left%60)}`:'演示码已过期';
+  if($('redeem')){$('redeem').hidden=left===0;$('renew-code').hidden=left>0;}
+}
+
+/* ==================== 渲染：用户内容仅经 esc 或 textContent 进入 DOM ==================== */
+function renderStats(){
+  const pots=Math.floor(state.spoons/PER_POT),current=state.spoons%PER_POT,s=state.stats;
+  $('spoons').textContent=state.spoons.toLocaleString('en-US');$('pot-copy').textContent=`已多熬 ${pots} 锅（约${pots*100}碗）`;
+  $('next-pot').textContent=`距下一锅还差 ${PER_POT-current} 勺`;$('rice-fill').style.width=`${current/PER_POT*100}%`;
+  $('rice-meter').setAttribute('aria-valuenow',String(current));$('rice-meter').setAttribute('aria-valuetext',`四城百家米缸${state.spoons}勺，已多熬${pots}锅，距下一锅${PER_POT-current}勺`);
+  $('stats').textContent=`飞鸽 ${s.flights} · 对对碰 ${s.pairs} · 保底 ${s.fallback} · 拦截 ${s.blocked} · 电子票 ${s.electronic}`;
+  $('quota').textContent=`今日 ${state.sent} / ${LIMIT}`;
+}
+function renderCities(){
+  $('cities').innerHTML=KEYS.map(k=>`<section class="city-card" id="city-${k}" aria-labelledby="city-title-${k}"><header class="city-head"><span class="city-art" aria-hidden="true">${CITIES[k].art}</span><div><h3 id="city-title-${k}">${CITIES[k].name}</h3><p>${CITY_CODES[k]}</p></div><svg class="bell" id="bell-${k}" aria-label="${CITIES[k].short}铜铃"><use href="#bell"/></svg><button class="printer-toggle" data-printer="${k}" type="button" aria-pressed="true" aria-label="${CITIES[k].short}打印机在线，点击切换离线">在线</button></header><div class="queue" id="queue-${k}">暂无人等待配对</div><div class="city-body"><div class="printer-slot" aria-hidden="true"></div><div class="ticket-list" id="tickets-${k}" aria-label="${CITIES[k].short}出票区"><div class="city-empty"><div class="empty-seal" aria-hidden="true">${CITIES[k].short.slice(0,1)}</div><p>一城灯火，静候飞鸽</p><small>${CITIES[k].food}已备好 · 铜铃静候来信</small></div></div></div><footer class="city-foot"><span>58mm 热敏粮票 / 模拟</span><span id="count-${k}">已收 0 票 · 电子 0</span></footer></section>`).join('');
+}
+function renderQueues(){const now=Date.now();KEYS.forEach(k=>{const qs=state.queue.filter(q=>q.source===k);$(`queue-${k}`).innerHTML=qs.length?qs.map(q=>{const remaining=Math.max(0,Math.ceil((q.deadline-now)/1000));return `<p class="queue-item">⏳ ${esc(q.nick)} 等配对→${esc(q.target==='any'?'任意城':CITIES[q.target].short)} · 保底倒计时 <strong>${Math.floor(remaining/60)}:${pad(remaining%60)}</strong></p>`;}).join(''):'暂无人等待配对';});}
+function updateTarget(){
+  const cloud=$('identity').value==='cloud',home=$('home').value,previous=$('target').value;
+  const keys=KEYS.filter(k=>cloud||k!==home);
+  $('target').innerHTML=(cloud?'':'<option value="any">🎲 随缘配对（任意一城）</option>')+keys.map(k=>`<option value="${k}">${CITIES[k].name}</option>`).join('');
+  if((previous==='any'&&!cloud)||keys.includes(previous))$('target').value=previous;
+  $('home').disabled=cloud;$('attach').disabled=cloud;$('simulate').disabled=cloud;
+  $('voice-hint').textContent=cloud?'宅家不附门店现场声':'原声机制演示 · Web Audio 合成示意';
+  renderPassport();
+}
+function togglePrinter(key){
+  state.printers[key]=!state.printers[key];const online=state.printers[key],btn=document.querySelector(`[data-printer="${key}"]`);
+  btn.textContent=online?'在线':'离线';btn.classList.toggle('offline',!online);btn.setAttribute('aria-pressed',String(online));btn.setAttribute('aria-label',`${CITIES[key].short}打印机${online?'在线，点击切换离线':'离线，点击切换在线'}`);
+  log(online?'ok':'warn',`${CITIES[key].short}打印机${online?'恢复在线，后续按纸票出票；既有电子票保留原票号，不重复打印':'已离线，后续来信自动改发电子粮票'}。`);
+  toast(online?'打印机恢复在线，后续正常出票。':'打印机离线，电子粮票兜底已启用。');
+}
+function resetDemo(initial=false){
+  timers.forEach(clearTimeout);timers.clear();clearTimeout(toastTimer);$('toast').hidden=true;stopVoice();queueSeq=0;state=freshState();
+  $('identity').value='store';$('home').value='xa';$('nickname').value='南门老张';$('message').value='雪下得正紧，替我在千里外喝一碗热的。';$('attach').checked=true;$('accelerate').checked=true;
+  $('target').replaceChildren();$('logs').replaceChildren();renderCities();updateTarget();renderStats();updateCounter();
+  status('每位访客每日最多寄5封 · 审核后放行');
+  log('info','演示就绪：四城打印机在线，米缸1786勺；无外部请求，二维码为示意。');
+  log('info','等待上限15秒（演示加速）；盖印添米，异城回信可撕票贴文牒。');
+  if(!initial)toast('演示已重置，四城铜铃重新候信。');
+}
+function updateCounter(){const count=chars($('message').value).length;$('counter').textContent=`${count}/40`;}
+$('send-form').addEventListener('submit',sendLetter);
+$('simulate').addEventListener('click',simulateGuest);
+$('stamp').addEventListener('click',stampHome);
+$('home').addEventListener('change',updateTarget);
+$('identity').addEventListener('change',()=>{updateTarget();status($('identity').value==='cloud'?'云票直接送达四城门店，不参与实体文牒。':'每位访客每日最多寄5封 · 审核后放行');});
+$('nickname').addEventListener('input',event=>{if(!event.isComposing)enforceLength(event.target,8);renderPassport();});
+$('nickname').addEventListener('compositionend',event=>{enforceLength(event.target,8);renderPassport();});
+$('message').addEventListener('input',event=>{if(!event.isComposing)enforceLength(event.target,40);updateCounter();});
+$('message').addEventListener('compositionend',event=>{enforceLength(event.target,40);updateCounter();});
+$('accelerate').addEventListener('change',()=>{log('info',`演示加速${$('accelerate').checked?'开启：新信等待15秒':'关闭：新信等待10分钟'}；已入队信件保留原倒计时。`);});
+$('cities').addEventListener('click',event=>{
+  const printer=event.target.closest('[data-printer]');if(printer){togglePrinter(printer.dataset.printer);return;}
+  const tear=event.target.closest('[data-tear]');if(tear){tearTicket(Number(tear.dataset.tear));return;}
+  const voice=event.target.closest('[data-voice]');if(voice){const ticket=state.tickets.find(t=>t.id===Number(voice.dataset.voice));if(ticket)showVoice(ticket.source);}
+});
+$('completion').addEventListener('click',event=>{if(event.target.closest('#redeem'))redeem();if(event.target.closest('#renew-code'))renewCode();});
+$('sound-toggle').addEventListener('click',()=>{muted=!muted;unlockAudio();if(master)master.gain.setTargetAtTime(muted?0:.42,audioContext.currentTime,.02);$('sound-toggle').textContent=`铃声：${muted?'静音':'开启'}`;$('sound-toggle').setAttribute('aria-pressed',String(muted));toast(muted?'声音已静音，出票动画照常。':'声音已开启。');});
+$('voice-replay').addEventListener('click',playVoice);
+$('voice-close').addEventListener('click',()=>$('voice-dialog').close());
+$('voice-dialog').addEventListener('close',stopVoice);
+$('voice-dialog').addEventListener('cancel',stopVoice);
+$('reset').addEventListener('click',()=>$('reset-dialog').showModal());
+['reset-close','reset-cancel'].forEach(id=>$(id).addEventListener('click',()=>$('reset-dialog').close()));
+$('reset-confirm').addEventListener('click',()=>{$('reset-dialog').close();resetDemo();});
+document.querySelectorAll('dialog').forEach(dialog=>dialog.addEventListener('click',event=>{if(event.target===dialog){const rect=dialog.getBoundingClientRect();if(event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom)dialog.close();}}));
+$('voice-visual').innerHTML=Array.from({length:29},(_,i)=>`<i style="--h:${12+Math.round(Math.sin(i*.8)**2*42)}px;--d:${i%7*-.12}s"></i>`).join('');
+window.addEventListener('pagehide',stopVoice);
+resetDemo(true);setInterval(tick,1000);
+</script>
+</body>
+</html>

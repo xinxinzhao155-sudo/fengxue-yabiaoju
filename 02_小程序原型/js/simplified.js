@@ -1,8 +1,8 @@
 (function (root) {
   "use strict";
 
-  const convert = root.OpenCC.Converter({ from: "cn", to: "tw" });
-  root.EscortTraditional = convert;
+  const convert = root.OpenCC.Converter({ from: "tw", to: "cn" });
+  root.EscortSimplify = convert;
   const labels = ["alt", "title", "placeholder", "aria-label", "aria-valuetext"];
 
   // Convert the displayed text only. Paths, form values, bridge IDs and stored records keep their original keys.

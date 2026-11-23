@@ -1,27 +1,30 @@
 <!doctype html>
-<html lang="zh-Hant">
+<html lang="zh-Hans">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>風雪押鏢局 · 小程序演示手冊</title>
+<title>风雪押镖局 · 小程序演示手册</title>
 <link rel="icon" href="data:,">
-<link rel="stylesheet" href="assets/fonts/standard-kai.css">
+<link rel="stylesheet" href="assets/fonts/kai-sc.css">
 <link rel="stylesheet" href="css/theme-adapter.css">
 <style>
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--color-bg);color:var(--color-text);font:17px/1.7 var(--font-body)}main{max-width:1280px;margin:auto;padding:clamp(14px,4vw,52px)}header{overflow:hidden;border:1px solid var(--color-border);border-radius:16px;display:grid;grid-template-columns:1fr 1.1fr;background:var(--material-paper)}header img{width:100%;height:100%;object-fit:cover}header div{padding:clamp(22px,4vw,56px);align-self:center}h1,h2,h3,p{margin:0}h1{font-size:clamp(40px,6vw,78px);line-height:1.16;margin:8px 0}h2{margin:36px 0 12px;font-size:28px}h3{color:var(--color-gold);font-size:21px}a{color:var(--color-gold);text-underline-offset:4px}header a{display:inline-block;margin:15px 16px 0 0}.shots{display:block;width:100%;height:auto}.steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.steps article{padding:14px 18px;border-left:2px solid var(--color-border-strong);background:var(--material-paper)}iframe{display:block;width:100%;height:min(90vh,920px);min-height:530px;border:1px solid var(--color-border);border-radius:12px;background:var(--color-surface)}#demo p{margin-bottom:12px}summary{cursor:pointer;color:var(--color-gold)}details{margin:16px 0}li{margin-bottom:6px}a:focus-visible,summary:focus-visible{outline:2px solid var(--color-gold)}@media(max-width:700px){header,.steps{grid-template-columns:1fr}header img{max-height:220px}main{padding:14px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{body{color:#191919;background:white}header,.steps article{background:white}h3,a{color:#473515}#demo,header nav{display:none}article{break-inside:avoid}}
 </style>
 </head>
 <body><main>
-<header><div><p>大冰的小屋 · 四城一碗粥</p><h1>風雪押鏢局</h1><p>小程序演示手冊</p><nav><a href="#demo">開始互動演示</a><a href="#guide">查看路演步驟</a></nav></div><img src="assets/stone-blue/crane-pass.webp" alt="鏢隊穿過石青山水間的雙闕"></header>
-<section id="guide"><h2>從領令到交鏢</h2><p>以西安南門為例。顧客在本城領令、走完三關，再收齊三座異城的民謠糧票，帶著一印三票到吧臺交鏢。</p>
-<a href="assets/stone-blue/四页实测.jpg"><img class="shots" src="assets/stone-blue/四页实测.jpg" alt="鏢局、行囊、飛鴿、文牒四頁實測，點擊可看原圖"></a>
+<header><div><p>大冰的小屋 · 六城一碗粥</p><h1>风雪押镖局</h1><p>小程序演示手册</p><nav><a href="#demo">开始互动演示</a><a href="#guide">查看路演步骤</a></nav></div><img src="assets/stone-blue/crane-pass.webp" alt="镖队穿过石青山水间的双阙"></header>
+<section aria-label="新开两城"><h2>长沙与成都 · 新开两路</h2><div class="steps">
+<article><a href="index.html?station=changsha"><img class="shots" src="assets/stone-blue/changsha_shanshui.webp" alt="长沙水阁行旅"><h3>长沙 · 水阁行旅</h3></a><p>循水入阁，听渡船铃，接一袋湘米。</p></article>
+<article><a href="index.html?station=chengdu"><img class="shots" src="assets/stone-blue/chengdu_shanshui.webp" alt="成都古道入城"><h3>成都 · 古道入城</h3></a><p>穿古树门楼，到炉边对一句「竹影围炉」。</p></article>
+</div></section><section id="guide"><h2>从领令到交镖</h2><p>首页首列为长沙与成都，点城市卡即可切换分舵并领令。以下以西安南门为例。顾客在本城领令、走完三关，再收齐五座异城的民谣粮票，带着一印五票到吧台交镖。</p>
+<a href="assets/stone-blue/六城首版实测.jpg"><img class="shots" src="assets/stone-blue/六城首版实测.jpg" alt="长沙与成都的接镖、行囊实测，点击可看原图"></a>
 <div class="steps">
-<article><h3>鏢局 · 領令</h3><p>選「西安南門」，查看永寧門與紅棗，點「揭榜領取押鏢令」。在門店演示時，同步展示木架上的實體歌本文牒。</p></article>
-<article><h3>行囊 · 過三關</h3><p>聽街聲，點「模擬到達地標」並保存尋味海報。讀火塘故事，輸入「木吉他」解鎖歌譜；確認添米與蓋印，再模擬掃米缸木牌，啟用飛鴿匣。</p></article>
-<article><h3>飛鴿 · 傳書</h3><p>選異城，填入本城寄語，附上十秒演示音軌並勾選同意，點「放飛信鴿」。可在發件箱查看剛寄出的糧票。</p></article>
-<article><h3>文牒 · 交鏢</h3><p>從收件箱逐張打開武漢、南昌、蘇州的來票，點「模擬掃碼 · 貼入文牒」。四格齊全後出示吧臺核銷碼，輸入店員演示口令 <strong>2026</strong>，查看「交鏢禮成」。</p></article>
+<article><h3>镖局 · 领令</h3><p>选「西安南门」，查看永宁门与红枣，点「揭榜领取押镖令」。在门店演示时，同步展示木架上的实体歌本文牒。</p></article>
+<article><h3>行囊 · 过三关</h3><p>听街声，点「模拟到达地标」并保存寻味海报。读火塘故事，输入「木吉他」解锁歌谱；确认添米与盖印，再模拟扫米缸木牌，启用飞鸽匣。</p></article>
+<article><h3>飞鸽 · 传书</h3><p>选异城，填入本城寄语，附上十秒演示音轨并勾选同意，点「放飞信鸽」。可在发件箱查看刚寄出的粮票。</p></article>
+<article><h3>文牒 · 交镖</h3><p>从收件箱逐张打开武汉、南昌、西塘、长沙、成都的来票，点「模拟扫码 · 贴入文牒」。六格齐全后出示吧台核销码，输入店员演示口令 <strong>2026</strong>，查看「交镖礼成」。</p></article>
 </div></section>
-<section id="demo"><h2>互動演示</h2><p>下方可直接操作。投影時可<a href="风雪押镖局-四城一碗粥-小程序.html">獨立開啟小程序</a>，在桌面寬度使用右側路演控制臺。</p>
-<details open><summary>路演快速走法</summary><ol><li>控制臺選「西安南門」，點「快進四城三關」。</li><li>切到「飛鴿」寄一張糧票，再點控制臺的「補齊三城來票」。手機可從「餘溫與備用票」補票。</li><li>回到收件箱，逐張貼牒後核銷。再次演示可在控制臺點「重置本地存檔」。</li></ol></details>
-<iframe title="風雪押鏢局可互動離線原型" loading="lazy" src="风雪押镖局-四城一碗粥-小程序.html"></iframe></section>
+<section id="demo"><h2>互动演示</h2><p>下方可直接操作。投影时可<a href="index.html">独立开启小程序</a>，在桌面宽度使用右侧路演控制台。</p>
+<details open><summary>路演快速走法</summary><ol><li>控制台选「西安南门」，点「快进六城三关」。</li><li>切到「飞鸽」寄一张粮票，再点控制台的「补齐五城来票」。手机可从「余温与备用票」补票。</li><li>回到收件箱，逐张贴牒后核销。再次演示可在控制台点「重置本地存档」。</li></ol></details>
+<iframe title="风雪押镖局可互动离线原型" loading="lazy" src="index.html"></iframe></section>
 </main></body></html>

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="">
+  <title>风雪押镖局 · 大冰的小屋</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="assets/fonts/kai-sc.css">
+  <link rel="stylesheet" href="assets/public/base_style.css">
+  <link rel="stylesheet" href="css/theme-adapter.css?v=zh-hans-1">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/film-preview.css">
+  <script defer src="js/vendor/opencc-to-cn.js"></script>
+  <script defer src="js/simplified.js"></script>
+  <script defer src="js/sop-content.js"></script>
+  <!-- 如需临时覆盖分舵字段或图标，可在适配层之前注入 ESCORT_SHARED_DATA。 -->
+  <script defer src="js/data-adapter.js?v=zh-hans-1"></script>
+  <script defer src="js/storage.js?v=zh-hans-1"></script>
+  <script defer src="js/views.js?v=zh-hans-1"></script>
+  <script defer src="js/app.js?v=zh-hans-1"></script>
+</head>
+<body>
+  <header class="desktop-header">
+    <div class="brand"><span class="brand-seal" aria-hidden="true">镖</span><span>大冰的小屋<small>风雪押镖局</small></span></div>
+    <span class="desktop-meta"><i></i> 腊八六城联动</span>
+  </header>
+  <main class="showcase">
+    <aside class="intro" aria-label="活动介绍">
+      <p class="intro-kicker"><span></span> 六城共熬一碗粥</p>
+      <h1>风雪<br>押镖局<span>。</span></h1>
+      <p class="intro-copy">一碗热粥暖皮囊，一首民谣暖魂灵。<br>粥熬百味，歌敬异乡。</p>
+      <ol class="intro-steps">
+        <li><span>一</span> 木架领牒，走完本城三关</li>
+        <li><span>二</span> 木匣响铃，撕票贴入文牒</li>
+        <li><span>三</span> 一印五票，到吧台交镖</li>
+      </ol>
+    </aside>
+
+    <section class="phone" aria-label="风雪押镖局小程序">
+      <div class="status-bar" aria-hidden="true"><b>9:41</b><div id="status-icons"></div></div>
+      <header class="mini-header">
+        <button class="icon-button mini-back" type="button" data-action="back" aria-label="返回镖局" hidden></button>
+        <button class="reset-demo" type="button" data-action="demo-reset">重置演示</button>
+        <strong id="mini-title">风雪押镖局</strong>
+        <button class="icon-button sound-control" id="sound-control" type="button" data-action="sound" aria-label="木匣提示音" aria-pressed="false"></button>
+        <div class="capsule">
+          <button type="button" data-action="about" aria-label="玩法说明" id="about-icon"></button>
+          <button type="button" data-action="home" aria-label="返回首页" id="home-icon"></button>
+        </div>
+      </header>
+      <div id="screen" class="screen" tabindex="-1"></div>
+      <nav id="tabs" class="tabs" aria-label="小程序导航"></nav>
+      <dialog id="sheet" class="sheet" aria-labelledby="sheet-title"></dialog>
+      <div id="toast" class="toast" role="status" aria-atomic="true"></div>
+      <div id="flight" class="flight" aria-hidden="true" hidden></div>
+    </section>
+
+    <aside class="demo-area" aria-label="路演控制台">
+      <details class="demo" open>
+        <summary id="demo-summary">路演控制台</summary>
+        <div id="demo-controls" class="demo-controls"></div>
+      </details>
+      <p class="demo-note" id="save-note"></p>
+    </aside>
+  </main>
+</body>
+</html>

@@ -252,7 +252,7 @@
   }
 
   function normalizeAnswer(value) {
-    return root.EscortTraditional(value.normalize("NFKC")).toLowerCase().replace(/[\p{P}\p{Z}\s]/gu, "");
+    return root.EscortSimplify(value.normalize("NFKC")).toLowerCase().replace(/[\p{P}\p{Z}\s]/gu, "");
   }
 
   function verifyAnswer(form) {
@@ -302,7 +302,7 @@
 
   function setDraftBody(textarea, content) {
     if (!textarea) return;
-    const body = Array.from(content).slice(0, data.post.maxLength).join("");
+    const body = Array.from(root.EscortSimplify(content)).slice(0, data.post.maxLength).join("");
     if (textarea.value !== body) textarea.value = body;
     context.draft.body = body;
     document.querySelector("#letter-count").value = Array.from(body).length + " / " + data.post.maxLength;
@@ -416,9 +416,9 @@
 
   function submitLetter(form) {
     const textarea = form.elements.body;
-    const body = Array.from(root.EscortTraditional(textarea.value)).slice(0, data.post.maxLength).join("").trim();
+    const body = Array.from(root.EscortSimplify(textarea.value)).slice(0, data.post.maxLength).join("").trim();
     const city = view.station(store.load());
-    const blocked = data.post.blocked.some(word => body.includes(root.EscortTraditional(word)));
+    const blocked = data.post.blocked.some(word => body.includes(root.EscortSimplify(word)));
     const error = !body ? "请写一句粮票寄语。" :
       blocked ? "寄语含演示拦截词，请修改后再放飞。" :
       !store.validAudio(context.draft.audio, city.id) ? "请附上 10 秒声音。" :
@@ -510,7 +510,7 @@
     const previous = state.outgoing.slice().reverse().find(letter => letter.fromCityId === toCityId && letter.toCityId === city.id);
     const letter = {
       id: store.id(), fromCityId: city.id, toCityId, body: city.seeds[state.incoming.length % city.seeds.length],
-      author: source === "seed" ? "守夜老镖师" : "木匣留票", tag: "四城民谣粮票",
+      author: source === "seed" ? "守夜老镖师" : "木匣留票", tag: "六城民谣粮票",
       source, audio: store.sampleAudio(city.id), replyTo: previous?.id || null,
       createdAt: now(), resonatedAt: null, readAt: null
     };
@@ -573,7 +573,7 @@
     if (!credential) {
       closeSheet();
       render();
-      notify("请先集齐实体文牒四格");
+      notify("请先集齐实体文牒六格");
       return;
     }
     openSheet(view.credentialSheet(data.city(credential.stationId), credential, store.load().demoStock));
@@ -620,14 +620,14 @@
       return;
     }
     render();
-    openSheet(`<div class="ceremony">${view.image("coat", "ceremony-coat")}<p class="eyebrow">交镖礼成 · 四城合奏</p><h2 id="sheet-title">金牌总镖头</h2>
-      <p>${result === "collected" ? "四城风物礼盒已领取。" : "礼盒暂缺，可回到文牒登记顺丰补发。"}</p>${button("报名腊八红马甲施粥", "signup")}</div>`);
+    openSheet(`<div class="ceremony">${view.image("coat", "ceremony-coat")}<p class="eyebrow">交镖礼成 · 六城合奏</p><h2 id="sheet-title">金牌总镖头</h2>
+      <p>${result === "collected" ? "六城风物礼盒已领取。" : "礼盒暂缺，可回到文牒登记顺丰补发。"}</p>${button("报名腊八红马甲施粥", "signup")}</div>`);
   }
 
   function signup() {
     const route = ourRoute(store.load());
     if (!route.redemption || route.signup) return;
-    openSheet(`<p class="eyebrow">腊八正日 · 四城共熬一碗粥</p><h2 id="sheet-title">红马甲街头施粥</h2>${view.image("hearth", "signup-hearth")}<p class="sheet-copy">和小屋一起背吉他上街，为环卫工和异乡人送碗热粥。这是本地报名演示。</p>
+    openSheet(`<p class="eyebrow">腊八正日 · 六城共熬一碗粥</p><h2 id="sheet-title">红马甲街头施粥</h2>${view.image("hearth", "signup-hearth")}<p class="sheet-copy">和小屋一起背吉他上街，为环卫工和异乡人送碗热粥。这是本地报名演示。</p>
       <form id="signup-form"><label for="signup-role">参与岗位</label><select id="signup-role" name="role">${data.roles.map(role => `<option value="${role}">${role}</option>`).join("")}</select>
         <label for="signup-shift">轮岗时段</label><select id="signup-shift" name="shift">${data.shifts.map(shift => `<option value="${shift}">${shift}</option>`).join("")}</select>
         <button type="submit" class="button primary full">确认报名</button></form>`);
@@ -674,7 +674,7 @@
       }
     });
     go("journey", true);
-    notify("四城三关已快进 · 当前分舵可继续寄票与贴牒");
+    notify("六城三关已快进 · 当前分舵可继续寄票与贴牒");
   }
 
   function demoLetter(all) {
@@ -702,7 +702,7 @@
     post: () => { closeSheet(); go("post", true); },
     passbook: () => go("passbook", true),
     close: closeSheet,
-    about: () => openSheet(`<p class="eyebrow">自助领牒 · 三关一匣</p><h2 id="sheet-title">押镖怎么玩？</h2><ol class="rules"><li>扫门口木架码，领取押镖令和实体文牒。</li><li>听音寻味、火塘听曲、落米成音，钤本城印。</li><li>听木匣响铃，撕下三个不同异城的粮票，扫码贴入文牒。</li><li>四格齐了到吧台核销，晋升金牌总镖头。</li></ol>${button("知道了", "close")}`),
+    about: () => openSheet(`<p class="eyebrow">自助领牒 · 三关一匣</p><h2 id="sheet-title">押镖怎么玩？</h2><ol class="rules"><li>扫门口木架码，领取押镖令和实体文牒。</li><li>听音寻味、火塘听曲、落米成音，钤本城印。</li><li>听木匣响铃，撕下五个不同异城的粮票，扫码贴入文牒。</li><li>六格齐了到吧台核销，晋升金牌总镖头。</li></ol>${button("知道了", "close")}`),
     sound: () => {
       store.update(state => { state.sound = !state.sound; });
       render();
@@ -721,7 +721,7 @@
       context.draft.preset = Number(control.dataset.value);
       for (const chip of screen.querySelectorAll(".chip")) chip.setAttribute("aria-pressed", String(chip === control));
     },
-    preset: () => setDraftBody(document.querySelector("#letter-body"), root.EscortTraditional(view.station(store.load()).seeds[context.draft.preset])),
+    preset: () => setDraftBody(document.querySelector("#letter-body"), root.EscortSimplify(view.station(store.load()).seeds[context.draft.preset])),
     record: recordAudio,
     "demo-audio": () => {
       if (context.recording) return;
@@ -844,6 +844,13 @@
   flight.innerHTML = view.asset("bird", "bird");
 
   const scan = new URLSearchParams(root.location.search);
+  if (scan.get("demo") === "restart") {
+    store.reset();
+    scan.delete("demo");
+    const clean = new URL(root.location.href);
+    clean.search = scan.toString();
+    root.history.replaceState(null, "", clean.href);
+  }
   const freshNavigation = root.performance.getEntriesByType("navigation")[0]?.type !== "reload";
   const scannedStation = freshNavigation && data.scanCity(scan.get("station"));
   if (scannedStation) store.update(state => { state.profile.stationId = scannedStation.id; });

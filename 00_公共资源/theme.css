@@ -1,12 +1,13 @@
+@import url("./04_界面组件与边框/base_style.css");
 /* 全项目配色与布局 */
 :root {
   color-scheme: dark;
-  --wood: #21130e;
-  --paper: #fff1da;
-  --muted: #d5bba0;
-  --lantern: #ffd18a;
-  --cinnabar: #b94e3d;
-  --border: #765340;
+  --wood: var(--fx-night);
+  --paper: var(--fx-silk-light);
+  --muted: var(--fx-silk-warm);
+  --lantern: var(--fx-gold-light);
+  --cinnabar: var(--fx-pillar);
+  --border: var(--fx-ink-fine);
   font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
 }
 * { box-sizing: border-box; }
@@ -14,7 +15,7 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(ellipse at 72% 4%, #774221 0%, transparent 52%),
+    radial-gradient(ellipse at 72% 4%, var(--fx-mountain-shadow) 0%, transparent 52%),
     repeating-linear-gradient(105deg, #ffffff04 0 1px, transparent 1px 8px),
     var(--wood);
   color: var(--paper);
@@ -31,23 +32,23 @@ header p, .card p, .panel p { color: var(--muted); margin-top: .5rem; }
 .card, .panel {
   border: 1px solid var(--border);
   border-radius: 10px;
-  background: linear-gradient(125deg, #38241a, #2a1a14);
+  background: linear-gradient(125deg, var(--fx-selected), var(--fx-night));
   padding: clamp(20px, 4vw, 32px);
 }
 .card { position: relative; display: block; color: inherit; text-decoration: none; padding-right: 55px; }
 .card::after { content: "→"; position: absolute; right: 22px; top: 50%; translate: 0 -50%; color: var(--lantern); font-size: 1.4rem; }
-.card:hover { border-color: var(--lantern); background: #482d20; }
+.card:hover { border-color: var(--lantern); background: var(--fx-mountain-shadow); }
 .role {
   display: inline-block;
   border: 1px solid var(--cinnabar);
   border-radius: 4px;
-  color: #ffcfbd;
+  color: var(--fx-silk-warm);
   padding: .1em .55em;
   margin-bottom: .65rem;
   font-size: .9rem;
 }
 .cities { padding-left: 1.3em; margin-bottom: 0; font-size: 1.2rem; color: var(--lantern); }
-.button { display: inline-block; margin-top: 24px; color: var(--paper); text-decoration: none; padding: .65em 1.1em; border-radius: 5px; background: #963929; }
-.button:hover { background: #ac4635; }
+.button { display: inline-block; margin-top: 24px; color: var(--paper); text-decoration: none; padding: .65em 1.1em; border-radius: 5px; background: var(--fx-pillar-shadow); }
+.button:hover { background: var(--fx-pressed); }
 a:focus-visible { outline: 3px solid var(--lantern); outline-offset: 4px; }
 @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
